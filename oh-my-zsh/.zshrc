@@ -87,6 +87,10 @@ source $ZSH/oh-my-zsh.sh
 export NVM_DIR="/Users/grodas/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
-# Custom scripts for @garethderioth
+# Custom scripts
+
+# Load syntax highlighting plugin
 source ~/.oh-my-zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# Load z plugin
 . `brew --prefix`/etc/profile.d/z.sh
