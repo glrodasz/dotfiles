@@ -1,6 +1,6 @@
 # Install
 
-## .zsh
+## .zshrc
 ```bash
 ln -fs ~/Code/dotfiles/zsh/.zshrc ~/.zshrc
 ```
