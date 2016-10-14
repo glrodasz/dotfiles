@@ -31,7 +31,7 @@
 # Atom Flight Manual:
 # http://flight-manual.atom.io/using-atom/sections/basic-customization/#_cson
 
-# Custom keymaps for @garethderioth
+# Custom keymap
 'atom-text-editor.vim-mode.insert-mode':
   'j k': 'vim-mode:activate-normal-mode'
 
