@@ -1,0 +1,6 @@
+# Custom keymaps for @garethderioth
+'atom-text-editor.vim-mode.insert-mode':
+  'j k': 'vim-mode:activate-normal-mode'
+
+'atom-text-editor':
+  'ctrl-alt-m': 'markdown-preview:toggle'
