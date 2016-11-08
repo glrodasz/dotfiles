@@ -94,3 +94,7 @@ source ~/.oh-my-zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 export PATH="$PATH:/usr/local/sbin"
 export PATH="$PATH:/usr/local/mongodb/bin"
+
+rmd () {
+   pandoc $1 | lynx -stdin
+}
