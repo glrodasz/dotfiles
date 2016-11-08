@@ -7,7 +7,7 @@ export ZSH=/Users/grodas/.oh-my-zsh
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="node"
+ZSH_THEME="pure"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -89,12 +89,20 @@ export NVM_DIR="/Users/grodas/.nvm"
 
 # Custom scripts 
 source ~/.oh-my-zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# Z plugin
 . `brew --prefix`/etc/profile.d/z.sh
 
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+# PATH
+export PATH="$PATH:$HOME/.rvm/bin"
 export PATH="$PATH:/usr/local/sbin"
 export PATH="$PATH:/usr/local/mongodb/bin"
 
+# Read markdown
 rmd () {
    pandoc $1 | lynx -stdin
 }
+
+# Load pure
+autoload -U promptinit; promptinit
+prompt pure
