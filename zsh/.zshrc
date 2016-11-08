@@ -90,3 +90,7 @@ export NVM_DIR="/Users/grodas/.nvm"
 # Custom scripts 
 source ~/.oh-my-zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 . `brew --prefix`/etc/profile.d/z.sh
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+export PATH="$PATH:/usr/local/sbin"
+export PATH="$PATH:/usr/local/mongodb/bin"
