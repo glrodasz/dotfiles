@@ -37,3 +37,13 @@
 
 'atom-text-editor':
   'ctrl-alt-m': 'markdown-preview:toggle'
+
+'atom-workspace atom-text-editor:not([mini])':
+  'cmd-k f f': 'open-this:here'
+  'cmd-k f d': 'open-this:split-down'
+  'cmd-k f r': 'open-this:split-right'
+
+'atom-text-editor.vim-mode.normal-mode':
+  'g f':      'open-this:here'
+  'ctrl-w f': 'open-this:split-down'
+  'ctrl-w F': 'open-this:split-right'
