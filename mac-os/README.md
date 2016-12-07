@@ -5,5 +5,5 @@
 launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist
 ```
 
-## Alt-key in Terminal
-> Terminal > Preferences > Settings > Keyboard. Just check ‘Use option as meta key’
+## Alt key in Terminal
+> Terminal > Preferences > Profiles > Keyboard and Just Uncheck 'Use option as meta key'.
