@@ -99,8 +99,8 @@ export PATH="$PATH:/usr/local/sbin"
 export PATH="$PATH:/usr/local/mongodb/bin"
 export PATH="$PATH:`yarn global bin`"
 
-# Read markdown
-rmd () {
+# Read Markdownn
+markdown () {
    pandoc $1 | lynx -stdin
 }
 
