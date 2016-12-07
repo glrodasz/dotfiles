@@ -1,5 +1,5 @@
 # Install
 
 ```bash
-npm install -g commitizen cz-conventional-changelog create-react-app yo gulp-webapp
+npm install -g commitizen cz-conventional-changelog create-react-app yo gulp-webapp yarn
 ```
