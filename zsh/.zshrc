@@ -94,10 +94,14 @@ source ~/.oh-my-zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 . `brew --prefix`/etc/profile.d/z.sh
 
 # PATH
+export PATH="~/.pyenv/shims:$PATH"
 export PATH="$PATH:$HOME/.rvm/bin"
 export PATH="$PATH:/usr/local/sbin"
 export PATH="$PATH:/usr/local/mongodb/bin"
 export PATH="$PATH:`yarn global bin`"
+
+# pyenv
+eval "$(pyenv init -)"
 
 # Read Markdownn
 markdown () {

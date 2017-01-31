@@ -32,8 +32,8 @@
 # http://flight-manual.atom.io/using-atom/sections/basic-customization/#_cson
 
 # Custom keymap
-'atom-text-editor.vim-mode.insert-mode':
-  'j k': 'vim-mode:activate-normal-mode'
+'atom-text-editor.vim-mode-plus.insert-mode':
+  'j k': 'vim-mode-plus:activate-normal-mode'
 
 'atom-text-editor':
   'ctrl-alt-m': 'markdown-preview:toggle'
@@ -43,7 +43,7 @@
   'cmd-k f d': 'open-this:split-down'
   'cmd-k f r': 'open-this:split-right'
 
-'atom-text-editor.vim-mode.normal-mode':
+'atom-text-editor.vim-mode-plus.normal-mode':
   'g f':      'open-this:here'
   'ctrl-w f': 'open-this:split-down'
   'ctrl-w F': 'open-this:split-right'
