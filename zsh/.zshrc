@@ -84,6 +84,10 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# Alias
+alias gmas="gcm && g fetch upstream && gl upstream master && ggpush"
+alias gdev="gco develop && gm master && ggpush && gcm"
+
 export NVM_DIR="/Users/grodas/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
@@ -99,6 +103,7 @@ export PATH="$PATH:$HOME/.rvm/bin"
 export PATH="$PATH:/usr/local/sbin"
 export PATH="$PATH:/usr/local/mongodb/bin"
 export PATH="$PATH:`yarn global bin`"
+export PATH="$PATH:/Users/grodas/miniconda3/bin"
 
 # pyenv
 eval "$(pyenv init -)"

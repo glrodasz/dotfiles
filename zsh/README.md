@@ -2,5 +2,5 @@
 
 ## .zshrc
 ```bash
-ln -fs ~/Code/dotfiles/zsh/.zshrc ~/.zshrc
+ln -fs ~/dotfiles/zsh/.zshrc ~/.zshrc
 ```
