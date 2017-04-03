@@ -4,14 +4,14 @@
 ```bash
 ln -fs ~/dotfiles/atom/keymap.cson ~/.atom/keymap.cson
 ```
-## package-list.txt
+## packages-list.txt
 
-#### Backup package list
+#### Backup packages list
 ```bash
-apm list --installed --bare > ~/dotfiles/atom/package-list.txt
+apm list --installed --bare > ~/dotfiles/atom/packages-list.txt
 ```
 
-#### Install package list
+#### Install packages list
 ```bash
-apm install --packages-file ~/dotfiles/atom/package-list.txt
+apm install --packages-file ~/dotfiles/atom/packages-list.txt
 ```
