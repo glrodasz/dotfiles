@@ -7,7 +7,7 @@ export ZSH=/Users/grodas/.oh-my-zsh
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="pure"
+ZSH_THEME="refined"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -87,6 +87,7 @@ source $ZSH/oh-my-zsh.sh
 # Alias
 alias gmas="gcm && g fetch upstream && gl upstream master && ggpush"
 alias gdev="gco develop && gm master && ggpush && gcm"
+alias naut="nvm use auth0"
 
 export NVM_DIR="/Users/grodas/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
