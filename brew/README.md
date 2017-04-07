@@ -8,5 +8,5 @@ brew leaves > packages
 
 ## Install packages
 ```bash
-cat file | xargs brew install
+cat packages | xargs brew install
 ```
