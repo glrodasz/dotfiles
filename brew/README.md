@@ -1,5 +1,12 @@
 # Install
 
+
+## Backup packages
 ```bash
-brew install git git-flow z zsh-syntax-highlighting httpie pandoc lynx yarn pyenv
+brew leaves > packages
+```
+
+## Install packages
+```bash
+cat packages | xargs brew install
 ```
