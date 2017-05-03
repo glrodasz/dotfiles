@@ -88,6 +88,8 @@ source $ZSH/oh-my-zsh.sh
 alias gmas="gcm && g fetch upstream && gl upstream master && ggpush"
 alias gdev="gco develop && gm master && ggpush && gcm"
 alias naut="nvm use auth0"
+alias clicc="rm -rf node_modules && npm i && npm link"
+alias clisc="rm -rf node_modules && npm link support-center-common && npm link support-center-components && npm i --no-optional"
 
 export NVM_DIR="/Users/grodas/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
