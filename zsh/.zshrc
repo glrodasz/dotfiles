@@ -90,6 +90,9 @@ alias gdev="gco develop && gm master && ggpush && gcm"
 alias naut="nvm use auth0"
 alias clicc="rm -rf node_modules && npm i && npm link"
 alias clisc="rm -rf node_modules && npm link support-center-common && npm link support-center-components && npm i --no-optional"
+alias bumpp="npm version patch && gp upstream master --tags"
+alias bumpi="npm version minor && gp upstream master --tags"
+alias bumpa="npm version major && gp upstream master --tags"
 
 export NVM_DIR="/Users/grodas/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm

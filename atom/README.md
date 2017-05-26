@@ -4,6 +4,12 @@
 ```bash
 ln -fs ~/dotfiles/atom/keymap.cson ~/.atom/keymap.cson
 ```
+
+## styles.less
+```bash
+ln -fs ~/dotfiles/atom/styles.less ~/.atom/styles.less
+```
+
 ## packages.txt
 
 #### Backup packages
