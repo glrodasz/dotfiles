@@ -93,6 +93,8 @@ alias clisc="rm -rf node_modules && npm link support-center-common && npm link s
 alias bumpp="npm version patch && gp upstream master --tags"
 alias bumpi="npm version minor && gp upstream master --tags"
 alias bumpa="npm version major && gp upstream master --tags"
+alias rmorig="rm -rf **/*.orig"
+alias sshadd="ssh-add -K ~/.ssh/id_rsa_docmeti ~/.ssh/id_rsa_rioth"
 
 export NVM_DIR="/Users/grodas/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
