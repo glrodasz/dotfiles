@@ -1,4 +1,4 @@
-nstall
+# Install
 
 ## apps-list.txt
 
