@@ -7,7 +7,7 @@ export ZSH=/Users/grodas/.oh-my-zsh
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="refined"
+ZSH_THEME=""
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -89,7 +89,9 @@ alias gmas="gcm && g fetch upstream && gl upstream master && ggpush"
 alias gdev="gco develop && gm master && ggpush && gcm"
 alias naut="nvm use auth0"
 alias clicc="rm -rf node_modules && npm i && npm link"
-alias clisc="rm -rf node_modules && npm link support-center-common && npm link support-center-components && npm i --no-optional"
+alias clisc="rm -rf node_modules && npm i --no-optional && npm link support-center-common && npm
+link support-center-components && npm i --no-optional"
+alias cisca="rm -rf node_modules && npm i --no-optional"
 alias bumpp="npm version patch && gp upstream master --tags"
 alias bumpi="npm version minor && gp upstream master --tags"
 alias bumpa="npm version major && gp upstream master --tags"
