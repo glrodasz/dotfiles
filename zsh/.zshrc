@@ -7,7 +7,7 @@ export ZSH=/Users/grodas/.oh-my-zsh
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME=""
+ZSH_THEME="spaceship"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -88,13 +88,12 @@ source $ZSH/oh-my-zsh.sh
 alias gmas="gcm && g fetch upstream && gl upstream master && ggpush"
 alias gdev="gco develop && gm master && ggpush && gcm"
 alias naut="nvm use auth0"
-alias clicc="rm -rf node_modules && npm i && npm link"
-alias clisc="rm -rf node_modules && npm i --no-optional && npm link support-center-common && npm
-link support-center-components && npm i --no-optional"
-alias cisca="rm -rf node_modules && npm i --no-optional"
-alias bumpp="npm version patch && gp upstream master --tags"
-alias bumpi="npm version minor && gp upstream master --tags"
-alias bumpa="npm version major && gp upstream master --tags"
+alias npmlcc="npm link support-center-common && npm link support-center-components"
+alias rmnpmo="rm -rf node_modules && npm i --no-optional"
+alias rmnpmi="rm -rf node_modules && npm i"
+alias bumpp="npm version patch && gp upstream master --tags && ggpush --tags"
+alias bumpi="npm version minor && gp upstream master --tags && ggpush --tags"
+alias bumpa="npm version major && gp upstream master --tags && ggpush --tags"
 alias rmorig="rm -rf **/*.orig"
 alias sshadd="ssh-add -K ~/.ssh/id_rsa_docmeti ~/.ssh/id_rsa_rioth"
 
@@ -126,3 +125,6 @@ markdown () {
 # Load pure
 autoload -U promptinit; promptinit
 prompt pure
+
+
+source "/Users/grodas/.oh-my-zsh/custom/themes/spaceship.zsh-theme"
