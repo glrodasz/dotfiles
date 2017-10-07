@@ -7,6 +7,5 @@ Numbers.app
 Pages.app
 Sip.app
 Spark.app
-Telegram.app
 Twitter.app
 Xcode.app

@@ -126,5 +126,5 @@ markdown () {
 autoload -U promptinit; promptinit
 prompt pure
 
-
+# Load Spaceship Theme
 source "/Users/grodas/.oh-my-zsh/custom/themes/spaceship.zsh-theme"
