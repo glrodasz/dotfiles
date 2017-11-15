@@ -128,5 +128,19 @@ markdown () {
 autoload -U promptinit; promptinit
 prompt pure
 
-# Load Spaceship Theme
+# Order
+SPACESHIP_PROMPT_ORDER=(
+  time     #
+  vi_mode  # these sections will be
+  user     # before prompt char
+  host     #
+  char
+  dir
+  git
+  node
+  docker
+  venv
+  pyenv
+)
+
 source "/Users/grodas/.oh-my-zsh/custom/themes/spaceship.zsh-theme"
