@@ -95,7 +95,7 @@ alias npmdev="npm run dev"
 alias bumpp="npm version patch"
 alias bumpi="npm version minor" 
 alias bumpa="npm version major" 
-alias npmtp="npm run tag:publish"
+alias npmtag="npm run tag:publish"
 alias rmorig="rm -rf **/*.orig"
 alias sshadd="ssh-add -K ~/.ssh/id_rsa_docmeti ~/.ssh/id_rsa_rioth"
 
@@ -124,23 +124,11 @@ markdown () {
    pandoc $1 | lynx -stdin
 }
 
+# Fix hub alias
+function git() { hub $@; }
+
 # Load pure
 autoload -U promptinit; promptinit
 prompt pure
-
-# Order
-SPACESHIP_PROMPT_ORDER=(
-  time     #
-  vi_mode  # these sections will be
-  user     # before prompt char
-  host     #
-  char
-  dir
-  git
-  node
-  docker
-  venv
-  pyenv
-)
 
 source "/Users/grodas/.oh-my-zsh/custom/themes/spaceship.zsh-theme"

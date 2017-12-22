@@ -1,4 +1,6 @@
 Spark.app
+LastPass.app
+FlagTimes.app
 Numbers.app
 Xcode.app
 iMovie.app
@@ -9,4 +11,3 @@ Pages.app
 GarageBand.app
 The Unarchiver.app
 Twitter.app
-Sip.app

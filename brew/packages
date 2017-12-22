@@ -1,3 +1,4 @@
+automake
 cairo
 cctools
 homebrew/php/composer
@@ -6,7 +7,9 @@ git
 git-flow
 gnupg
 gpg-agent
+heroku/brew/heroku
 httpie
+hub
 kubernetes-cli
 libusb-compat
 libyaml
@@ -16,7 +19,6 @@ pandoc
 homebrew/php/php71
 postgresql
 pyenv
-python3
 rabbitmq
 wget
 yarn
