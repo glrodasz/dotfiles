@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/grodas/.oh-my-zsh
+export ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -85,10 +85,10 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # Alias
-alias gmas="gcm && g fetch upstream && gl upstream master && ggpush"
+alias gmas="gcm && g fetch upstream && g reset --hard upstream/master && ggpush"
 alias gdev="gco develop && gm master && ggpush && gcm"
 alias naut="nvm use auth0"
-alias npmlcc="npm link support-center-common && npm link support-center-components"
+alias ndef="nvm use default"
 alias rmnpmo="rm -rf node_modules && npm i --no-optional"
 alias rmnpmi="rm -rf node_modules && npm i"
 alias npmdev="npm run dev"
@@ -99,11 +99,11 @@ alias npmtag="npm run tag:publish"
 alias rmorig="rm -rf **/*.orig"
 alias sshadd="ssh-add -K ~/.ssh/id_rsa_docmeti ~/.ssh/id_rsa_rioth"
 
-export NVM_DIR="/Users/grodas/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" --no-use # This loads nvm
 
 # Custom scripts 
-source ~/.oh-my-zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Z plugin
 . `brew --prefix`/etc/profile.d/z.sh
@@ -114,7 +114,7 @@ export PATH="$PATH:$HOME/.rvm/bin"
 export PATH="$PATH:/usr/local/sbin"
 export PATH="$PATH:/usr/local/mongodb/bin"
 export PATH="$PATH:`yarn global bin`"
-export PATH="$PATH:/Users/grodas/miniconda3/bin"
+export PATH="$PATH:$HOME/miniconda3/bin"
 
 # pyenv
 eval "$(pyenv init -)"
@@ -128,7 +128,7 @@ markdown () {
 function git() { hub $@; }
 
 # Load pure
-autoload -U promptinit; promptinit
-prompt pure
+# autoload -U promptinit; promptinit
+# prompt pure
 
-source "/Users/grodas/.oh-my-zsh/custom/themes/spaceship.zsh-theme"
+# source "$HOME/.oh-my-zsh/custom/themes/spaceship.zsh-theme"
