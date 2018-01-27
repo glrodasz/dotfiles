@@ -85,7 +85,7 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # Alias
-alias gmas="gcm && g fetch upstream && g reset --hard upstream/master && ggpush"
+alias gmas="gcm && g fetch upstream && g reset --hard upstream/master && ggpush -f"
 alias gdev="gco develop && gm master && ggpush && gcm"
 alias naut="nvm use auth0"
 alias ndef="nvm use default"
@@ -97,7 +97,7 @@ alias bumpi="npm version minor"
 alias bumpa="npm version major" 
 alias npmtag="npm run tag:publish"
 alias rmorig="rm -rf **/*.orig"
-alias sshadd="ssh-add -K ~/.ssh/id_rsa_docmeti ~/.ssh/id_rsa_rioth"
+alias sshadd="ssh-add -K ~/.ssh/id_rsa_docmeti ~/.ssh/id_rsa_rioth ~/.ssh/id_rsa_auth0 ~/.ssh/id_rsa_sm"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" --no-use # This loads nvm

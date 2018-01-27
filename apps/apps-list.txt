@@ -1,12 +1,10 @@
 Spark.app
-LastPass.app
 FlagTimes.app
 Numbers.app
 Xcode.app
 iMovie.app
 Fantastical 2.app
 Keynote.app
-Bear.app
 Pages.app
 GarageBand.app
 The Unarchiver.app
