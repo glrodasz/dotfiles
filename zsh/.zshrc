@@ -8,7 +8,7 @@ export ZSH=$HOME/.oh-my-zsh
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="spaceship"
+# ZSH_THEME=""
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -87,17 +87,14 @@ source $ZSH/oh-my-zsh.sh
 
 # Alias
 alias gmas="gcm && g fetch upstream && g reset --hard upstream/master && ggpush -f"
-alias gdev="gco develop && gm master && ggpush && gcm"
 alias naut="nvm use auth0"
 alias ndef="nvm use default"
-alias rmnpmo="rm -rf node_modules && npm i --no-optional"
 alias rmnpmi="rm -rf node_modules && npm i"
 alias rmyarn="rm -rf node_modules && yarn"
 alias npmdev="npm run dev"
 alias bumpp="npm version patch"
 alias bumpi="npm version minor" 
 alias bumpa="npm version major" 
-alias npmtag="npm run tag:publish"
 alias rmorig="rm -rf **/*.orig"
 alias sshadd="ssh-add -K ~/.ssh/id_rsa_docmeti ~/.ssh/id_rsa_rioth ~/.ssh/id_rsa_auth0 ~/.ssh/id_rsa_sm"
 
@@ -115,8 +112,8 @@ export PATH="~/.pyenv/shims:$PATH"
 export PATH="$PATH:$HOME/.rvm/bin"
 export PATH="$PATH:/usr/local/sbin"
 export PATH="$PATH:/usr/local/mongodb/bin"
-export PATH="$PATH:`yarn global bin`"
 export PATH="$PATH:$HOME/miniconda3/bin"
+export PATH="$PATH:`yarn global bin`"
 
 # pyenv
 eval "$(pyenv init -)"
@@ -130,8 +127,7 @@ markdown () {
 function git() { hub $@; }
 
 # Load pure
-# autoload -U promptinit; promptinit
-# prompt pure
+autoload -U promptinit; promptinit
+prompt pure
 
-# source "$HOME/.oh-my-zsh/custom/themes/spaceship.zsh-theme"
 # zprof
