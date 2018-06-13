@@ -1,0 +1,27 @@
+SkyFonts
+1Password 7
+CraftManager
+Docker
+Franz
+Kaleidoscope
+Milanote
+Minecraft
+Now
+OpenEmu
+Postman
+PSequel
+Robo 3T
+Sip
+Sketch
+Skype
+Slack
+Spectacle
+Spotify
+STAMP
+Steam
+There
+Tomighty
+Tower
+Vanilla
+VirtualBox
+Zoom

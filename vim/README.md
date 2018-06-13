@@ -2,8 +2,7 @@
 
 ## vim-colors-solarized
 ```bash
-mkdir -p ~/.vim/colors
-ln -fs ~/dotfiles/vim/vim-colors-solarized/colors/solarized.vim ~/.vim/colors/solarized.vim
+mkdir -p ~/.vim/colors && ln -fs ~/dotfiles/vim/vim-colors-solarized/colors/solarized.vim ~/.vim/colors/solarized.vim
 ```
 
 ## .vimrc

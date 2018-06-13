@@ -1,12 +1,11 @@
 # Install
 
-
 ## Backup packages
 ```bash
-brew leaves > packages
+brew leaves > ~/dotfiles/brew/packages
 ```
 
 ## Install packages
 ```bash
-cat packages | xargs brew install
+cat ~/dotfiles/brew/packages | xargs brew install
 ```
