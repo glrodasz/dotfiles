@@ -13,7 +13,6 @@ PSequel
 Robo 3T
 Sip
 Sketch
-Skype
 Slack
 Spectacle
 Spotify
