@@ -21,6 +21,6 @@ Steam
 There
 Tomighty
 Tower
-Vanilla
+Bartender 3
 VirtualBox
 Zoom
