@@ -1,4 +1,5 @@
 Spark.app
+Contrast.app
 Lungo.app
 Numbers.app
 Xcode.app
