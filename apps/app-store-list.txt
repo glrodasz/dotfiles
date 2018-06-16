@@ -9,4 +9,5 @@ iStat Menus.app
 Pages.app
 The Unarchiver.app
 Skitch.app
+Slack.app
 Gestimer.app
