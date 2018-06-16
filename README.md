@@ -1,7 +1,7 @@
 # dotfiles
 
 ## Install
-1. Install Chrome, Firefox, Atom, iTerm.
+1. Install Chrome, Firefox, Atom (Run `Atom > Install Shell Commands`), iTerm.
 2. Install Mouse (Logitech Options) drivers.
 3. Install Aerial Screensaver from https://github.com/JohnCoates/Aerial.
 4. Install apps from App Store check app-store-list.txt from ~/dotfiles/apps.
