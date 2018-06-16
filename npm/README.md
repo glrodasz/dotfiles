@@ -16,6 +16,6 @@ wt-cli \
 create-react-app \
 eslint \
 standard \
-prettier
-trash-cli \
+prettier \
+trash-cli
 ```
