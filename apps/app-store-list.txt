@@ -3,12 +3,10 @@ Contrast.app
 Lungo.app
 Numbers.app
 Xcode.app
-iMovie.app
 Fantastical 2.app
 Keynote.app
 iStat Menus.app
 Pages.app
-GarageBand.app
 The Unarchiver.app
 Skitch.app
 Gestimer.app
