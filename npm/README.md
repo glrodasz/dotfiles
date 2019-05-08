@@ -13,9 +13,7 @@ npm-check-updates \
 public-ip-cli \
 internal-ip-cli \
 wt-cli \
-create-react-app \
 eslint \
-standard \
 prettier \
 trash-cli
 ```
