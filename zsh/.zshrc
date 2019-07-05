@@ -30,8 +30,8 @@ alias rm="trash"
 alias sshadd="ssh-add -K ~/.ssh/id_rsa_docmeti ~/.ssh/id_rsa_rioth ~/.ssh/id_rsa_auth0 ~/.ssh/id_rsa_sm ~/.ssh/id_rsa_glrodasz"
 
 alias v='vivaldi'
-alias vu='v up'
-alias vd='v down'
+alias vu='brew services stop mongodb && v up'
+alias vd='v down && brew services start mongodb'
 alias vid='v install-deps'
 alias vo='v open'
 alias vl='v logs'
@@ -83,3 +83,9 @@ autoload -U promptinit; promptinit
 prompt pure
 
 # zprof
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/grodas/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/grodas/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/grodas/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/grodas/Downloads/google-cloud-sdk/completion.zsh.inc'; fi

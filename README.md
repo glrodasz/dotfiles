@@ -24,7 +24,6 @@
 
 ## Backup
 1. Follow the instructions inside each folder.
-2. Save the Documents folder.
-3. Backup the SSH keys.
-4. Backup the .env files.
-5. Backup the MySQL and MongoDB databases.
+2. Backup the SSH keys in LastPass.
+3. Backup the .env files in LastPass.
+4. Backup the MySQL and MongoDB databases.
