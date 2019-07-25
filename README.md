@@ -6,7 +6,7 @@
 3. Install Aerial Screensaver from https://github.com/JohnCoates/Aerial.
 4. Install apps from App Store check app-store-list.txt from ~/dotfiles/apps.
 5. Add SSH keys.
-6. Set git identity with `git config --global user.name "John Doe"` and `git config --global user.email johndoe@example.com` 
+6. Set git identity with `git config --global user.name "Guillermo Rodas"` and `git config --global user.email glrodasz@gmail.com` 
 7. Clone this dotfiles repository.
 8. Install brew and brew package from ~/dotfiles/brew.
 9. Install zsh set it as default shell with `chsh -s /bin/zsh`.
@@ -25,5 +25,5 @@
 ## Backup
 1. Follow the instructions inside each folder.
 2. Backup the SSH keys in LastPass.
-3. Backup the .env files in LastPass.
+3. Backup the .env files in LastPass. `find ~/Code -name .env -not -path */node_modules/**`
 4. Backup the MySQL and MongoDB databases.
