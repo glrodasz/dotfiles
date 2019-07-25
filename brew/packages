@@ -5,6 +5,7 @@ boost-build
 cmake
 composer
 coreutils
+doctl
 git
 git-flow
 gnupg

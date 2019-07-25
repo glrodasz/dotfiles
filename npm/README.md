@@ -12,8 +12,9 @@ npx \
 npm-check-updates \
 public-ip-cli \
 internal-ip-cli \
-wt-cli \
 eslint \
 prettier \
-trash-cli
+trash-cli \ 
+now \
+server \
 ```
