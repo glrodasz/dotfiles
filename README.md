@@ -26,4 +26,3 @@
 1. Follow the instructions inside each folder.
 2. Backup the SSH keys in LastPass.
 3. Backup the .env files in LastPass. `find ~/Code -name .env -not -path */node_modules/**`
-4. Backup the MySQL and MongoDB databases.
