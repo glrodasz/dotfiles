@@ -12,8 +12,6 @@ source $ZSH/oh-my-zsh.sh
 # Alias
 alias gmas="gcm && g fetch upstream && g reset --hard upstream/master && ggpush -f --no-verify"
 
-alias naut="nvm use auth0"
-alias ndef="nvm use default"
 alias npmd="npm run dev"
 alias npms="npm start"
 
@@ -27,16 +25,7 @@ alias bumpa="npm version major"
 alias rmorig="rm -rf **/*.orig"
 alias rm="trash"
 
-alias sshadd="ssh-add -K ~/.ssh/id_rsa_docmeti ~/.ssh/id_rsa_rioth ~/.ssh/id_rsa_auth0 ~/.ssh/id_rsa_sm ~/.ssh/id_rsa_glrodasz"
-
-alias v='vivaldi'
-alias vu='brew services stop mongodb && v up'
-alias vd='v down && brew services start mongodb'
-alias vid='v install-deps'
-alias vo='v open'
-alias vl='v logs'
-alias vb='v bash'
-alias vcls='v down && v cleanup all && v up'
+alias sshadd="ssh-add -K ~/.ssh/id_rsa_rioth"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" --no-use # This loads nvm
@@ -64,17 +53,6 @@ markdown () {
    pandoc $1 | lynx -stdin
 }
 
-# Vivaldi functions
-vr () { v down "$1" && sleep 2 && v up "$1"; }
-
-vivaldi () {
-  if [[ $@ == 'restart' ]]; then
-    command echo "trust me, vivaldi restart is not your friend ;) do 'vivaldi down service' and 'vivaldi up service'";
-  else
-    command vivaldi "$@";
-  fi;
-}
-
 # Fix hub alias
 function git() { hub $@; }
 
@@ -83,9 +61,3 @@ autoload -U promptinit; promptinit
 prompt pure
 
 # zprof
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/grodas/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/grodas/Downloads/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/grodas/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/grodas/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
