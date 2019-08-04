@@ -26,6 +26,7 @@ alias rmorig="rm -rf **/*.orig"
 alias rm="trash"
 
 alias sshadd="ssh-add -K ~/.ssh/id_rsa_rioth"
+alias rundb="run-rs --mongod /usr/local/bin/mongod --keep --dbpath ~/.data/mongodb"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" --no-use # This loads nvm
