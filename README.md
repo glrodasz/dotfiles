@@ -1,26 +1,31 @@
 # dotfiles
 
 ## Install
-1. Install Chrome, VS Code, iTerm
-2. Install Logitech Options (Mouse drivers)
-3. Install Aerial Screensaver from https://github.com/JohnCoates/Aerial
-4. Install apps from App Store
-5. Install `installed-apps.txt` from `~/dotfiles/apps`
-6. Add SSH key and add it to the agent `shh-add -K ~/id_rsa_rioth`
-7. Set Git identity `git config --global user.name "Guillermo Rodas"` and `git config --global user.email glrodasz@gmail.com`
-8. Clone dotfiles repository `git@github.com:glrodasz/dotfiles.git`
-9. Install brew`/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
-10. Install brew package from `~/dotfiles/brew`
-11. Set ZSH shell as default with `chsh -s /bin/zsh`
-12. Install Oh My Zsh `sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"`
-13. Install nvm and then install LTS and lastest version
-14. Install Pure from `npm install --global pure-prompt`
-15. Set ZSH, iTerm, Terminal, Vim config from `~/dotfiles/zsh`, `~/dotfiles/iterm`, `~/dotfiles/terminal` and `~/dotfiles/vim`
-16. Install npm packages from `~/dotfiles/npm`
-17. Install Adobe Illustrator, Photoshop
-18. Configure Macbook options from `~/dotfiles/mac`
-19. Install miniconda3 (Optional).
+
+1. Install Chrome, Visual Studio Code, and iTerm
+2. Install Logitech Options `https://www.logitech.com/en-roeu/product/options`
+3. Install Aerial Screensaver from `https://github.com/JohnCoates/Aerial`
+4. Configure hot cornerns to start screen saver: left-top and left-bottom
+5. Install purchase apps from App Store
+6. Install downloaded apps following `~/dotfiles/apps`
+7. Add SSH key and add it to the agent `shh-add -K ~/id_rsa_rioth`
+8. Set Git identity name `git config --global user.name "Guillermo Rodas"`
+9. Set Git identity email `git config --global user.email glrodasz@gmail.com`
+10. Clone dotfiles repository `git@github.com:glrodasz/dotfiles.git`
+11. Install brew `/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
+12. Install brew packages from `~/dotfiles/brew`
+13. Set zsh shell as default with `chsh -s /bin/zsh`
+14. Install Oh My Zsh `sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"`
+15. Install nvm `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash`
+16. Install LTS and current versions
+17. Add aliases `prev` for LTS and `curr` for current version.
+18. Install npm packages from `~/dotfiles/npm`
+19. Install Pure from `npm install --global pure-prompt`
+20. Set zsh, iTerm, terminal, vim config from `~/dotfiles/zsh`, `~/dotfiles/iterm`, `~/dotfiles/terminal` and `~/dotfiles/vim`
+21. Install Adobe Illustrator, Photoshop `https://www.adobe.com/creativecloud/desktop-app.html`
+22. Configure Macbook options from `~/dotfiles/mac`
 
 ## Backup
+
 1. Follow the instructions inside each folder
 2. Backup the .env files `find ~/Code -name .env -not -path */node_modules/**`
