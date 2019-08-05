@@ -8,7 +8,7 @@
 4. Configure hot cornerns to start screen saver: left-top and left-bottom
 5. Install purchase apps from App Store
 6. Install downloaded apps following `~/dotfiles/apps`
-7. Add SSH key and add it to the agent `shh-add -K ~/id_rsa_rioth`
+7. Add SSH key and add it to the agent `shh-add -K ~/id_rsa`
 8. Set Git identity name `git config --global user.name "Guillermo Rodas"`
 9. Set Git identity email `git config --global user.email glrodasz@gmail.com`
 10. Clone dotfiles repository `git@github.com:glrodasz/dotfiles.git`
