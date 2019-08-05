@@ -25,7 +25,7 @@ alias bumpa="npm version major"
 alias rmorig="rm -rf **/*.orig"
 alias rm="trash"
 
-alias sshadd="ssh-add -K ~/.ssh/id_rsa_rioth"
+alias sshadd="ssh-add -K ~/.ssh/id_rsa"
 alias rundb="run-rs --mongod /usr/local/bin/mongod --keep --dbpath ~/.data/mongodb"
 
 export NVM_DIR="$HOME/.nvm"
