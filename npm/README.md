@@ -16,5 +16,5 @@ eslint \
 prettier \
 trash-cli \ 
 now \
-server \
+server
 ```
