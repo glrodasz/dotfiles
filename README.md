@@ -5,7 +5,7 @@
 1. Install Chrome, Visual Studio Code, and iTerm
 2. Install Logitech Options `https://www.logitech.com/en-roeu/product/options`
 3. Install Aerial Screensaver from `https://github.com/JohnCoates/Aerial`
-4. Configure hot cornerns to start screen saver: left-top and left-bottom
+4. Configure hot cornerns: left-top for **Mision Control** and left-bottom for **Screen Saver**
 5. Install purchase apps from App Store
 6. Install downloaded apps following `~/dotfiles/apps`
 7. Add SSH key and add it to the agent `shh-add -K ~/id_rsa`
