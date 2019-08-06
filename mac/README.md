@@ -13,8 +13,8 @@ launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist
 
 ## Screen saver
 
-- Set 1 minute to start the screensaver
+1. Set **5 minutes** to start the screensaver.
+2. Configure hot cornerns: left-top for **Mision Control** and left-bottom for **Screen Saver**.
 
 ## Lock computer after screen saver
-
-- Set lock inmediatly screen savev starts
+- Set require password after **5 seconds** of sleep or screen saver starts.
