@@ -15,8 +15,10 @@ alias gmas="gcm && g fetch upstream && g reset --hard upstream/master && ggpush 
 alias npmd="npm run dev"
 alias npms="npm start"
 
-alias rmnpmi="rm -rf node_modules && rm -f package-lock.json && npm cache clean --force && npm i"
-alias rmyarn="rm -rf node_modules && rm -f yarn.lock && yarn cache clean && yarn"
+alias rmnpmi="rm -rf node_modules && npm cache clean --force && npm i"
+alias rmnpmif="rm -rf node_modules && rm -f package-lock.json && npm cache clean --force && npm i"
+alias rmyarn="rm -rf node_modules && yarn cache clean && yarn"
+alias rmyarnf="rm -rf node_modules && rm -f yarn.lock && yarn cache clean && yarn"
 
 alias bumpp="npm version patch"
 alias bumpi="npm version minor"
