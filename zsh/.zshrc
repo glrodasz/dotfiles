@@ -55,7 +55,16 @@ markdown () {
 }
 
 # Fix hub alias
-function git() { hub $@; }
+git() { hub $@; }
+
+# Fuzzy branch
+fbr() {
+  git fetch
+  local branches branch
+  branches=$(git branch -a) &&
+  branch=$(echo "$branches" | fzf +s +m -e) &&
+  git checkout $(echo "$branch" | sed "s:.* remotes/origin/::" | sed "s:.* ::")
+}
 
 # Load pure
 autoload -U promptinit; promptinit
