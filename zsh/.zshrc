@@ -29,6 +29,7 @@ alias rm="trash"
 
 alias sshadd="ssh-add -K ~/.ssh/id_rsa"
 alias rundb="run-rs --mongod /usr/local/bin/mongod --keep --dbpath ~/.data/mongodb"
+alias nocors="open --new -a 'Google Chrome' --args --disable-web-security --allow-running-insecure-content --user-data-dir=/tmp/$USER --test-type"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" --no-use # This loads nvm
@@ -73,3 +74,4 @@ autoload -U promptinit; promptinit
 prompt pure
 
 # zprof
+export PATH="/usr/local/opt/ruby/bin:$PATH"
