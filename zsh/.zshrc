@@ -29,6 +29,7 @@ alias rm="trash"
 
 alias sshadd="ssh-add -K ~/.ssh/id_rsa"
 alias rundb="run-rs --mongod /usr/local/bin/mongod --keep --dbpath ~/.data/mongodb"
+alias nocors="open --new -a 'Google Chrome' --args --disable-web-security --allow-running-insecure-content --user-data-dir=/tmp/$USER --test-type"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" --no-use # This loads nvm
@@ -47,6 +48,7 @@ export PATH="$PATH:/usr/local/mongodb/bin"
 export PATH="$PATH:$HOME/miniconda3/bin"
 export PATH="$PATH:`yarn global bin`"
 export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
+export PATH="/usr/local/opt/ruby/bin:$PATH"
 
 # pyenv
 eval "$(pyenv init -)"
@@ -57,7 +59,16 @@ markdown () {
 }
 
 # Fix hub alias
-function git() { hub $@; }
+git() { hub $@; }
+
+# Fuzzy branch
+fbr() {
+  git fetch
+  local branches branch
+  branches=$(git branch -a) &&
+  branch=$(echo "$branches" | fzf +s +m -e) &&
+  git checkout $(echo "$branch" | sed "s:.* remotes/origin/::" | sed "s:.* ::")
+}
 
 # Load pure
 autoload -U promptinit; promptinit
