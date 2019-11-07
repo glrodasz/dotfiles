@@ -16,13 +16,8 @@ alias npmd="npm run dev"
 alias npms="npm start"
 
 alias rmnpmi="rm -rf node_modules && npm cache clean --force && npm i"
-alias rmnpmif="rm -rf node_modules && rm -f package-lock.json && npm cache clean --force && npm i"
 alias rmyarn="rm -rf node_modules && yarn cache clean && yarn"
-alias rmyarnf="rm -rf node_modules && rm -f yarn.lock && yarn cache clean && yarn"
-
-alias bumpp="npm version patch"
-alias bumpi="npm version minor"
-alias bumpa="npm version major"
+alias rmpack="rm -rf node_modules && rm -rf packages/**/node_modules && yarn --force"
 
 alias rmorig="rm -rf **/*.orig"
 alias rm="trash"
