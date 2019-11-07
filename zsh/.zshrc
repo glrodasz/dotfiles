@@ -43,6 +43,7 @@ export PATH="$PATH:/usr/local/mongodb/bin"
 export PATH="$PATH:$HOME/miniconda3/bin"
 export PATH="$PATH:`yarn global bin`"
 export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
+export PATH="/usr/local/opt/ruby/bin:$PATH"
 
 # pyenv
 eval "$(pyenv init -)"
@@ -68,5 +69,10 @@ fbr() {
 autoload -U promptinit; promptinit
 prompt pure
 
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/glrodasz/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/glrodasz/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/glrodasz/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/glrodasz/google-cloud-sdk/completion.zsh.inc'; fi
+
 # zprof
-export PATH="/usr/local/opt/ruby/bin:$PATH"
