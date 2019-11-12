@@ -10,7 +10,9 @@ plugins=(git)
 source $ZSH/oh-my-zsh.sh
 
 # Alias
-alias gmas="gcm && g fetch upstream && g reset --hard upstream/master && ggpush -f --no-verify"
+alias gmasu="gcm && g fetch upstream && g reset --hard upstream/master && ggpush -f --no-verify"
+alias gmaso="gcm && g fetch origin && g reset --hard origin/master"
+alias nux="nvm use wux"
 
 alias npmd="npm run dev"
 alias npms="npm start"
