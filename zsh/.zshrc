@@ -16,6 +16,8 @@ alias nvmx="nvm use 10"
 
 alias npmd="npm run dev"
 alias npms="npm start"
+alias yarnd="yarn run dev"
+alias yarns="yarn start"
 
 alias rmnpmi="rm -rf node_modules && npm cache clean --force && npm i"
 alias rmyarn="rm -rf node_modules && yarn cache clean && yarn"
