@@ -12,8 +12,9 @@ source $ZSH/oh-my-zsh.sh
 # Alias
 alias gmasu="gcm && g fetch upstream && g reset --hard upstream/master && ggpush -f --no-verify"
 alias gmaso="gcm && g fetch origin && g reset --hard origin/master"
-alias nvmx="nvm use 10"
+alias gempty= "g commit --allow-empty -m"
 
+alias nvmx="nvm use 10"
 alias npmd="npm run dev"
 alias npms="npm start"
 alias yarnd="yarn run dev"
