@@ -12,9 +12,11 @@ source $ZSH/oh-my-zsh.sh
 # Alias
 alias gmasu="gcm && g fetch upstream && g reset --hard upstream/master && ggpush -f --no-verify"
 alias gmaso="gcm && g fetch origin && g reset --hard origin/master"
-alias gempty="g commit --allow-empty -m"
+alias gaem="g commit --allow-empty -m"
 
+alias nvmix="nvm use 9"
 alias nvmx="nvm use 10"
+
 alias npmd="npm run dev"
 alias npms="npm start"
 alias yarnd="yarn run dev"
@@ -24,13 +26,17 @@ alias rmnpmi="rm -rf node_modules && npm cache clean --force && npm i"
 alias rmyarn="rm -rf node_modules && yarn cache clean && yarn"
 alias rmpack="rm -rf node_modules && rm -rf packages/**/node_modules && yarn --force"
 
+alias nlog="npm login --registry=https://artifactory.klarna.net/artifactory/api/npm/l-npm-production/"
+alias lpub="yarn lerna publish --canary --cd-version=patch --skip-git --registry=https://artifactory.klarna.net/artifactory/api/npm/l-npm-production/"
+
 alias rmorig="rm -rf **/*.orig"
 alias rm="trash"
+alias cafe="cat /dev/urandom | hexdump | grep \"ca fe\""
 
 alias sshadd="ssh-add -K ~/.ssh/id_rsa"
 alias rundb="run-rs --mongod /usr/local/bin/mongod --keep --dbpath ~/.data/mongodb"
 alias nocors="open --new -a 'Google Chrome' --args --disable-web-security --allow-running-insecure-content --user-data-dir=/tmp/$USER --test-type"
-alias simulator="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app"
+alias simu="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" --no-use # This loads nvm
