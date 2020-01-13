@@ -32,6 +32,7 @@ alias lpub="yarn lerna publish --canary --cd-version=patch --skip-git --registry
 
 alias rmorig="rm -rf **/*.orig"
 alias rm="trash"
+alias cl="clear"
 alias cafe="cat /dev/urandom | hexdump | grep \"ca fe\""
 
 alias sshadd="ssh-add -K ~/.ssh/id_rsa"
@@ -82,6 +83,14 @@ fbr() {
   branches=$(git branch -a) &&
   branch=$(echo "$branches" | fzf +s +m -e) &&
   git checkout $(echo "$branch" | sed "s:.* remotes/origin/::" | sed "s:.* ::")
+}
+
+findport() {
+  sudo lsof -n -i :$1 | egrep "LISTEN|PID"
+}
+
+findproc() {
+  ps -fa | egrep "$1|PID"
 }
 
 # Load pure
