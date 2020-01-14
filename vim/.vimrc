@@ -35,6 +35,4 @@ set backspace=indent,eol,start            " Backspace behaviour
 
 
 "" Key maps
-let mapleader=","                         " Change leader key into comma
-nnoremap <leader><space> :nohlsearch<CR>  " Turn off search highlight
-inoremap jk <esc>                         " Map jk into ESC key
+inoremap jk <esc>l
