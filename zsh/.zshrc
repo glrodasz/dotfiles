@@ -50,23 +50,27 @@ source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 . `brew --prefix`/etc/profile.d/z.sh
 
 # PATH
-export PATH="~/.pyenv/shims:$PATH"
+export PATH="$PATH:`yarn global bin`"
+export PATH="$PATH:$HOME/.pyenv/shims"
 export PATH="$PATH:$HOME/.rvm/bin"
+export PATH="$PATH:$HOME/miniconda3/bin"
 export PATH="$PATH:/usr/local/sbin"
 export PATH="$PATH:/usr/local/mongodb/bin"
-export PATH="$PATH:$HOME/miniconda3/bin"
-export PATH="$PATH:`yarn global bin`"
-export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
-export PATH="/usr/local/opt/ruby/bin:$PATH"
+export PATH="$PATH:/usr/local/opt/mysql@5.7/bin"
+export PATH="$PATH:/usr/local/opt/ruby/bin"
 
-export ANDROID_HOME=$HOME/Library/Android/sdk
-export PATH=$PATH:$ANDROID_HOME/emulator
-export PATH=$PATH:$ANDROID_HOME/tools
-export PATH=$PATH:$ANDROID_HOME/tools/bin
-export PATH=$PATH:$ANDROID_HOME/platform-tools
+# Android PATH
+export ANDROID_HOME="$HOME/Library/Android/sdk"
+export PATH="$PATH:$ANDROID_HOME/emulator"
+export PATH="$PATH:$ANDROID_HOME/tools"
+export PATH="$PATH:$ANDROID_HOME/tools/bin"
+export PATH="$PATH:$ANDROID_HOME/platform-tools"
 
 # pyenv
 eval "$(pyenv init -)"
+
+# direnv
+eval "$(direnv hook $SHELL)"
 
 # Read Markdownn
 markdown () {
@@ -85,10 +89,12 @@ fbr() {
   git checkout $(echo "$branch" | sed "s:.* remotes/origin/::" | sed "s:.* ::")
 }
 
+# Find a process given a port
 findport() {
   sudo lsof -n -i :$1 | egrep "LISTEN|PID"
 }
 
+# Find a process given a name
 findproc() {
   ps -fa | egrep "$1|PID"
 }
