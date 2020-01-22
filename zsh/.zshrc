@@ -10,7 +10,7 @@ plugins=(git)
 source $ZSH/oh-my-zsh.sh
 
 # Alias
-alias gmasu="gcm && g fetch upstream && g reset --hard upstream/master && ggpush -f --no-verify"
+alias gmasu="gcm && g fetch upstream && g reset --hard upstream/master && ggpush -f"
 alias gmaso="gcm && g fetch origin && g reset --hard origin/master"
 alias gaem="g commit --allow-empty -m"
 
