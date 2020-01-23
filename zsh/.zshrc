@@ -70,7 +70,7 @@ export PATH="$PATH:$ANDROID_HOME/platform-tools"
 eval "$(pyenv init -)"
 
 # direnv
-eval "$(direnv hook $SHELL)"
+eval "$(direnv hook $SHELL 2>/dev/null)" || exit 1
 
 # Read Markdownn
 markdown () {
