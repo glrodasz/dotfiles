@@ -36,7 +36,7 @@ alias cl="clear"
 alias cafe="cat /dev/urandom | hexdump | grep \"ca fe\""
 
 alias sshadd="ssh-add -K ~/.ssh/id_rsa"
-alias rundb="run-rs --mongod /usr/local/bin/mongod --keep --dbpath ~/.data/mongodb"
+alias rundb="run-rs --mongod "$(which mongod)" --keep --dbpath ~/.data/mongodb"
 alias nocors="open --new -a 'Google Chrome' --args --disable-web-security --allow-running-insecure-content --user-data-dir=/tmp/$USER --test-type"
 alias simu="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app"
 
