@@ -27,9 +27,6 @@ alias rmyarn="rm -rf node_modules && yarn cache clean && yarn"
 alias rmpack="rm -rf node_modules && rm -rf packages/**/node_modules && yarn --force"
 alias yarncr="yarn clean-repo"
 
-alias nlog="npm login --registry=https://artifactory.klarna.net/artifactory/api/npm/l-npm-production/"
-alias lpub="yarn lerna publish --canary --cd-version=patch --skip-git --registry=https://artifactory.klarna.net/artifactory/api/npm/l-npm-production/"
-
 alias rmorig="rm -rf **/*.orig"
 alias rm="trash"
 alias cl="clear"
