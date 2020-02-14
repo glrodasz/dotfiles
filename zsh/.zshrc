@@ -20,7 +20,7 @@ alias gaem="g commit --allow-empty -m"
 alias nvmix="nvm use 9"
 alias nvmx="nvm use 10"
 
-# NPM/yarn aliases
+# NPM and yarn aliases
 alias npmd="npm run dev"
 alias npms="npm start"
 alias yarnd="yarn run dev"
@@ -31,9 +31,6 @@ alias rmnpmi="rm -rf node_modules && npm cache clean --force && npm i"
 alias rmyarn="rm -rf node_modules && yarn cache clean && yarn"
 alias rmpack="rm -rf node_modules && rm -rf packages/**/node_modules && yarn --force"
 alias yarncr="yarn clean-repo"
-
-alias nlog="npm login --registry=https://artifactory.klarna.net/artifactory/api/npm/l-npm-production/"
-alias lpub="yarn lerna publish --canary --cd-version=patch --skip-git --registry=https://artifactory.klarna.net/artifactory/api/npm/l-npm-production/"
 
 # utils aliases
 alias rmorig="rm -rf **/*.orig"
