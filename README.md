@@ -3,7 +3,7 @@
 ## Install
 
 1. Install **Chrome**, **Visual Studio Code**, **WebStorm** and **iTerm**.
-2. Install Logitech Options `https://www.logitech.com/en-roeu/product/options`.
+2. Install **Logitech Options** `https://www.logitech.com/en-roeu/product/options`.
 3. Install **Aerial Screensaver** from `https://github.com/JohnCoates/Aerial`.
 5. Install **purchased apps** from **App Store**.
 6. Install **downloaded apps** following `~/dotfiles/apps`.
