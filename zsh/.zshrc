@@ -1,12 +1,12 @@
 # zmodload zsh/zprof
 
-# Oh My ZSH path
+# Oh My Zsh path
 export ZSH=$HOME/.oh-my-zsh
 
 # Plugins
 plugins=(git)
 
-# Oh My ZSH load
+# Oh My Zsh load
 source $ZSH/oh-my-zsh.sh
 
 # Git aliases
