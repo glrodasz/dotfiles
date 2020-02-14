@@ -9,18 +9,16 @@ plugins=(git)
 # Oh My ZSH load
 source $ZSH/oh-my-zsh.sh
 
-# Aliases
-
 # Git aliases
 alias gmasu="gcm && g fetch upstream && g reset --hard upstream/master && ggpush -f"
 alias gmaso="gcm && g fetch origin && g reset --hard origin/master"
 alias gaem="g commit --allow-empty -m"
 
-# NVM aliases
+# nvm aliases
 alias nvmix="nvm use 9"
 alias nvmx="nvm use 10"
 
-# NPM and yarn aliases
+# npm and yarn aliases
 alias npmd="npm run dev"
 alias npms="npm start"
 alias yarnd="yarn run dev"
@@ -42,10 +40,10 @@ alias rundb="run-rs --mongod "$(which mongod)" --keep --dbpath ~/.data/mongodb"
 alias nocors="open --new -a 'Google Chrome' --args --disable-web-security --allow-running-insecure-content --user-data-dir=/tmp/$USER --test-type"
 alias simu="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app"
 
-# NVM path
+# nvm path
 export NVM_DIR="$HOME/.nvm"
 
-# NVM load without use (Improves terminal load speed)
+# nvm load without use (Improves terminal load speed)
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" --no-use
 
 # Syntax Highlighting
@@ -54,7 +52,7 @@ source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # Z plugin
 . `brew --prefix`/etc/profile.d/z.sh
 
-# GENERAL PATH
+# General path
 export PATH="$PATH:`yarn global bin`"
 export PATH="$PATH:$HOME/.pyenv/shims"
 export PATH="$PATH:$HOME/.rvm/bin"
@@ -64,7 +62,7 @@ export PATH="$PATH:/usr/local/mongodb/bin"
 export PATH="$PATH:/usr/local/opt/mysql@5.7/bin"
 export PATH="$PATH:/usr/local/opt/ruby/bin"
 
-# ANDROID PATH
+# Android path
 export ANDROID_HOME="$HOME/Library/Android/sdk"
 export PATH="$PATH:$ANDROID_HOME/emulator"
 export PATH="$PATH:$ANDROID_HOME/tools"
@@ -85,7 +83,7 @@ markdown () {
 # Fix hub alias
 git() { hub $@; }
 
-# Fuzzy branch
+# Fuzzy search branch
 fbr() {
   git fetch
   local branches branch
