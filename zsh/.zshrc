@@ -75,11 +75,6 @@ eval "$(pyenv init -)"
 # direnv load
 eval "$(direnv hook $SHELL 2>/dev/null)" || exit 1
 
-# Read markdown
-markdown () {
-   pandoc $1 | lynx -stdin
-}
-
 # Fix hub alias
 git() { hub $@; }
 
