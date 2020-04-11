@@ -1,4 +1,4 @@
-# dotfiles
+# ~dotfiles
 
 ## Install
 
@@ -26,4 +26,4 @@
 ## Backup
 
 1. Follow the instructions inside each folder
-2. Backup the .env files `find ~/Code -name .env -not -path */node_modules/**`
+2. Backup the `.env` files `find ~/Code -name .env -not -path */node_modules/**`
