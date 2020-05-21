@@ -10,8 +10,8 @@
 4. Install **purchased apps** from **App Store**.
 5. Install **downloaded apps** following `~/dotfiles/apps`.
 6. Add **SSH key** and add it to the agent `shh-add -K ~/id_rsa`.
-7. Set Git identity name `git config --global user.name "Guillermo Rodas"`.
-8. Set Git identity email `git config --global user.email glrodasz@gmail.com`.
+7. Set **git name** `git config --global user.name "Guillermo Rodas"`.
+8. Set **git email** `git config --global user.email <email>@gmail.com`.
 9. Clone **dotfiles** repository `git@github.com:glrodasz/dotfiles.git`.
 10. Install **brew** `/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`.
 11. Install **brew packages** from `~/dotfiles/brew`.
