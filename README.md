@@ -1,5 +1,7 @@
 # ~dotfiles
 
+![iterm](iterm.png)
+
 ## Install
 
 1. Install **Chrome**, **Visual Studio Code**, **WebStorm** and **iTerm**.
