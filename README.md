@@ -2,7 +2,7 @@
 
 ![iterm](iterm.png)
 
-## Install
+## ⏰ Install steps in a new machine
 
 1. Install **Chrome**, **Visual Studio Code**, **WebStorm** and **iTerm**.
 2. Install **Logitech Options** `https://www.logitech.com/en-roeu/product/options`.
@@ -25,7 +25,6 @@
 19. Set **zsh**, **iTerm**, **terminal**, **vim** config from `~/dotfiles/zsh`, `~/dotfiles/iterm`, `~/dotfiles/terminal` and `~/dotfiles/vim`
 20. Configure **Macbook** options from `~/dotfiles/mac`
 
-## Backup
-
+## ⏳ Backup for the future
 1. Follow the instructions inside each folder
 2. Backup the `.env` files `find ~/Code -name .env -not -path */node_modules/**`
