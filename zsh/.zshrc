@@ -30,6 +30,10 @@ alias rmyarn="rm -rf node_modules && yarn cache clean && yarn"
 alias rmpack="rm -rf node_modules && rm -rf packages/**/node_modules && yarn --force"
 alias yarncr="yarn clean-repo"
 
+# pyenv aliases
+alias pyg2="pyenv global 2.7.17"
+alias pyg3="pyenv global 3.6.7"
+
 # utils aliases
 alias rmorig="rm -rf **/*.orig"
 alias rm="trash"
@@ -102,9 +106,12 @@ autoload -U promptinit; promptinit
 prompt pure
 
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/glrodasz/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/glrodasz/google-cloud-sdk/path.zsh.inc'; fi
+if [ -f '/Users/$USER/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/$USER/google-cloud-sdk/path.zsh.inc'; fi
 
 # The next line enables shell command completion for gcloud.
-if [ -f '/Users/glrodasz/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/glrodasz/google-cloud-sdk/completion.zsh.inc'; fi
+if [ -f '/Users/$USER/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/$USER/google-cloud-sdk/completion.zsh.inc'; fi
 
 # zprof
+
+# added by travis gem
+[ -f '/Users/$USER/.travis/travis.sh' ] && source '/Users/$USER/.travis/travis.sh'
