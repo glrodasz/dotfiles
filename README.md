@@ -1,29 +1,44 @@
-# dotfiles
+# ~dotfiles
+<img src="iterm.png" alt="iterm" width="600">
 
-## Install
+## ⏰ Install steps in a new machine
 
+### Install Fundamental Apps
 1. Install **Chrome**, **Visual Studio Code**, **WebStorm** and **iTerm**.
-2. Install **Logitech Options** `https://www.logitech.com/en-roeu/product/options`.
-3. Install **Aerial Screensaver** from `https://github.com/JohnCoates/Aerial`.
-4. Install **purchased apps** from **App Store**.
-5. Install **downloaded apps** following `~/dotfiles/apps`.
-6. Add **SSH key** and add it to the agent `shh-add -K ~/id_rsa`.
-7. Set Git identity name `git config --global user.name "Guillermo Rodas"`.
-8. Set Git identity email `git config --global user.email glrodasz@gmail.com`.
-9. Clone **dotfiles** repository `git@github.com:glrodasz/dotfiles.git`.
-10. Install **brew** `/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`.
-11. Install **brew packages** from `~/dotfiles/brew`.
-12. Set **zsh shell** as default with `chsh -s /bin/zsh`.
-13. Install **Oh My Zsh** `sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"`
-14. Install **nvm** `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash`
-15. Install **LTS** and **current** versions
-16. Add aliases `prev` for LTS and `curr` for current version.
-17. Install **npm packages** from `~/dotfiles/npm`
-18. Install **Pure** from `npm install --global pure-prompt`
-19. Set **zsh**, **iTerm**, **terminal**, **vim** config from `~/dotfiles/zsh`, `~/dotfiles/iterm`, `~/dotfiles/terminal` and `~/dotfiles/vim`
-20. Configure **Macbook** options from `~/dotfiles/mac`
+1. Install **Logitech Options** `https://www.logitech.com/en-roeu/product/options`.
+1. Install **Aerial Screensaver** from `https://github.com/JohnCoates/Aerial`.
+1. Install **Purchased Apps** from **App Store**.
+1. Install **Downloaded Apps** following `~/dotfiles/apps`.
 
-## Backup
+### Configure Git
+1. Add **SSH key** and add it to the agent `shh-add -K ~/id_rsa`.
+1. Set **git name** `git config --global user.name "Guillermo Rodas"`.
+1. Set **git email** `git config --global user.email <email>@gmail.com`.
+1. Clone **dotfiles** repository `git@github.com:glrodasz/dotfiles.git`.
 
+### Configure Brew
+1. Install **brew** `/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`.
+1. Install **brew packages** from `~/dotfiles/brew`.
+
+### Configure ZSH
+1. Set **zsh shell** as default with `chsh -s /bin/zsh`.
+1. Install **Oh My Zsh** `sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"`
+
+### Configure Development Environment
+1. Install **nvm** `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash`
+1. Install **LTS** and **current** versions
+1. Add aliases `prev` for LTS and `curr` for current version.
+1. Install **npm packages** from `~/dotfiles/npm`
+
+### Configure Terminal
+1. Install **Pure** from `npm install --global pure-prompt`
+1. Set **zsh**, **iTerm**, **terminal**, **vim** config from `~/dotfiles/zsh`, `~/dotfiles/iterm`, `~/dotfiles/terminal` and `~/dotfiles/vim`
+
+### Configure Extra options
+1. Configure **Macbook** options from `~/dotfiles/mac`
+
+## ⏳ Backup for the future
 1. Follow the instructions inside each folder
-2. Backup the .env files `find ~/Code -name .env -not -path */node_modules/**`
+1. Backup the `.env` files `find ~/Code -name .env -not -path */node_modules/**` in a USB.
+1. Backup the SSH Keys `./ssh` in a USB.
+1. Commit lastest changes in `~/dotfiles` and push them.
