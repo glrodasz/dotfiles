@@ -13,6 +13,8 @@ source $ZSH/oh-my-zsh.sh
 alias gmasu="gcm && g fetch upstream && g reset --hard upstream/master && ggpush -f"
 alias gmaso="gcm && g fetch origin && g reset --hard origin/master"
 alias gaem="g commit --allow-empty -m"
+alias grmum='git rebase -i $(git merge-base HEAD upstream/master)'
+alias grmom='git rebase -i $(git merge-base HEAD origin/master)'
 
 # nvm aliases
 alias nvmix="nvm use 9"
@@ -26,7 +28,7 @@ alias yarns="yarn start"
 
 # node_modules aliases
 alias rmnpmi="rm -rf node_modules && npm cache clean --force && npm i"
-alias rmyarn="rm -rf node_modules && yarn cache clean && yarn"
+alias rmyarn="rm -rf node_modules && yarn cache clean && yarn --force"
 alias rmpack="rm -rf node_modules && rm -rf packages/**/node_modules && yarn --force"
 alias yarncr="yarn clean-repo"
 
