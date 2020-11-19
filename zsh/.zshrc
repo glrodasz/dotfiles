@@ -17,6 +17,7 @@ alias grmum='git rebase -i $(git merge-base HEAD upstream/master)'
 alias grmom='git rebase -i $(git merge-base HEAD origin/master)'
 
 # nvm aliases
+alias nvmu="nvm use"
 alias nvmx="nvm use 10"
 alias nvmy="nvm use 12"
 alias nvmz="nvm use 15"
