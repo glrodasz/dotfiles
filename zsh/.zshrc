@@ -32,7 +32,7 @@ alias yarns="yarn start"
 alias rmnpmi="rm -rf node_modules && npm cache clean --force && npm i"
 alias rmyarn="rm -rf node_modules && yarn cache clean && yarn --force"
 alias rmpack="rm -rf node_modules && rm -rf packages/**/node_modules && yarn --force"
-alias yarncr="yarn clean-repo"
+alias cryarn="yarn clean-repo"
 
 # pyenv aliases
 alias pyg2="pyenv global 2.7.17"
