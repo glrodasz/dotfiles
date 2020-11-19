@@ -17,8 +17,9 @@ alias grmum='git rebase -i $(git merge-base HEAD upstream/master)'
 alias grmom='git rebase -i $(git merge-base HEAD origin/master)'
 
 # nvm aliases
-alias nvmix="nvm use 9"
 alias nvmx="nvm use 10"
+alias nvmy="nvm use 12"
+alias nvmz="nvm use 15"
 
 # npm and yarn aliases
 alias npmd="npm run dev"
@@ -78,21 +79,6 @@ export PATH="$PATH:$ANDROID_HOME/platform-tools"
 # pyenv load
 eval "$(pyenv init -)"
 
-# direnv hook
-_direnv_hook() {
-  trap -- '' SIGINT;
-  eval "$("/usr/local/bin/direnv" export zsh)";
-  trap - SIGINT;
-}
-typeset -ag precmd_functions;
-if [[ -z ${precmd_functions[(r)_direnv_hook]} ]]; then
-  precmd_functions=( _direnv_hook ${precmd_functions[@]} )
-fi
-typeset -ag chpwd_functions;
-if [[ -z ${chpwd_functions[(r)_direnv_hook]} ]]; then
-  chpwd_functions=( _direnv_hook ${chpwd_functions[@]} )
-fi
-
 # Fix hub alias
 git() { hub $@; }
 
@@ -119,13 +105,13 @@ findproc() {
 autoload -U promptinit; promptinit
 prompt pure
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/$USER/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/$USER/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/$USER/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/$USER/google-cloud-sdk/completion.zsh.inc'; fi
-
 # zprof
 
 # added by travis gem
 [ -f '/Users/$USER/.travis/travis.sh' ] && source '/Users/$USER/.travis/travis.sh'
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/glrodasz/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/glrodasz/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/glrodasz/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/glrodasz/google-cloud-sdk/completion.zsh.inc'; fi
