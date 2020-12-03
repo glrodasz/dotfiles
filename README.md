@@ -6,7 +6,7 @@
 ### Install Fundamental Apps
 1. Install **Chrome**, **1Password**, **Visual Studio Code**, **WebStorm** and **iTerm**.
 1. Install **Logitech Options** `https://www.logitech.com/en-roeu/product/options`.
-1. Install **Aerial Screensaver** from `https://github.com/JohnCoates/Aerial`.
+1. Install **Aerial Screensaver** from `https://aerialscreensaver.github.io`.
 1. Install **Purchased Apps** from **App Store**.
 1. Install **Downloaded Apps** following `~/dotfiles/apps`.
 
