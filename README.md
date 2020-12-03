@@ -11,7 +11,7 @@
 1. Install **Downloaded Apps** following `~/dotfiles/apps`.
 
 ### Configure Git
-1. Add **SSH key** and add it to the agent `shh-add -K ~/id_rsa`.
+1. Add **SSH key** and add it to the agent `shh-add -K ~/.ssh/id_rsa`.
 1. Set **git name** `git config --global user.name "Guillermo Rodas"`.
 1. Set **git email** `git config --global user.email <email>@gmail.com`.
 1. Clone **dotfiles** repository `git@github.com:glrodasz/dotfiles.git`.
