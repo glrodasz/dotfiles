@@ -1,5 +1,8 @@
 # Install
 
+## Install Hack font
+1. Search *Hack* font inside `~/Documents/Fonts`
+
 ## Alt key in Terminal
 1. Terminal > Preferences > Profiles > Keyboard.
 2. Uncheck 'Use option as meta key'.
