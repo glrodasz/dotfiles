@@ -23,13 +23,11 @@
 1. Install **brew packages** from `~/dotfiles/brew`.
 
 ### Configure ZSH
-1. Set **zsh shell** as default with `chsh -s /bin/zsh`.
 1. Install **Oh My Zsh** `sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"`
 
 ### Configure Development Environment
-1. Install **nvm** `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash`
+1. Install **nvm** `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash`
 1. Install **LTS** and **current** versions
-1. Add aliases `prev` for LTS and `curr` for current version.
 1. Install **npm packages** from `~/dotfiles/npm`
 
 ### Configure Terminal
