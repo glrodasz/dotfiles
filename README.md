@@ -33,7 +33,7 @@
 
 ### Configure Terminal
 1. Install **Pure** from `npm install -g pure-prompt`
-1. Set **zsh**, **iTerm**, **terminal**, **vim** config from `~/dotfiles/iterm`, `~/dotfiles/terminal` and `~/dotfiles/vim`
+1. Set **iTerm**, **terminal**, **vim** config from `~/dotfiles/iterm`, `~/dotfiles/terminal` and `~/dotfiles/vim`
 
 ### Configure Extra options
 1. Configure **Macbook** options from `~/dotfiles/mac`
