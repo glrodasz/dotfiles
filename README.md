@@ -12,6 +12,7 @@
 1. Install **Downloaded Apps** following `~/dotfiles/apps`.
 
 ### Configure Git
+1. Install **Git** through Xcode Command Line Tools `xcode-select --install`
 1. Add **SSH key** and add it to the agent `ssh-add -K ~/.ssh/id_rsa`.
 1. Set **git name** `git config --global user.name "Guillermo Rodas"`.
 1. Set **git email** `git config --global user.email <email>@gmail.com`.
