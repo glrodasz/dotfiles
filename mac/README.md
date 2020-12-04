@@ -1,7 +1,7 @@
 # Install
 
 ## Install Hack font
-1. Search *Hack* font inside `~/Documents/Fonts`
+1. Search *Hack* font inside `~/Documents/Fonts` and install it.
 
 ## Alt key in Terminal
 1. Terminal > Preferences > Profiles > Keyboard.
