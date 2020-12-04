@@ -5,13 +5,14 @@
 
 ### Install Fundamental Apps
 1. Install **Chrome**, **1Password**, **Visual Studio Code**, **WebStorm** and **iTerm**.
-1. Install **Logitech Options** `https://www.logitech.com/en-roeu/product/options`.
+1. Install **Logitech Options** `https://www.logitech.com/en-us/product/options`.
+1. Install **Camera Settings** `https://support.logi.com/hc/en-us/articles/360049055854`.
 1. Install **Aerial Screensaver** from `https://aerialscreensaver.github.io`.
 1. Install **Purchased Apps** from **App Store**.
 1. Install **Downloaded Apps** following `~/dotfiles/apps`.
 
 ### Configure Git
-1. Add **SSH key** and add it to the agent `shh-add -K ~/.ssh/id_rsa`.
+1. Add **SSH key** and add it to the agent `ssh-add -K ~/.ssh/id_rsa`.
 1. Set **git name** `git config --global user.name "Guillermo Rodas"`.
 1. Set **git email** `git config --global user.email <email>@gmail.com`.
 1. Clone **dotfiles** repository `git@github.com:glrodasz/dotfiles.git`.
