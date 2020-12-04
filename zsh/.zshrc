@@ -1,5 +1,8 @@
 # zmodload zsh/zprof
 
+# Disable Warnings
+ZSH_DISABLE_COMPFIX=true
+
 # Oh My Zsh path
 export ZSH=$HOME/.oh-my-zsh
 
