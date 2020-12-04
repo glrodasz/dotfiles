@@ -24,10 +24,11 @@
 
 ### Configure ZSH
 1. Install **Oh My Zsh** `sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"`
+1. Install ZSH config from https://github.com/glrodasz/dotfiles/tree/master/zsh
 
 ### Configure Development Environment
 1. Install **nvm** `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash`
-1. Install **LTS** and **current** versions
+1. Install **LTS** and **Current** versions, check them in https://nodejs.org/en/download
 1. Install **npm packages** from `~/dotfiles/npm`
 
 ### Configure Terminal
