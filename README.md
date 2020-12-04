@@ -24,16 +24,16 @@
 
 ### Configure ZSH
 1. Install **Oh My Zsh** `sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"`
-1. Install ZSH config from https://github.com/glrodasz/dotfiles/tree/master/zsh
+1. Install **ZSH config** from `~/dotfiles/zsh`
 
 ### Configure Development Environment
 1. Install **nvm** `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash`
-1. Install **LTS** and **Current** versions, check them in https://nodejs.org/en/download
+1. Install **Active LTS** and **Current** versions from https://nodejs.org/en/about/releases (using nvm install)
 1. Install **npm packages** from `~/dotfiles/npm`
 
 ### Configure Terminal
-1. Install **Pure** from `npm install --global pure-prompt`
-1. Set **zsh**, **iTerm**, **terminal**, **vim** config from `~/dotfiles/zsh`, `~/dotfiles/iterm`, `~/dotfiles/terminal` and `~/dotfiles/vim`
+1. Install **Pure** from `npm install -g pure-prompt`
+1. Set **zsh**, **iTerm**, **terminal**, **vim** config from `~/dotfiles/iterm`, `~/dotfiles/terminal` and `~/dotfiles/vim`
 
 ### Configure Extra options
 1. Configure **Macbook** options from `~/dotfiles/mac`
