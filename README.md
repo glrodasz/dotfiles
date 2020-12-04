@@ -17,7 +17,7 @@
 1. Clone **dotfiles** repository `git@github.com:glrodasz/dotfiles.git`.
 
 ### Configure Brew
-1. Install **brew** `/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`.
+1. Install **brew** `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`.
 1. Install **brew packages** from `~/dotfiles/brew`.
 
 ### Configure ZSH
