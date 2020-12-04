@@ -5,11 +5,13 @@
 
 ## Alt key in Terminal
 1. Terminal > Preferences > Profiles > Keyboard.
-2. Uncheck 'Use option as meta key'.
+1. Uncheck 'Use option as meta key'.
+1. Set *Hack* font and 16 font size.
 
 ## Alt Key in iTerm
 1. iTerm Preferences > Profiles, select your profile, then the Keys tab.
 1. Click Load Preset... and choose Natural Text Editing.
+1. Set *Hack* font and 16 font size.
 
 ## Screen saver
 1. Set **5 minutes** to start the screensaver.
