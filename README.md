@@ -40,6 +40,9 @@
 ### Configure Extra options
 1. Configure **Macbook** options from `~/dotfiles/mac`
 
+### For Raspberry Pi OS
+Follow **Configure Git**, **Configure ZSH**, **Configure Development Environment**, and **Configure Terminal** instructions and `~/dotfiles/raspberry` instructions.
+
 ## ⏳ Backup for the future
 1. Follow the instructions inside each folder
 1. Backup the `.env` files `find ~/Code -name .env -not -path */node_modules/**` in a USB.
