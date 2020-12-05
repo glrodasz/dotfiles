@@ -1,13 +1,13 @@
 # zmodload zsh/zprof
 
-# Disable Warnings
+# Disable warnings
 ZSH_DISABLE_COMPFIX=true
 
 # Oh My Zsh path
 export ZSH=$HOME/.oh-my-zsh
 
 # Plugins
-plugins=(git)
+[[ "$(uname -s)" == "Darwin" ]] && plugins=(git) || plugins=(git zsh-z)
 
 # Oh My Zsh load
 source $ZSH/oh-my-zsh.sh
@@ -61,16 +61,13 @@ export NVM_DIR="$HOME/.nvm"
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Z plugin
-. `brew --prefix`/etc/profile.d/z.sh
+[[ "$(uname -s)" == "Darwin" ]] && . `brew --prefix`/etc/profile.d/z.sh
 
 # General path
-export PATH="$PATH:`yarn global bin`"
-export PATH="$PATH:$HOME/.pyenv/shims"
+export PATH="$HOME/.pyenv/bin:$PATH"
 export PATH="$PATH:$HOME/.rvm/bin"
-export PATH="$PATH:$HOME/miniconda3/bin"
 export PATH="$PATH:/usr/local/sbin"
 export PATH="$PATH:/usr/local/mongodb/bin"
-export PATH="$PATH:/usr/local/opt/mysql@5.7/bin"
 export PATH="$PATH:/usr/local/opt/ruby/bin"
 
 # Android path
@@ -106,6 +103,7 @@ findproc() {
 }
 
 # Load pure
+[[ "$(uname -s)" == "Linux" ]] && fpath+=$HOME/.zsh/pure
 autoload -U promptinit; promptinit
 prompt pure
 
