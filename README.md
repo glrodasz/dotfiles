@@ -13,6 +13,7 @@
 
 ### Configure Git
 1. Install **Git** through Xcode Command Line Tools `xcode-select --install`
+1. Add the **SSH Keys** to the `.ssh` folder and update permissions `chmod 400 id_rsa id_rsa.pub`
 1. Add **SSH key** and add it to the agent `ssh-add -K ~/.ssh/id_rsa`.
 1. Set **git name** `git config --global user.name "Guillermo Rodas"`.
 1. Set **git email** `git config --global user.email <email>@gmail.com`.
@@ -23,6 +24,7 @@
 1. Install **brew packages** from `~/dotfiles/brew`.
 
 ### Configure ZSH
+1. (Linux) Install `sudo apt install zsh` and make default zsh shell `chsh -s $(which zsh)`
 1. Install **Oh My Zsh** `sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"`
 1. Install **ZSH config** from `~/dotfiles/zsh`
 
@@ -37,6 +39,9 @@
 
 ### Configure Extra options
 1. Configure **Macbook** options from `~/dotfiles/mac`
+
+### For Raspberry Pi OS
+Follow **Configure Git**, **Configure ZSH**, **Configure Development Environment**, and **Configure Terminal** instructions and `~/dotfiles/raspberry` instructions.
 
 ## ⏳ Backup for the future
 1. Follow the instructions inside each folder
