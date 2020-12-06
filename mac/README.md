@@ -6,7 +6,7 @@
 ## Alt key in Terminal
 1. Terminal > Preferences > Profiles > Keyboard.
 1. Uncheck 'Use option as meta key'.
-1. Set *Hack* font and 16 font size.
+1. Set *Hack* font and 18 font size.
 
 ## Alt Key in iTerm
 1. iTerm Preferences > Profiles, select your profile, then the Keys tab.
