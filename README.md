@@ -40,7 +40,7 @@
 ### Configure Extra options
 1. Configure **Macbook** options from `~/dotfiles/mac`
 
-### For Raspberry Pi OS
+## 🍓 Raspberry Pi OS
 Follow **Configure Git**, **Configure ZSH**, **Configure Development Environment**, and **Configure Terminal** instructions and `~/dotfiles/raspberry` instructions.
 
 ## ⏳ Backup for the future
