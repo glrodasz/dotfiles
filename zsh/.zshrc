@@ -13,16 +13,17 @@ export ZSH=$HOME/.oh-my-zsh
 source $ZSH/oh-my-zsh.sh
 
 # Git aliases
-alias gmasu="gcm && g fetch upstream && g reset --hard upstream/master && ggpush -f"
+alias gmasu="gcm && g fetch upstream && g reset --hard upstream/master && gfp"
 alias gmaso="gcm && g fetch origin && g reset --hard origin/master"
 alias gaem="g commit --allow-empty -m"
 alias grmum='git rebase -i $(git merge-base HEAD upstream/master)'
 alias grmom='git rebase -i $(git merge-base HEAD origin/master)'
+alias grreb='git reset HEAD~1'
 
 # nvm aliases
 alias nvmu="nvm use"
 alias nvmx="nvm use 10"
-alias nvmy="nvm use 12"
+alias nvmy="nvm use 14"
 alias nvmz="nvm use 15"
 
 # npm and yarn aliases
@@ -34,8 +35,6 @@ alias yarns="yarn start"
 # node_modules aliases
 alias rmnpmi="rm -rf node_modules && npm cache clean --force && npm i"
 alias rmyarn="rm -rf node_modules && yarn cache clean && yarn --force"
-alias rmpack="rm -rf node_modules && rm -rf packages/**/node_modules && yarn --force"
-alias cryarn="yarn clean-repo"
 
 # pyenv aliases
 alias pyg2="pyenv global 2.7.17"
@@ -104,6 +103,15 @@ findport() {
 # Find a process given a name
 findproc() {
   ps -fa | egrep "$1|PID"
+}
+
+# Make a release branch
+rbranch() {
+  gcd && 
+  g fetch origin &&
+  g reset --hard origin/develop 
+  branch="release-$(date +%F)" 
+  gco -b $(echo "$branch") $1
 }
 
 # Load pure
