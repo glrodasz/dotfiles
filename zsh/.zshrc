@@ -1,5 +1,8 @@
 # zmodload zsh/zprof
 
+# Prompt Symbol for WSL
+[[ "$(uname -s)" == "Linux" ]] && PURE_PROMPT_SYMBOL=">"
+
 # Disable warnings
 ZSH_DISABLE_COMPFIX=true
 
@@ -7,7 +10,7 @@ ZSH_DISABLE_COMPFIX=true
 export ZSH=$HOME/.oh-my-zsh
 
 # Plugins
-[[ "$(uname -s)" == "Darwin" ]] && plugins=(git) || plugins=(git zsh-z)
+[[ "$(uname -s)" == "Darwin" ]] && plugins=(git) || plugins=(git zsh-z zsh-syntax-highlighting)
 
 # Oh My Zsh load
 source $ZSH/oh-my-zsh.sh
@@ -57,13 +60,14 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" --no-use
 
 # Syntax Highlighting
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+[[ "$(uname -s)" == "Darwin" ]] && source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Z plugin
 [[ "$(uname -s)" == "Darwin" ]] && . `brew --prefix`/etc/profile.d/z.sh
 
 # General path
-export PATH="$HOME/.jpyenv/bin:$PATH"
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
 export PATH="/usr/local/bin:$PATH"
 export PATH="$PATH:$HOME/.rvm/bin"
 export PATH="$PATH:/usr/local/sbin"
@@ -78,13 +82,13 @@ export PATH="$PATH:$ANDROID_HOME/tools/bin"
 export PATH="$PATH:$ANDROID_HOME/platform-tools"
 
 # pyenv load
-eval "$(pyenv init -)"
+eval "$(pyenv init --path)"
 eval "$(pyenv virtualenv-init -)"
 export LDFLAGS="-L/usr/local/opt/zlib/lib -L/usr/local/opt/bzip2/lib"
 export CPPFLAGS="-I/usr/local/opt/zlib/include -I/usr/local/opt/bzip2/include"
 
 # Fix hub alias
-git() { hub $@; }
+# git() { hub $@; }
 
 # Fuzzy search branch
 fbr() {
