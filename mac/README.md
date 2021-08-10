@@ -1,7 +1,7 @@
 # Install
 
-## Install Hack font
-1. Search *Hack* font inside `~/Documents/Fonts` and install it.
+## Install Hack and JetBrains Mono fonts
+1. Search *Hack* and *JetBrains Mono* fonts inside `~/Documents/Fonts` and install it.
 
 ## Alt key in Terminal
 1. Terminal > Preferences > Profiles > Keyboard.
