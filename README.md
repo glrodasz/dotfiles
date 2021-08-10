@@ -24,7 +24,7 @@
 1. Install **brew packages** from `~/dotfiles/brew`.
 
 ### Configure ZSH
-1. (Linux) Install `sudo apt install zsh` and make default zsh shell `chsh -s $(which zsh)`
+1. _Install `sudo apt install zsh` and make default zsh shell `chsh -s $(which zsh)` (Linux)_
 1. Install **Oh My Zsh** `sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"`
 1. Install **ZSH config** from `~/dotfiles/zsh`
 
