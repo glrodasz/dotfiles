@@ -36,7 +36,7 @@
 1. Install **npm packages** from `~/dotfiles/npm`
 
 ### Configure Terminal
-1. Install **Pure** from `npm install -g pure-prompt`
+1. Install **Pure** following [these instructions](https://github.com/sindresorhus/pure#manually)
 1. Set **iTerm**, **terminal**, **vim** config from `~/dotfiles/iterm`, `~/dotfiles/terminal` and `~/dotfiles/vim`
 
 ### Configure Extra options
