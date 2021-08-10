@@ -26,13 +26,13 @@
 ### Configure ZSH
 1. _Install `sudo apt install zsh` and make default zsh shell `chsh -s $(which zsh)` (Linux)_
 1. Install **Oh My Zsh** `sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"`
-1. Install **Zsh Syntax Highlighting** as a [plugin](https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md#oh-my-zsh)
-1. Install **Zsh Z** as a [plugin](https://github.com/agkozak/zsh-z#for-oh-my-zsh-users)
+1. Install **ZSH Syntax Highlighting** as a plugin following [these instructions](https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md#oh-my-zsh)
+1. Install **ZSH Z** as a plugin following [these instructions](https://github.com/agkozak/zsh-z#for-oh-my-zsh-users)
 1. Install **ZSH config** from `~/dotfiles/zsh`
 
 ### Configure Development Environment
-1. Install **nvm** `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash`
-1. Install **Active LTS** and **Current** versions from https://nodejs.org/en/about/releases (using nvm install)
+1. Install **nvm** following [these instructions](https://github.com/nvm-sh/nvm#install--update-script)
+1. Install **Active LTS** `nvm install --lts` and **Current** version `nvm install node`
 1. Install **npm packages** from `~/dotfiles/npm`
 
 ### Configure Terminal
