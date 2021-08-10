@@ -10,7 +10,7 @@ ZSH_DISABLE_COMPFIX=true
 export ZSH=$HOME/.oh-my-zsh
 
 # Plugins
-[[ "$(uname -s)" == "Darwin" ]] && plugins=(git) || plugins=(git zsh-z zsh-syntax-highlighting)
+plugins=(git zsh-z zsh-syntax-highlighting)
 
 # Oh My Zsh load
 source $ZSH/oh-my-zsh.sh
@@ -40,8 +40,8 @@ alias rmnpmi="rm -rf node_modules && npm cache clean --force && npm i"
 alias rmyarn="rm -rf node_modules && yarn cache clean && yarn --force"
 
 # pyenv aliases
-alias pyg2="pyenv global 2.7.17"
-alias pyg3="pyenv global 3.6.7"
+# alias pyg2="pyenv global 2.7.17"
+# alias pyg3="pyenv global 3.6.7"
 
 # utils aliases
 alias rmorig="rm -rf **/*.orig"
@@ -58,9 +58,6 @@ export NVM_DIR="$HOME/.nvm"
 
 # nvm load without use (Improves terminal load speed)
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" --no-use
-
-# Syntax Highlighting
-[[ "$(uname -s)" == "Darwin" ]] && source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Z plugin
 [[ "$(uname -s)" == "Darwin" ]] && . `brew --prefix`/etc/profile.d/z.sh
@@ -82,10 +79,10 @@ export PATH="$PATH:$ANDROID_HOME/tools/bin"
 export PATH="$PATH:$ANDROID_HOME/platform-tools"
 
 # pyenv load
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
-export LDFLAGS="-L/usr/local/opt/zlib/lib -L/usr/local/opt/bzip2/lib"
-export CPPFLAGS="-I/usr/local/opt/zlib/include -I/usr/local/opt/bzip2/include"
+# eval "$(pyenv init -)"
+# eval "$(pyenv virtualenv-init -)"
+# export LDFLAGS="-L/usr/local/opt/zlib/lib -L/usr/local/opt/bzip2/lib"
+# export CPPFLAGS="-I/usr/local/opt/zlib/include -I/usr/local/opt/bzip2/include"
 
 # Fix hub alias
 # git() { hub $@; }
@@ -119,7 +116,7 @@ rbranch() {
 }
 
 # Load pure
-[[ "$(uname -s)" == "Linux" ]] && fpath+=$HOME/.zsh/pure
+fpath+=$HOME/.zsh/pure
 autoload -U promptinit; promptinit
 prompt pure
 

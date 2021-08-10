@@ -26,7 +26,6 @@ mysql@5.7
 php
 postgresql
 pyenv
-python@2
 ruby
 tldr
 tree
