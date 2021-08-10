@@ -1,5 +1,8 @@
 # Install
 
-## iterm2-snazzy
+## Snazzy
 1. Double-click `Snazzy.itermcolors` file.
-2. Go to Preferences > Profiles > Colors > Load Presets…
+1. Go to Preferences > Profiles > Colors > Load Presets…
+
+# Theme
+1. Go to Preferences > Appareance > Theme and choose `Mininal`
