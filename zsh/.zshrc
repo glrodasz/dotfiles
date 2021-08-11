@@ -40,8 +40,8 @@ alias rmnpmi="rm -rf node_modules && npm cache clean --force && npm i"
 alias rmyarn="rm -rf node_modules && yarn cache clean && yarn --force"
 
 # pyenv aliases
-# alias pyg2="pyenv global 2.7.17"
-# alias pyg3="pyenv global 3.6.7"
+alias pyg2="pyenv global 2.7.17"
+alias pyg3="pyenv global 3.9.2"
 
 # utils aliases
 alias rmorig="rm -rf **/*.orig"
@@ -78,15 +78,6 @@ export PATH="$PATH:$ANDROID_HOME/tools"
 export PATH="$PATH:$ANDROID_HOME/tools/bin"
 export PATH="$PATH:$ANDROID_HOME/platform-tools"
 
-# pyenv load
-# eval "$(pyenv init -)"
-# eval "$(pyenv virtualenv-init -)"
-# export LDFLAGS="-L/usr/local/opt/zlib/lib -L/usr/local/opt/bzip2/lib"
-# export CPPFLAGS="-I/usr/local/opt/zlib/include -I/usr/local/opt/bzip2/include"
-
-# Fix hub alias
-# git() { hub $@; }
-
 # Fuzzy search branch
 fbr() {
   git fetch
@@ -106,28 +97,15 @@ findproc() {
   ps -fa | egrep "$1|PID"
 }
 
-# Make a release branch
-rbranch() {
-  gcd && 
-  g fetch origin &&
-  g reset --hard origin/develop 
-  branch="release-$(date +%F)" 
-  gco -b $(echo "$branch") $1
-}
-
 # Load pure
 fpath+=$HOME/.zsh/pure
 autoload -U promptinit; promptinit
 prompt pure
 
-
-# added by travis gem
-[ -f '/Users/$USER/.travis/travis.sh' ] && source '/Users/$USER/.travis/travis.sh'
+# zprof
 
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/$USER/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/$USER/google-cloud-sdk/path.zsh.inc'; fi
+if [ -f '/Users/guillermo.rodas/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/guillermo.rodas/google-cloud-sdk/path.zsh.inc'; fi
 
 # The next line enables shell command completion for gcloud.
-if [ -f '/Users/$USER/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/$USER/google-cloud-sdk/completion.zsh.inc'; fi
-
-# zprof
+if [ -f '/Users/guillermo.rodas/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/guillermo.rodas/google-cloud-sdk/completion.zsh.inc'; fi
