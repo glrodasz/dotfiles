@@ -28,9 +28,9 @@ alias grreb='git reset HEAD~1'
 
 # nvm aliases
 alias nvmu="nvm use"
-alias nvmx="nvm use 10"
-alias nvmy="nvm use 14"
-alias nvmz="nvm use 15"
+alias nvmx="nvm use 14"
+alias nvmy="nvm use 16"
+alias nvmz="nvm use 17"
 
 # npm and yarn aliases
 alias npmd="npm run dev"
@@ -56,6 +56,9 @@ alias sagent="eval `ssh-agent`"
 alias rundb="run-rs --mongod "$(which mongod)" --keep --dbpath ~/.data/mongodb"
 alias nocors="open --new -a 'Google Chrome' --args --disable-web-security --allow-running-insecure-content --user-data-dir=/tmp/$USER --test-type"
 alias simu="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app"
+
+# Temp alias
+alias ycorgi="yarn codegen:gql-types"
 
 # nvm path
 export NVM_DIR="$HOME/.nvm"
