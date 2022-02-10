@@ -6,6 +6,9 @@
 # Disable warnings
 ZSH_DISABLE_COMPFIX=true
 
+# Disable ssh-add warnings
+export APPLE_SSH_ADD_BEHAVIOR=macos
+
 # Oh My Zsh path
 export ZSH=$HOME/.oh-my-zsh
 
