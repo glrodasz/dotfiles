@@ -1,3 +1,5 @@
+# Fig pre block. Keep at the top of this file.
+. "$HOME/.fig/shell/zshrc.pre.zsh"
 # zmodload zsh/zprof
 
 # Prompt Symbol for WSL
@@ -113,3 +115,10 @@ if [ -f '/Users/guillermo.rodas/google-cloud-sdk/path.zsh.inc' ]; then . '/Users
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/guillermo.rodas/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/guillermo.rodas/google-cloud-sdk/completion.zsh.inc'; fi
+
+# Open SSL and Kafka hotfix
+export LDFLAGS="-L/opt/homebrew/opt/openssl/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/openssl/include"
+
+# Fig post block. Keep at the bottom of this file.
+. "$HOME/.fig/shell/zshrc.post.zsh"
