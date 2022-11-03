@@ -49,8 +49,8 @@ alias rmnpmi="rm -rf node_modules && npm cache clean --force && npm i"
 alias rmyarn="rm -rf node_modules && yarn cache clean && yarn --force"
 
 # pyenv aliases
-alias pyg2="pyenv global 2.7.17"
-alias pyg3="pyenv global 3.9.2"
+alias pyg2="pyenv global 2.7.18"
+alias pyg3="pyenv global 3.10.7"
 
 # utils aliases
 alias rmorig="rm -rf **/*.orig"
