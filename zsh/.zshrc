@@ -1,9 +1,13 @@
-# Fig pre block. Keep at the top of this file.
-. "$HOME/.fig/shell/zshrc.pre.zsh"
 # zmodload zsh/zprof
+
+# Fig pre block. Keep at the top of this file.
+# [[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
 
 # Prompt Symbol for WSL
 [[ "$(uname -s)" == "Linux" ]] && PURE_PROMPT_SYMBOL=">"
+
+# Disable auto update for performance
+DISABLE_AUTO_UPDATE="true"
 
 # Disable warnings
 ZSH_DISABLE_COMPFIX=true
@@ -21,18 +25,18 @@ plugins=(git zsh-z zsh-syntax-highlighting)
 source $ZSH/oh-my-zsh.sh
 
 # Git aliases
-alias gmasu="gcm && g fetch upstream && g reset --hard upstream/master && gfp"
-alias gmaso="gcm && g fetch origin && g reset --hard origin/master"
+alias gmasu="gcm && g fetch upstream && g reset --hard upstream/main && gfp"
+alias gmaso="gcm && g fetch origin && g reset --hard origin/main"
 alias gaem="g commit --allow-empty -m"
-alias grmum='git rebase -i $(git merge-base HEAD upstream/master)'
-alias grmom='git rebase -i $(git merge-base HEAD origin/master)'
+alias grmum='git rebase -i $(git merge-base HEAD upstream/main)'
+alias grmom='git rebase -i $(git merge-base HEAD origin/main)'
 alias grreb='git reset HEAD~1'
 
 # nvm aliases
 alias nvmu="nvm use"
-alias nvmx="nvm use 14"
-alias nvmy="nvm use 16"
-alias nvmz="nvm use 17"
+alias nvmx="nvm use 16"
+alias nvmy="nvm use 18"
+alias nvmz="nvm use 19"
 
 # npm and yarn aliases
 alias npmd="npm run dev"
@@ -55,12 +59,17 @@ alias cl="clear"
 alias cafe="cat /dev/urandom | hexdump | grep \"ca fe\""
 alias sshadd="ssh-add -K ~/.ssh/id_rsa"
 alias sagent="eval `ssh-agent`"
-alias rundb="run-rs --mongod "$(which mongod)" --keep --dbpath ~/.data/mongodb"
 alias nocors="open --new -a 'Google Chrome' --args --disable-web-security --allow-running-insecure-content --user-data-dir=/tmp/$USER --test-type"
 alias simu="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app"
 
-# Temp alias
-alias ycorgi="yarn codegen:gql-types"
+# Improve compinit performance
+autoload -Uz compinit
+
+for dump in ~/.zcompdump(N.mh+24); do
+  compinit
+done
+
+compinit -C
 
 # nvm path
 export NVM_DIR="$HOME/.nvm"
@@ -108,20 +117,30 @@ findproc() {
 
 # Load pure
 fpath+=$HOME/.zsh/pure
+
 autoload -U promptinit; promptinit
+
 prompt pure
 
-# zprof
-
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/guillermo.rodas/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/guillermo.rodas/google-cloud-sdk/path.zsh.inc'; fi
+if [ -f "/Users/$USER/google-cloud-sdk/path.zsh.inc" ]; then . "/Users/$USER/google-cloud-sdk/path.zsh.inc"; fi
 
 # The next line enables shell command completion for gcloud.
-if [ -f '/Users/guillermo.rodas/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/guillermo.rodas/google-cloud-sdk/completion.zsh.inc'; fi
+if [ -f "/Users/$USER/google-cloud-sdk/completion.zsh.inc" ]; then . "/Users/$USER/google-cloud-sdk/completion.zsh.inc"; fi
 
 # Open SSL and Kafka hotfix
 export LDFLAGS="-L/opt/homebrew/opt/openssl/lib"
 export CPPFLAGS="-I/opt/homebrew/opt/openssl/include"
 
+# C paths for python libs to access (confluent_kafka)
+export C_INCLUDE_PATH=$C_INCLUDE_PATH:$(brew --prefix)/include
+export LIBRARY_PATH=$LIBRARY_PATH:$(brew --prefix)/lib
+
+# grpcio 
+export GRPC_PYTHON_BUILD_SYSTEM_OPENSSL=1
+export GRPC_PYTHON_BUILD_SYSTEM_ZLIB=1
+
 # Fig post block. Keep at the bottom of this file.
-. "$HOME/.fig/shell/zshrc.post.zsh"
+# [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
+
+# zprof
