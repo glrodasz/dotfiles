@@ -46,6 +46,7 @@ alias yarns="yarn start"
 # node_modules aliases
 alias rmnpmi="rm -rf node_modules && npm cache clean --force && npm i"
 alias rmyarn="rm -rf node_modules && yarn cache clean && yarn --force"
+alias rmmodules="find . -name node_modules -type d -prune -exec rm -rf '{}' +"
 
 # pyenv aliases
 alias pyg2="pyenv global 2.7.18"
@@ -73,7 +74,7 @@ compinit -C
 # nvm path
 export NVM_DIR="$HOME/.nvm"
 
-# nvm load without use (Improves terminal load speed)
+# nvm load without use (improves terminal load speed)
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" --no-use
 
 # Z plugin
