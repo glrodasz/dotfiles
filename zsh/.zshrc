@@ -57,7 +57,7 @@ alias rmorig="rm -rf **/*.orig"
 alias rm="trash"
 alias cl="clear"
 alias cafe="cat /dev/urandom | hexdump | grep \"ca fe\""
-alias sshadd="ssh-add -K ~/.ssh/id_rsa"
+[[ "$(uname -s)" == "Darwin" ]] && alias sshadd="ssh-add -K ~/.ssh/id_rsa" || alias sshadd="ssh-add ~/.ssh/id_rsa" 
 alias sagent="eval `ssh-agent`"
 alias nocors="open --new -a 'Google Chrome' --args --disable-web-security --allow-running-insecure-content --user-data-dir=/tmp/$USER --test-type"
 alias simu="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app"
@@ -130,12 +130,12 @@ if [ -f "/Users/$USER/google-cloud-sdk/path.zsh.inc" ]; then . "/Users/$USER/goo
 if [ -f "/Users/$USER/google-cloud-sdk/completion.zsh.inc" ]; then . "/Users/$USER/google-cloud-sdk/completion.zsh.inc"; fi
 
 # Open SSL and Kafka hotfix
-export LDFLAGS="-L/opt/homebrew/opt/openssl/lib"
-export CPPFLAGS="-I/opt/homebrew/opt/openssl/include"
+[[ "$(uname -s)" == "Darwin" ]] && export LDFLAGS="-L/opt/homebrew/opt/openssl/lib"
+[[ "$(uname -s)" == "Darwin" ]] && export CPPFLAGS="-I/opt/homebrew/opt/openssl/include"
 
 # C paths for python libs to access (confluent_kafka)
-export C_INCLUDE_PATH=$C_INCLUDE_PATH:$(brew --prefix)/include
-export LIBRARY_PATH=$LIBRARY_PATH:$(brew --prefix)/lib
+[[ "$(uname -s)" == "Darwin" ]] && export C_INCLUDE_PATH=$C_INCLUDE_PATH:$(brew --prefix)/include
+[[ "$(uname -s)" == "Darwin" ]] && export LIBRARY_PATH=$LIBRARY_PATH:$(brew --prefix)/lib
 
 # grpcio 
 export GRPC_PYTHON_BUILD_SYSTEM_OPENSSL=1
