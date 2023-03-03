@@ -61,6 +61,7 @@ alias sshadd="ssh-add -K ~/.ssh/id_rsa"
 alias sagent="eval `ssh-agent`"
 alias nocors="open --new -a 'Google Chrome' --args --disable-web-security --allow-running-insecure-content --user-data-dir=/tmp/$USER --test-type"
 alias simu="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app"
+alias mostused='history | awk '\''{print $2}'\'' | sort | uniq -c | sort -nr | head -n 10'
 
 # Improve compinit performance
 autoload -Uz compinit
