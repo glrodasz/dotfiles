@@ -3,7 +3,7 @@
 # zmodload zsh/zprof
 
 # Prompt Symbol for WSL
-[[ "$(uname -s)" == "Linux" ]] && PURE_PROMPT_SYMBOL=">"
+# [[ "$(uname -s)" == "Linux" ]] && PURE_PROMPT_SYMBOL=">"
 
 # Disable auto update for performance
 DISABLE_AUTO_UPDATE="true"
@@ -117,11 +117,11 @@ findproc() {
 }
 
 # Load pure
-fpath+=$HOME/.zsh/pure
+# fpath+=$HOME/.zsh/pure
 
-autoload -U promptinit; promptinit
+# autoload -U promptinit; promptinit
 
-prompt pure
+# prompt pure
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f "/Users/$USER/google-cloud-sdk/path.zsh.inc" ]; then . "/Users/$USER/google-cloud-sdk/path.zsh.inc"; fi
@@ -140,6 +140,9 @@ if [ -f "/Users/$USER/google-cloud-sdk/completion.zsh.inc" ]; then . "/Users/$US
 # grpcio 
 export GRPC_PYTHON_BUILD_SYSTEM_OPENSSL=1
 export GRPC_PYTHON_BUILD_SYSTEM_ZLIB=1
+
+# Load starship
+eval "$(starship init zsh)"
 
 # zprof
 
