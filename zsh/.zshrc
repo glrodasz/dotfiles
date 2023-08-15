@@ -51,6 +51,8 @@ alias rmmodules="find . -name node_modules -type d -prune -exec rm -rf '{}' +"
 # pyenv aliases
 alias pyg2="pyenv global 2.7.18"
 alias pyg3="pyenv global 3.10.7"
+alias python="$(pyenv which python)"
+alias pip="$(pyenv which pip)"
 
 # utils aliases
 alias rmorig="rm -rf **/*.orig"
