@@ -146,6 +146,9 @@ export GRPC_PYTHON_BUILD_SYSTEM_ZLIB=1
 # Load starship
 eval "$(starship init zsh)"
 
+# Load copilot cli
+eval "$(github-copilot-cli alias -- "$0")"
+
 # zprof
 
 # Fig post block. Keep at the bottom of this file.
