@@ -5,8 +5,8 @@
 
 ### Install Fundamental Apps
 1. Install **Chrome**, **1Password**, **Visual Studio Code**, **WebStorm** and **Warp**.
-1. Install **Logitech Options** `https://www.logitech.com/en-us/product/options`.
-1. Install **Camera Settings** `https://support.logi.com/hc/en-us/articles/360049055854`.
+1. Install **Logitech Options+** `https://www.logitech.com/en-us/software/logi-options-plus.html`.
+1. Install **Logitech G Hub** `https://www.logitechg.com/en-us/innovation/g-hub.html`.
 1. Install **Purchased Apps** from **App Store**.
 1. Install **Downloaded Apps** following `~/dotfiles/apps`.
 
@@ -20,10 +20,11 @@
 
 ### Configure Brew
 1. Install **brew** `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`.
+2. Run the commands to make brew available in the path.
 1. Install **brew packages** from `~/dotfiles/brew`.
 
 ### Configure ZSH
-1. _Install `sudo apt install zsh` and make default zsh shell `chsh -s $(which zsh)` (Linux)_
+> **Linux:** _Install `sudo apt install zsh` and make default zsh shell `chsh -s $(which zsh)`
 1. Install **Oh My Zsh** `sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"`
 1. Install **ZSH config** from `~/dotfiles/zsh`
 
