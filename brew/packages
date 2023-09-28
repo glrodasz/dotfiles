@@ -5,6 +5,7 @@ composer
 deno
 erdtree
 flyctl
+fzf
 gh
 httpie
 jq
