@@ -20,13 +20,12 @@
 
 ### Configure Brew
 1. Install **brew** `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`.
+2. Run the commands to make brew available in the path.
 1. Install **brew packages** from `~/dotfiles/brew`.
 
 ### Configure ZSH
-1. _Install `sudo apt install zsh` and make default zsh shell `chsh -s $(which zsh)` (Linux)_
+> **Linux:** _Install `sudo apt install zsh` and make default zsh shell `chsh -s $(which zsh)`
 1. Install **Oh My Zsh** `sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"`
-1. Install **ZSH Syntax Highlighting** as a plugin following [these instructions](https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md#oh-my-zsh)
-1. Install **ZSH Z** as a plugin following [these instructions](https://github.com/agkozak/zsh-z#for-oh-my-zsh-users)
 1. Install **ZSH config** from `~/dotfiles/zsh`
 
 ### Configure Development Environment
