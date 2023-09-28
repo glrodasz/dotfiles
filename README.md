@@ -33,9 +33,11 @@
 1. Install **Active LTS** `nvm install --lts` and **Current** version `nvm install node`
 1. Install **npm packages** from `~/dotfiles/npm`
 
+### Install Hack and JetBrains Mono fonts
+1. Install *Hack* and *JetBrains Mono* fonts from https://www.nerdfonts.com/font-downloads.
+
 ### Configure Terminal
-1. Install **Pure** following [these instructions](https://github.com/sindresorhus/pure#manually)
-1. Set **iTerm**, **terminal**, **vim** config from `~/dotfiles/iterm`, `~/dotfiles/terminal` and `~/dotfiles/vim`
+1. Set **terminal**, **vim** config from `~/dotfiles/terminal` and `~/dotfiles/vim`
 
 ### Configure Extra options
 1. Configure **Macbook** options from `~/dotfiles/mac`
