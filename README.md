@@ -4,7 +4,7 @@
 ## ⏰ Install steps in a new machine
 
 ### Install Fundamental Apps
-1. Install **Chrome**, **1Password**, **Visual Studio Code**, **WebStorm** and **Warp**.
+1. Install **Chrome**, **Arc**, **1Password**, **Visual Studio Code**, **WebStorm** and **Warp**.
 1. Install **Logitech Options+** `https://www.logitech.com/en-us/software/logi-options-plus.html`.
 1. Install **Logitech G Hub** `https://www.logitechg.com/en-us/innovation/g-hub.html`.
 1. Install **Purchased Apps** from **App Store**.
@@ -34,14 +34,19 @@
 1. Install **npm packages** from `~/dotfiles/npm`
 
 ### Install Hack and JetBrains Mono fonts
-1. Install *Hack* and *JetBrains Mono* fonts from https://www.nerdfonts.com/font-downloads.
+1. Install *Hack Nerd Font* and *JetBrainsMono Nerd Font* fonts from https://www.nerdfonts.com/font-downloads.
 
 ### Configure Terminal
 1. Set **terminal**, **vim** config from `~/dotfiles/terminal` and `~/dotfiles/vim`
 
 ### Configure Extra options
 1. Configure **Macbook** options from `~/dotfiles/mac`
-
+### Configure WebStorm
+1. Set the theme to `One Dark theme`
+2. Install the plugin `Atom Material Icons`
+2. Set the Editor > Font to `JetBrainsMono Nerd Font Mono` and size `24`
+3. Set the Editor > Color Scheme > Console Font to `Hack Nerd Font Mono` and size `28`
+4. Set the Appearance & Behaviour > Appearance to font `Inter` and size `18`.
 ## 🍓 Raspberry Pi OS
 Follow **Configure Git**, **Configure ZSH**, **Configure Development Environment**, and **Configure Terminal** instructions and `~/dotfiles/raspberry` instructions.
 
