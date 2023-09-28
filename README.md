@@ -25,8 +25,6 @@
 ### Configure ZSH
 1. _Install `sudo apt install zsh` and make default zsh shell `chsh -s $(which zsh)` (Linux)_
 1. Install **Oh My Zsh** `sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"`
-1. Install **ZSH Syntax Highlighting** as a plugin following [these instructions](https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md#oh-my-zsh)
-1. Install **ZSH Z** as a plugin following [these instructions](https://github.com/agkozak/zsh-z#for-oh-my-zsh-users)
 1. Install **ZSH config** from `~/dotfiles/zsh`
 
 ### Configure Development Environment

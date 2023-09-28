@@ -18,7 +18,7 @@ export APPLE_SSH_ADD_BEHAVIOR=macos
 export ZSH=$HOME/.oh-my-zsh
 
 # Plugins
-plugins=(git zsh-z zsh-syntax-highlighting)
+plugins=(git z)
 
 # Oh My Zsh load
 source $ZSH/oh-my-zsh.sh
@@ -35,7 +35,7 @@ alias grreb='git reset HEAD~1'
 alias nvmu="nvm use"
 alias nvmx="nvm use 16"
 alias nvmy="nvm use 18"
-alias nvmz="nvm use 19"
+alias nvmz="nvm use 20"
 
 # npm and yarn aliases
 alias npmd="npm run dev"
@@ -148,6 +148,8 @@ eval "$(starship init zsh)"
 
 # Load copilot cli
 eval "$(github-copilot-cli alias -- "$0")"
+
+source $HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # zprof
 
