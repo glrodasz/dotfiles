@@ -149,6 +149,7 @@ eval "$(starship init zsh)"
 # Load copilot cli
 eval "$(github-copilot-cli alias -- "$0")"
 
+export HOMEBREW_PREFIX=$(brew config | grep HOMEBREW_PREFIX | awk '{print $2}')
 source $HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # zprof
