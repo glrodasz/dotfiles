@@ -4,11 +4,13 @@
 ## ⏰ Install steps in a new machine
 
 ### Install Fundamental Apps
-1. Install **Chrome**, **Arc**, **1Password**, **Visual Studio Code**, **WebStorm** and **Warp**.
-1. Install **Logitech Options+** `https://www.logitech.com/en-us/software/logi-options-plus.html`.
-1. Install **Logitech G Hub** `https://www.logitechg.com/en-us/innovation/g-hub.html`.
-1. Install **Purchased Apps** from **App Store**.
-1. Install **Downloaded Apps** following `~/dotfiles/apps`.
+1. Install **[Chrome](https://www.google.com/chrome/)**, **[Arc](https://arc.net/)**, **[1Password](https://1password.com/downloads/mac/)** and **[Warp](https://www.warp.dev/)**
+1. Install **Elgato Camera Hub**, **Elgato Control Center** and **Elgato Stream Deck** [here](https://www.elgato.com/us/en/s/downloads)
+1. Install **[Logitech Options+](https://www.logitech.com/en-us/software/logi-options-plus.html)**
+1. Install **[Logitech G Hub](https://www.logitechg.com/en-us/innovation/g-hub.html)**
+1. Install **Purchased Apps** from **App Store**
+1. Install **Downloaded Apps** following `~/dotfiles/apps`
+1. Install **Visual Studio Code** and **WebStorm**
 
 ### Configure Git
 1. Install **Git** through Xcode Command Line Tools `xcode-select --install`
