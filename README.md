@@ -36,7 +36,7 @@
 1. Install **npm packages** from `~/dotfiles/npm`
 
 ### Install Hack and JetBrains Mono fonts
-1. Install *Hack Nerd Font* and *JetBrainsMono Nerd Font* fonts from https://www.nerdfonts.com/font-downloads.
+1. Install **Hack Nerd Font** and **JetBrainsMono Nerd Font** fonts from https://www.nerdfonts.com/font-downloads.
 
 ### Configure Terminal
 1. Set **terminal**, **vim** config from `~/dotfiles/terminal` and `~/dotfiles/vim`
