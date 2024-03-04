@@ -4,7 +4,7 @@
 1. Double-click `Snazzy.itermcolors` file.
 1. Go to Settings > Profiles > Colors > Load Presets…
 
-# Appareance & beahviour
+# Appareance
 1. Settings > Appareance > Theme and choose `Mininal`.
 1. Settings > Profiles > Text > set Font: `Hack Nerd Font Mono` and Size: `28`.
 1. Settings > Profiles > Window, set Transparency: 10 and Blur: 5.
