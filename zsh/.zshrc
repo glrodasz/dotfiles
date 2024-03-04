@@ -91,6 +91,7 @@ export PATH="$PATH:$HOME/.rvm/bin"
 export PATH="$PATH:/usr/local/sbin"
 export PATH="$PATH:/usr/local/mongodb/bin"
 export PATH="$PATH:/usr/local/opt/ruby/bin"
+export PATH="$PATH:$HOME"
 
 # Android path
 export ANDROID_HOME="$HOME/Library/Android/sdk"
@@ -156,3 +157,5 @@ source $HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 
 # Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
+
+[[ -f ~/machine_aliases.zsh ]] && source ~/machine_aliases.zsh
