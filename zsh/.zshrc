@@ -1,27 +1,68 @@
-# Fig pre block. Keep at the top of this file.
+# Performance profiling
+#zmodload zsh/zprof
+
+# Fig pre block
 [[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
-# zmodload zsh/zprof
 
-# Prompt Symbol for WSL
-# [[ "$(uname -s)" == "Linux" ]] && PURE_PROMPT_SYMBOL=">"
+# Essential Configs
+export ZSH="$HOME/.oh-my-zsh"
+export NVM_DIR="$HOME/.nvm"
 
-# Disable auto update for performance
+# Optimized HOMEBREW_PREFIX Setting
+if [[ "$(uname -m)" == "arm64" ]]; then
+    export HOMEBREW_PREFIX="/opt/homebrew"
+else
+    export HOMEBREW_PREFIX="/usr/local"
+fi
+
+# General System Paths
+export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
+
+# Pyenv and RVM Paths
+export PATH="$HOME/.pyenv/bin:$PATH"
+export PATH="$HOME/.rvm/bin:$PATH"
+
+# MongoDB and additional Ruby binaries
+export PATH="$PATH:/usr/local/mongodb/bin:/usr/local/opt/ruby/bin"
+
+# Android SDK Paths
+export ANDROID_HOME="$HOME/Library/Android/sdk"
+export PATH="$PATH:$ANDROID_HOME/emulator:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools"
+
+# Performance and Compatibility Settings
 DISABLE_AUTO_UPDATE="true"
-
-# Disable warnings
 ZSH_DISABLE_COMPFIX=true
+export GRPC_PYTHON_BUILD_SYSTEM_OPENSSL=1
+export GRPC_PYTHON_BUILD_SYSTEM_ZLIB=1
 
-# Disable ssh-add warnings
-export APPLE_SSH_ADD_BEHAVIOR=macos
-
-# Oh My Zsh path
-export ZSH=$HOME/.oh-my-zsh
-
-# Plugins
+# Plugins and source configurations
 plugins=(git z)
-
-# Oh My Zsh load
 source $ZSH/oh-my-zsh.sh
+source $HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# macOS Specific Configurations
+[[ "$(uname -s)" == "Darwin" ]] && {
+  export APPLE_SSH_ADD_BEHAVIOR=macos
+
+  # Open SSL and Kafka hotfix
+  export LDFLAGS="-L/opt/homebrew/opt/openssl/lib"
+  export CPPFLAGS="-I/opt/homebrew/opt/openssl/include"
+  
+  # C paths for python libs to access (confluent_kafka)
+  export C_INCLUDE_PATH=$C_INCLUDE_PATH:$(brew --prefix)/include
+  export LIBRARY_PATH=$LIBRARY_PATH:$(brew --prefix)/lib
+
+  # Z plugin
+  . `brew --prefix`/etc/profile.d/z.sh
+
+  alias sshadd="ssh-add -K ~/.ssh/id_rsa"
+}
+
+# Linux/WSL Specific Configurations
+[[ "$(uname -s)" == "Linux" ]] && {
+  PURE_PROMPT_SYMBOL=">"
+  alias sshadd="ssh-add ~/.ssh/id_rsa"
+}
 
 # Git aliases
 alias gmasu="gcm && g fetch upstream && g reset --hard upstream/main && gfp"
@@ -59,10 +100,7 @@ alias rmorig="rm -rf **/*.orig"
 alias rm="trash"
 alias cl="clear"
 alias cafe="cat /dev/urandom | hexdump | grep \"ca fe\""
-[[ "$(uname -s)" == "Darwin" ]] && alias sshadd="ssh-add -K ~/.ssh/id_rsa" || alias sshadd="ssh-add ~/.ssh/id_rsa" 
 alias sagent="eval `ssh-agent`"
-alias nocors="open --new -a 'Google Chrome' --args --disable-web-security --allow-running-insecure-content --user-data-dir=/tmp/$USER --test-type"
-alias simu="open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app"
 alias mostused='history | awk '\''{print $2}'\'' | sort | uniq -c | sort -nr | head -n 10'
 
 # Improve compinit performance
@@ -74,31 +112,8 @@ done
 
 compinit -C
 
-# nvm path
-export NVM_DIR="$HOME/.nvm"
-
 # nvm load without use (improves terminal load speed)
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" --no-use
-
-# Z plugin
-[[ "$(uname -s)" == "Darwin" ]] && . `brew --prefix`/etc/profile.d/z.sh
-
-# General path
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-export PATH="/usr/local/bin:$PATH"
-export PATH="$PATH:$HOME/.rvm/bin"
-export PATH="$PATH:/usr/local/sbin"
-export PATH="$PATH:/usr/local/mongodb/bin"
-export PATH="$PATH:/usr/local/opt/ruby/bin"
-export PATH="$PATH:$HOME"
-
-# Android path
-export ANDROID_HOME="$HOME/Library/Android/sdk"
-export PATH="$PATH:$ANDROID_HOME/emulator"
-export PATH="$PATH:$ANDROID_HOME/tools"
-export PATH="$PATH:$ANDROID_HOME/tools/bin"
-export PATH="$PATH:$ANDROID_HOME/platform-tools"
 
 # Fuzzy search branch
 fbr() {
@@ -119,30 +134,11 @@ findproc() {
   ps -fa | egrep "$1|PID"
 }
 
-# Load pure
-# fpath+=$HOME/.zsh/pure
-
-# autoload -U promptinit; promptinit
-
-# prompt pure
-
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f "/Users/$USER/google-cloud-sdk/path.zsh.inc" ]; then . "/Users/$USER/google-cloud-sdk/path.zsh.inc"; fi
 
 # The next line enables shell command completion for gcloud.
 if [ -f "/Users/$USER/google-cloud-sdk/completion.zsh.inc" ]; then . "/Users/$USER/google-cloud-sdk/completion.zsh.inc"; fi
-
-# Open SSL and Kafka hotfix
-[[ "$(uname -s)" == "Darwin" ]] && export LDFLAGS="-L/opt/homebrew/opt/openssl/lib"
-[[ "$(uname -s)" == "Darwin" ]] && export CPPFLAGS="-I/opt/homebrew/opt/openssl/include"
-
-# C paths for python libs to access (confluent_kafka)
-[[ "$(uname -s)" == "Darwin" ]] && export C_INCLUDE_PATH=$C_INCLUDE_PATH:$(brew --prefix)/include
-[[ "$(uname -s)" == "Darwin" ]] && export LIBRARY_PATH=$LIBRARY_PATH:$(brew --prefix)/lib
-
-# grpcio 
-export GRPC_PYTHON_BUILD_SYSTEM_OPENSSL=1
-export GRPC_PYTHON_BUILD_SYSTEM_ZLIB=1
 
 # Load starship
 eval "$(starship init zsh)"
@@ -150,12 +146,9 @@ eval "$(starship init zsh)"
 # Load copilot cli
 eval "$(github-copilot-cli alias -- "$0")"
 
-export HOMEBREW_PREFIX=$(brew config | grep HOMEBREW_PREFIX | awk '{print $2}')
-source $HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+[[ -f ~/machine_aliases.zsh ]] && source ~/machine_aliases.zsh
 
-# zprof
-
-# Fig post block. Keep at the bottom of this file.
+# Fig post block.
 [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
 
-[[ -f ~/machine_aliases.zsh ]] && source ~/machine_aliases.zsh
+#zprof
