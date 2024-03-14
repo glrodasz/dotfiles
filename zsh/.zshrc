@@ -1,9 +1,6 @@
 # Performance profiling
 #zmodload zsh/zprof
 
-# Fig pre block
-[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
-
 # Essential Configs
 export ZSH="$HOME/.oh-my-zsh"
 export NVM_DIR="$HOME/.nvm"
@@ -147,8 +144,5 @@ eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
 [[ -f ~/machine_aliases.zsh ]] && source ~/machine_aliases.zsh
-
-# Fig post block.
-[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
 
 #zprof
