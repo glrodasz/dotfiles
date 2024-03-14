@@ -34,6 +34,7 @@ DISABLE_AUTO_UPDATE="true"
 ZSH_DISABLE_COMPFIX=true
 export GRPC_PYTHON_BUILD_SYSTEM_OPENSSL=1
 export GRPC_PYTHON_BUILD_SYSTEM_ZLIB=1
+export VIRTUAL_ENV_DISABLE_PROMPT=1
 
 # Plugins and source configurations
 plugins=(git z)
@@ -90,10 +91,8 @@ alias rmyarn="rm -rf node_modules && yarn cache clean && yarn --force"
 alias rmmodules="find . -name node_modules -type d -prune -exec rm -rf '{}' +"
 
 # pyenv aliases
-alias pyg2="pyenv global 2.7.18"
-alias pyg3="pyenv global 3.10.7"
-alias python="$(pyenv which python)"
-alias pip="$(pyenv which pip)"
+alias pyg2="pyenv global 2"
+alias pyg3="pyenv global 3"
 
 # utils aliases
 alias rmorig="rm -rf **/*.orig"
@@ -143,8 +142,9 @@ if [ -f "/Users/$USER/google-cloud-sdk/completion.zsh.inc" ]; then . "/Users/$US
 # Load starship
 eval "$(starship init zsh)"
 
-# Load copilot cli
-eval "$(github-copilot-cli alias -- "$0")"
+# Load pyenv & pyenv-virtualenv 
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
 
 [[ -f ~/machine_aliases.zsh ]] && source ~/machine_aliases.zsh
 
