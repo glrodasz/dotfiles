@@ -12,3 +12,6 @@
 ## Alt key in Terminal
 1. Terminal > Preferences > Profiles > Keyboard.
 1. Uncheck `Use option as meta key`.
+
+# Remove "Last login" message
+1. Create a file called `~/.hushlogin` with no content.
