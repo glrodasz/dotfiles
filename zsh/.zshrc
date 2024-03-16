@@ -63,15 +63,9 @@ source $HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 }
 
 # Git aliases
-alias gmasu="gcm && g fetch upstream && g reset --hard upstream/main && gfp"
-alias gmaso="gcm && g fetch origin && g reset --hard origin/main"
 alias gaem="g commit --allow-empty -m"
-alias grmum='git rebase -i $(git merge-base HEAD upstream/main)'
-alias grmom='git rebase -i $(git merge-base HEAD origin/main)'
-alias grreb='git reset HEAD~1'
 
 # nvm aliases
-alias nvmu="nvm use"
 alias nvmx="nvm use 16"
 alias nvmy="nvm use 18"
 alias nvmz="nvm use 20"
@@ -79,7 +73,7 @@ alias nvmz="nvm use 20"
 # npm and yarn aliases
 alias npmd="npm run dev"
 alias npms="npm start"
-alias yarnd="yarn run dev"
+alias yarnd="yarn dev"
 alias yarns="yarn start"
 
 # node_modules aliases
@@ -88,8 +82,8 @@ alias rmyarn="rm -rf node_modules && yarn cache clean && yarn --force"
 alias rmmodules="find . -name node_modules -type d -prune -exec rm -rf '{}' +"
 
 # pyenv aliases
-alias pyg2="pyenv global 2"
-alias pyg3="pyenv global 3"
+alias py2="pyenv global 2"
+alias py3="pyenv global 3"
 
 # utils aliases
 alias rmorig="rm -rf **/*.orig"

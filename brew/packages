@@ -16,7 +16,7 @@ node
 oven-sh/bun/bun
 planetscale/tap/pscale
 postgresql@14
-pyenv
+pyenv-virtualenv
 starship
 tldr
 tree
