@@ -18,6 +18,7 @@ export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
 # Pyenv and RVM Paths
 export PATH="$HOME/.pyenv/bin:$PATH"
 export PATH="$HOME/.rvm/bin:$PATH"
+export PATH="$PATH:$HOME/.local/bin"
 
 # MongoDB and additional Ruby binaries
 export PATH="$PATH:/usr/local/mongodb/bin:/usr/local/opt/ruby/bin"
@@ -34,7 +35,7 @@ export GRPC_PYTHON_BUILD_SYSTEM_ZLIB=1
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 
 # Plugins and source configurations
-plugins=(git z)
+plugins=(git z poetry)
 source $ZSH/oh-my-zsh.sh
 source $HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
@@ -140,3 +141,4 @@ eval "$(pyenv virtualenv-init -)"
 [[ -f ~/machine_aliases.zsh ]] && source ~/machine_aliases.zsh
 
 #zprof
+
