@@ -12,20 +12,17 @@ else
     export HOMEBREW_PREFIX="/usr/local"
 fi
 
-# General System Paths
-export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
+# General System Paths including $HOME/.local/bin for user-specific scripts and tools
+export PATH="/usr/local/bin:/usr/local/sbin:$HOME/.local/bin:$PATH"
 
-# Pyenv and RVM Paths
+# Python-related Paths (Pyenv)
 export PATH="$HOME/.pyenv/bin:$PATH"
-export PATH="$HOME/.rvm/bin:$PATH"
-export PATH="$PATH:$HOME/.local/bin"
 
-# MongoDB and additional Ruby binaries
-export PATH="$PATH:/usr/local/mongodb/bin:/usr/local/opt/ruby/bin"
+# Ruby-related Paths (RVM and additional Ruby binaries)
+export PATH="$HOME/.rvm/bin:/usr/local/opt/ruby/bin:$PATH"
 
-# Android SDK Paths
-export ANDROID_HOME="$HOME/Library/Android/sdk"
-export PATH="$PATH:$ANDROID_HOME/emulator:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools"
+# MongoDB path
+export PATH="$PATH:/usr/local/mongodb/bin"
 
 # Performance and Compatibility Settings
 DISABLE_AUTO_UPDATE="true"
@@ -141,4 +138,3 @@ eval "$(pyenv virtualenv-init -)"
 [[ -f ~/machine_aliases.zsh ]] && source ~/machine_aliases.zsh
 
 #zprof
-
