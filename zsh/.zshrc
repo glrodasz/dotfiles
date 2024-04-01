@@ -122,6 +122,12 @@ findproc() {
   ps -fa | egrep "$1|PID"
 }
 
+# Get a lucky message 
+lucky() {
+    local cow=$(cowsay -l | tail -n +2 | tr ' ' '\n' | shuf -n 1)
+    fortune | cowsay -f $cow | lolcat --seed 0 --spread 1.0
+}
+
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f "/Users/$USER/google-cloud-sdk/path.zsh.inc" ]; then . "/Users/$USER/google-cloud-sdk/path.zsh.inc"; fi
 
