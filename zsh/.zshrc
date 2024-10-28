@@ -68,8 +68,8 @@ alias gaem="g commit --allow-empty -m"
 
 # nvm aliases
 alias nvmx="nvm use 16"
-alias nvmy="nvm use 18"
-alias nvmz="nvm use 20"
+alias nvmy="nvm use 20"
+alias nvmz="nvm use 22"
 
 # npm and yarn aliases
 alias npmd="npm run dev"
@@ -151,4 +151,5 @@ eval "$(pyenv virtualenv-init -)"
 
 # Amazon Q post block. Keep at the bottom of this file.
 [[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh"
+
 #zprof
