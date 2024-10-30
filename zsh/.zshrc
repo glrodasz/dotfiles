@@ -71,11 +71,13 @@ alias nvmx="nvm use 16"
 alias nvmy="nvm use 20"
 alias nvmz="nvm use 22"
 
-# npm and yarn aliases
+# npm, yarn and deno aliases
 alias npmd="npm run dev"
 alias npms="npm start"
 alias yarnd="yarn dev"
 alias yarns="yarn start"
+alias denod="deno run dev"
+alias denos="deno run start"
 
 # node_modules aliases
 alias rmnpmi="rm -rf node_modules && npm cache clean --force && npm i"
