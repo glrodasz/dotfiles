@@ -1,7 +1,7 @@
 # Performance profiling
 #zmodload zsh/zprof
 
-# Q pre block. Keep at the top of this file.
+# Amazon Q pre block. Keep at the top of this file.
 [[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh"
 
 # Essential Configs
@@ -108,6 +108,9 @@ compinit -C
 # nvm load without use (improves terminal load speed)
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" --no-use
 
+# Load deno
+. "/Users/$USER/.deno/env"
+
 # Fuzzy search branch
 fbr() {
   git fetch
@@ -148,7 +151,7 @@ eval "$(pyenv virtualenv-init -)"
 
 [[ -f ~/machine_aliases.zsh ]] && source ~/machine_aliases.zsh
 
-# Q post block. Keep at the bottom of this file.
+# Amazon Q post block. Keep at the bottom of this file.
 [[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh"
 
 #zprof
