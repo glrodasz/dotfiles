@@ -3,7 +3,6 @@ blueutil
 clojure/tools/clojure
 composer
 cowsay
-deno
 erdtree
 flyctl
 fortune
@@ -17,7 +16,6 @@ mysql-client
 neofetch
 node
 oven-sh/bun/bun
-planetscale/tap/pscale
 postgresql@14
 pyenv-virtualenv
 starship
