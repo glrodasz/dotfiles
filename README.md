@@ -4,7 +4,7 @@
 ## ⏰ Install steps in a new machine
 
 ### Install Fundamental Apps
-1. Install **[Chrome](https://www.google.com/chrome/)**, **[1Password](https://1password.com/downloads/mac/)**, and **[Warp](https://www.warp.dev/)**
+1. Install **[Chrome](https://www.google.com/chrome/)**, **[1Password](https://1password.com/downloads/mac/)**, and **[iTerm](https://iterm2.com/)**
 1. Install **Elgato Camera Hub**, **Elgato Control Center**, **Elgato Stream Deck**, and **Game Capture HD** from [here](https://www.elgato.com/us/en/s/downloads)
 1. Install **[Logitech Options+](https://www.logitech.com/en-us/software/logi-options-plus.html)**
 1. Install **[Logitech G Hub](https://www.logitechg.com/en-us/innovation/g-hub.html)**
