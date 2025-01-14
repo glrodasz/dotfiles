@@ -14,8 +14,8 @@
 
 ### Configure Git
 > (If not available) Install **Git** through Xcode Command Line Tools `xcode-select --install`
-1. Add the **SSH Keys** to the `.ssh` folder and update permissions `chmod 400 id_rsa id_rsa.pub`
-1. Add **SSH key** and add it to the agent `ssh-add -K ~/.ssh/id_rsa`.
+1. Add the **SSH Keys** from 1Password to the `.ssh` folder and update permissions `chmod 400 id_{algorithm}`
+1. Add **SSH key** and add it to the agent `ssh-add -K ~/.ssh/id_{algorithm}`.
 1. Set **git name** `git config --global user.name "Guillermo Rodas"`.
 1. Set **git email** `git config --global user.email "<email>@gmail.com"`.
 1. Clone **dotfiles** repository `git@github.com:glrodasz/dotfiles.git`.
