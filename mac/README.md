@@ -1,7 +1,11 @@
 # Configure
 
-## Screen saver
-1. Set **5 minutes** to start the screensaver.
+## Screen Saver
+1. Choose Shuffle Aerials > Shuffle All
+2. Shuffle All > Continusly
 
-## Lock computer after screen saver
-1. Set require password after **5 seconds** of sleep or screen saver starts.
+## Lock Screen
+* Start Screen Saver when inactive: **For 1 minute**
+* Turn display off on battery when inactive: **For 2 minutes**
+* Turn display off on power adapter when inactive: **For 5 minutes**
+* Require password after screen saver begins or display is turned off: **After 1 minute**

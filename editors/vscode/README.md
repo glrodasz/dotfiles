@@ -10,4 +10,4 @@ Plugins and settings are synced via GitHub account:
 1. Make sure the `Window: Zoom Level` is 0.
 
 ## Theme
-1. CMD + Shit + P, type `theme`, choose `One Dark Pro Darker`
+1. CMD + Shit + P, type `theme`, choose `Catppuccin Frapé`
