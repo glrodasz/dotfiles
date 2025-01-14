@@ -27,7 +27,7 @@
 
 ### Configure Brew
 1. Install **brew** `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`.
-2. Run the commands to make brew available in the path.
+1. Run the commands to make brew available in the path.
 1. Install **brew packages** from `~/dotfiles/brew`.
 
 ### Configure Development Environment
@@ -40,15 +40,16 @@
 
 ### Configure Terminals and Vim
 1. Set **terminals** config from `~/dotfiles/terminal/*`
-2.  Set **vim** config from `~/dotfiles/vim`
-
-### Configure Extra options
-1. Configure **Macbook** options from `~/dotfiles/mac`
+1. Set **vim** config from `~/dotfiles/vim`
 
 ### Configure Editors
 1. Configure **Visual Studio Code** from `~/dotfiles/editors/vscode`
-2. Configure **Cursor** from `~/dotfiles/editors/cursor`
-2. Configure **WebStorm** from `~/dotfiles/editors/webstorm`
+1. Configure **Cursor** from `~/dotfiles/editors/cursor`
+1. Configure **WebStorm** from `~/dotfiles/editors/webstorm`
+
+### Configure Extra options
+1. Configure **Macbook** options from `~/dotfiles/mac`
+1. Configure extra apps here: https://share.lazyapp.io/do-not-forget-to-backup-09d35f99-43f1-5f90-9bb3-708e1b1d853c
 
 ## 🍓 Raspberry Pi OS
 Follow **Configure Git**, **Configure ZSH**, **Configure Development Environment**, and **Configure Terminal** instructions and `~/dotfiles/raspberry` instructions.
