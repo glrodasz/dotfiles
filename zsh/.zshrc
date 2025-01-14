@@ -1,7 +1,8 @@
-# Amazon Q pre block. Keep at the top of this file.
-[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh"
 # Performance profiling
 #zmodload zsh/zprof
+
+# Amazon Q pre block. Keep at the top of this file.
+[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh"
 
 # Essential Configs
 export ZSH="$HOME/.oh-my-zsh"
@@ -66,6 +67,7 @@ source $HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 alias gaem="g commit --allow-empty -m"
 
 # nvm aliases
+alias nvmu="nvm use"
 alias nvmx="nvm use 16"
 alias nvmy="nvm use 20"
 alias nvmz="nvm use 22"
@@ -150,7 +152,7 @@ eval "$(pyenv virtualenv-init -)"
 
 [[ -f ~/machine_aliases.zsh ]] && source ~/machine_aliases.zsh
 
-#zprof
-
 # Amazon Q post block. Keep at the bottom of this file.
 [[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh"
+
+#zprof
