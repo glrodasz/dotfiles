@@ -1,9 +1,13 @@
+aws-elasticbeanstalk
+awscli
 bat
 blueutil
 circleci
 clojure/tools/clojure
+cocoapods
 composer
 cowsay
+deno
 erdtree
 flyctl
 fortune
@@ -33,6 +37,7 @@ starship
 terraform
 tldr
 tree
+watchman
 wget
 wrk
 yarn
