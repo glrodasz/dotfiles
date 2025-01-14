@@ -47,6 +47,7 @@
 
 ### Configure Editors
 1. Configure **Visual Studio Code** from `~/dotfiles/editors/vscode`
+2. Configure **Cursor** from `~/dotfiles/editors/cursor`
 2. Configure **WebStorm** from `~/dotfiles/editors/webstorm`
 
 ## 🍓 Raspberry Pi OS
