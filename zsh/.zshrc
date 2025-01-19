@@ -1,36 +1,20 @@
-# Performance profiling
-#zmodload zsh/zprof
+#====================
+# Initialization
+#====================
+
+# How to profile zsh
+# for i in $(seq 1 10); do /usr/bin/time zsh -i -c exit; done
+
+source ~/.zsh-defer/zsh-defer.plugin.zsh
 
 # Amazon Q pre block. Keep at the top of this file.
 [[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh"
 
-# Essential Configs
+#====================
+# Core Environment & Prompt
+#====================
 export ZSH="$HOME/.oh-my-zsh"
 export NVM_DIR="$HOME/.nvm"
-
-# Optimized HOMEBREW_PREFIX Setting
-if [[ "$(uname -m)" == "arm64" ]]; then
-    export HOMEBREW_PREFIX="/opt/homebrew"
-else
-    export HOMEBREW_PREFIX="/usr/local"
-fi
-
-# General System Paths including $HOME/.local/bin for user-specific scripts and tools
-export PATH="/usr/local/bin:/usr/local/sbin:$HOME/.local/bin:$PATH"
-
-# Python-related Paths (Pyenv)
-export PATH="$HOME/.pyenv/bin:$PATH"
-
-# Ruby-related Paths (RVM and additional Ruby binaries)
-export PATH="$HOME/.rvm/bin:/usr/local/opt/ruby/bin:$PATH"
-
-# MongoDB path
-export PATH="$PATH:/usr/local/mongodb/bin"
-
-# Android SDK path
-export ANDROID_HOME=$HOME/Library/Android/sdk
-export PATH=$PATH:$ANDROID_HOME/emulator
-export PATH=$PATH:$ANDROID_HOME/platform-tools
 
 # Performance and Compatibility Settings
 DISABLE_AUTO_UPDATE="true"
@@ -39,45 +23,91 @@ export GRPC_PYTHON_BUILD_SYSTEM_OPENSSL=1
 export GRPC_PYTHON_BUILD_SYSTEM_ZLIB=1
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 
-# Plugins and source configurations
-plugins=(git z poetry evalcache)
-source $ZSH/oh-my-zsh.sh
-source $HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# Prompt initialization (needs to be immediate)
+eval "$(starship init zsh)"
 
-# macOS Specific Configurations
+#====================
+# Critical Path Configuration
+#====================
+# System Paths (including $HOME/.local/bin for user-specific scripts) (needed immediately)
+export PATH="/usr/local/bin:/usr/local/sbin:$HOME/.local/bin:$PATH"
+
+# Python-related Paths (Pyenv)
+zsh-defer export PATH="$HOME/.pyenv/bin:$PATH"
+
+# Ruby-related Paths (RVM and additional Ruby binaries)
+zsh-defer export PATH="$HOME/.rvm/bin:/usr/local/opt/ruby/bin:$PATH"
+
+# MongoDB path
+zsh-defer export PATH="$PATH:/usr/local/mongodb/bin"
+
+# Android SDK path
+zsh-defer export ANDROID_HOME=$HOME/Library/Android/sdk
+zsh-defer export PATH="$PATH:$ANDROID_HOME/emulator"
+zsh-defer export PATH="$PATH:$ANDROID_HOME/platform-tools"
+
+#====================
+# OS-Specific Config
+#====================
+# Optimized HOMEBREW_PREFIX Setting | checks for ARM vs Intel
+if [[ "$(uname -m)" == "arm64" ]]; then
+    export HOMEBREW_PREFIX="/opt/homebrew"
+else
+    export HOMEBREW_PREFIX="/usr/local"
+fi
+
+# macOS
 [[ "$(uname -s)" == "Darwin" ]] && {
-  export APPLE_SSH_ADD_BEHAVIOR=macos
+    export APPLE_SSH_ADD_BEHAVIOR=macos
 
-  # Open SSL and Kafka hotfix
-  export LDFLAGS="-L/opt/homebrew/opt/openssl/lib"
-  export CPPFLAGS="-I/opt/homebrew/opt/openssl/include"
-  
-  # C paths for python libs to access (confluent_kafka)
-  export C_INCLUDE_PATH=$C_INCLUDE_PATH:$HOMEBREW_PREFIX/include
-  export LIBRARY_PATH=$LIBRARY_PATH:$HOMEBREW_PREFIX/lib
+    # Open SSL and Kafka hotfix
+    zsh-defer export LDFLAGS="-L/opt/homebrew/opt/openssl/lib"
+    zsh-defer export CPPFLAGS="-I/opt/homebrew/opt/openssl/include"
 
-  # Z plugin
-  . $HOMEBREW_PREFIX/etc/profile.d/z.sh
+    # C paths for python libs to access (confluent_kafka)
+    zsh-defer export C_INCLUDE_PATH=$C_INCLUDE_PATH:$HOMEBREW_PREFIX/include
+    zsh-defer export LIBRARY_PATH=$LIBRARY_PATH:$HOMEBREW_PREFIX/lib
 
-  alias sshadd="ssh-add -K ~/.ssh/id_rsa"
+    # Z plugin
+    zsh-defer . $HOMEBREW_PREFIX/etc/profile.d/z.sh
+    
+    # SSH Agent alias (Including loading resident keys from FIDO authenticator)
+    alias sshadd="ssh-add -K ~/.ssh/id_rsa"
 }
 
-# Linux/WSL Specific Configurations
+# Linux/WSL
 [[ "$(uname -s)" == "Linux" ]] && {
-  PURE_PROMPT_SYMBOL=">"
-  alias sshadd="ssh-add ~/.ssh/id_rsa"
+    PURE_PROMPT_SYMBOL=">"
+    
+    # SSH Agent alias
+    alias sshadd="ssh-add ~/.ssh/id_rsa"
 }
 
-# Git aliases
+#====================
+# Plugins & Shell
+#====================
+# Essential plugins and evalcache for immediate eval commands
+plugins=(git evalcache)
+source $ZSH/oh-my-zsh.sh
+
+# Defer additional plugins
+zsh-defer source ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/z/z.plugin.zsh
+zsh-defer source ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/poetry/poetry.plugin.zsh
+zsh-defer source $HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+#====================
+# Aliases
+#====================
+# Git
 alias gaem="g commit --allow-empty -m"
 
-# nvm aliases
+# Node Version Manager
 alias nvmu="nvm use"
 alias nvmx="nvm use 16"
 alias nvmy="nvm use 20"
 alias nvmz="nvm use 22"
 
-# npm, yarn and deno aliases
+# Package Managers
 alias npmd="npm run dev"
 alias npms="npm start"
 alias yarnd="yarn dev"
@@ -85,16 +115,16 @@ alias yarns="yarn start"
 alias denod="deno run dev"
 alias denos="deno run start"
 
-# node_modules aliases
+# Cleanup
 alias rmnpmi="rm -rf node_modules && npm cache clean --force && npm i"
 alias rmyarn="rm -rf node_modules && yarn cache clean && yarn --force"
 alias rmmodules="find . -name node_modules -type d -prune -exec rm -rf '{}' +"
 
-# pyenv aliases
+# Python
 alias py2="pyenv global 2"
 alias py3="pyenv global 3"
 
-# utils aliases
+# System Utils
 alias rmorig="rm -rf **/*.orig"
 alias rm="trash"
 alias cl="clear"
@@ -102,66 +132,57 @@ alias cafe="cat /dev/urandom | hexdump | grep \"ca fe\""
 alias sagent="eval `ssh-agent`"
 alias mostused='history | awk '\''{print $2}'\'' | sort | uniq -c | sort -nr | head -n 10'
 
-# Improve compinit performance
-autoload -Uz compinit
-
-for dump in ~/.zcompdump(N.mh+24); do
-  compinit
-done
-
-compinit -C
-
-# nvm load without use (improves terminal load speed)
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" --no-use
-
-# Load deno
-. "/Users/$USER/.deno/env"
-
-# Fuzzy search branch
+#====================
+# Functions
+#====================
+# Git branch fuzzy finder
 fbr() {
-  git fetch
-  local branches branch
-  branches=$(git branch -a) &&
-  branch=$(echo "$branches" | fzf +s +m -e) &&
-  git checkout $(echo "$branch" | sed "s:.* remotes/origin/::" | sed "s:.* ::")
+    git fetch
+    local branches branch
+    branches=$(git branch -a) &&
+    branch=$(echo "$branches" | fzf +s +m -e) &&
+    git checkout $(echo "$branch" | sed "s:.* remotes/origin/::" | sed "s:.* ::")
 }
 
 # Find a process given a port
 findport() {
-  sudo lsof -n -i :$1 | egrep "LISTEN|PID"
+    sudo lsof -n -i :$1 | egrep "LISTEN|PID"
 }
 
 # Find a process given a name
 findproc() {
-  ps -fa | egrep "$1|PID"
+    ps -fa | egrep "$1|PID"
 }
 
-# Get a lucky message 
+# Get a lucky message
 lucky() {
     local cow=$(cowsay -l | tail -n +2 | tr ' ' '\n' | shuf -n 1)
     fortune | cowsay -f $cow | lolcat --seed 0 --spread 1.0
 }
 
-# The next line updates PATH for the Google Cloud SDK.
+#====================
+# Deferred Initializations
+#====================
+# Development Tools
+zsh-defer . "$NVM_DIR/nvm.sh" --no-use
+zsh-defer . "/Users/$USER/.deno/env"
+
+# Combine defer + evalcache for expensive operations
+zsh-defer _evalcache pyenv init -
+zsh-defer _evalcache pyenv virtualenv-init -
+
+# Google Cloud SDK
 if [ -f "/Users/$USER/google-cloud-sdk/path.zsh.inc" ]; then 
-    _evalcache source "/Users/$USER/google-cloud-sdk/path.zsh.inc"
+    zsh-defer _evalcache source "/Users/$USER/google-cloud-sdk/path.zsh.inc"
 fi
-
-# The next line enables shell command completion for gcloud.
 if [ -f "/Users/$USER/google-cloud-sdk/completion.zsh.inc" ]; then
-    _evalcache source "/Users/$USER/google-cloud-sdk/completion.zsh.inc"
+    zsh-defer _evalcache source "/Users/$USER/google-cloud-sdk/completion.zsh.inc"
 fi
 
-# Load starship
-_evalcache starship init zsh
+#====================
+# Local Config
+#====================
+[[ -f ~/machine_aliases.zsh ]] && zsh-defer source ~/machine_aliases.zsh
 
-# Load pyenv & pyenv-virtualenv 
-_evalcache pyenv init -
-_evalcache pyenv virtualenv-init -
-
-[[ -f ~/machine_aliases.zsh ]] && source ~/machine_aliases.zsh
-
-# Amazon Q post block. Keep at the bottom of this file.
-[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh"
-
-#zprof 
+# Amazon Q post block
+zsh-defer source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh"
