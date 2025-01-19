@@ -27,6 +27,11 @@ export PATH="$HOME/.rvm/bin:/usr/local/opt/ruby/bin:$PATH"
 # MongoDB path
 export PATH="$PATH:/usr/local/mongodb/bin"
 
+# Android SDK path
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+
 # Performance and Compatibility Settings
 DISABLE_AUTO_UPDATE="true"
 ZSH_DISABLE_COMPFIX=true
@@ -35,7 +40,7 @@ export GRPC_PYTHON_BUILD_SYSTEM_ZLIB=1
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 
 # Plugins and source configurations
-plugins=(git z poetry)
+plugins=(git z poetry evalcache)
 source $ZSH/oh-my-zsh.sh
 source $HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
