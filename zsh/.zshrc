@@ -53,11 +53,11 @@ source $HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
   export CPPFLAGS="-I/opt/homebrew/opt/openssl/include"
   
   # C paths for python libs to access (confluent_kafka)
-  export C_INCLUDE_PATH=$C_INCLUDE_PATH:$(brew --prefix)/include
-  export LIBRARY_PATH=$LIBRARY_PATH:$(brew --prefix)/lib
+  export C_INCLUDE_PATH=$C_INCLUDE_PATH:$HOMEBREW_PREFIX/include
+  export LIBRARY_PATH=$LIBRARY_PATH:$HOMEBREW_PREFIX/lib
 
   # Z plugin
-  . `brew --prefix`/etc/profile.d/z.sh
+  . $HOMEBREW_PREFIX/etc/profile.d/z.sh
 
   alias sshadd="ssh-add -K ~/.ssh/id_rsa"
 }
@@ -143,21 +143,25 @@ lucky() {
 }
 
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f "/Users/$USER/google-cloud-sdk/path.zsh.inc" ]; then . "/Users/$USER/google-cloud-sdk/path.zsh.inc"; fi
+if [ -f "/Users/$USER/google-cloud-sdk/path.zsh.inc" ]; then 
+    _evalcache source "/Users/$USER/google-cloud-sdk/path.zsh.inc"
+fi
 
 # The next line enables shell command completion for gcloud.
-if [ -f "/Users/$USER/google-cloud-sdk/completion.zsh.inc" ]; then . "/Users/$USER/google-cloud-sdk/completion.zsh.inc"; fi
+if [ -f "/Users/$USER/google-cloud-sdk/completion.zsh.inc" ]; then
+    _evalcache source "/Users/$USER/google-cloud-sdk/completion.zsh.inc"
+fi
 
 # Load starship
-eval "$(starship init zsh)"
+_evalcache starship init zsh
 
 # Load pyenv & pyenv-virtualenv 
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+_evalcache pyenv init -
+_evalcache pyenv virtualenv-init -
 
 [[ -f ~/machine_aliases.zsh ]] && source ~/machine_aliases.zsh
 
 # Amazon Q post block. Keep at the bottom of this file.
 [[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh"
 
-#zprof
+#zprof 
