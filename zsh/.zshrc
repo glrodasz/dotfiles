@@ -5,10 +5,10 @@
 # How to profile zsh
 # for i in $(seq 1 10); do /usr/bin/time zsh -i -c exit; done
 
-source ~/.zsh-defer/zsh-defer.plugin.zsh
-
 # Amazon Q pre block. Keep at the top of this file.
 [[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh"
+
+source ~/.zsh-defer/zsh-defer.plugin.zsh
 
 #====================
 # Core Environment & Prompt
@@ -184,5 +184,5 @@ fi
 #====================
 [[ -f ~/machine_aliases.zsh ]] && zsh-defer source ~/machine_aliases.zsh
 
-# Amazon Q post block
-zsh-defer source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh"
+# Amazon Q post block. Keep at the bottom of this file.
+[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh"
