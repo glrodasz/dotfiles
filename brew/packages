@@ -13,6 +13,7 @@ flyctl
 fortune
 fzf
 gh
+gum
 httpie
 jq
 jupyterlab
@@ -32,6 +33,7 @@ pipx
 poetry
 postgresql@14
 pre-commit
+pulumi
 pyenv-virtualenv
 starship
 swagger-codegen
