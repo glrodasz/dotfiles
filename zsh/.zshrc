@@ -160,6 +160,40 @@ lucky() {
     fortune | cowsay -f $cow | lolcat --seed 0 --spread 1.0
 }
 
+# Testing packages installation :)
+busy() {
+    while true; do
+        if [ -f package.json ]; then
+            packages=($(jq -r 'to_entries[] | select(.key | test("dependencies|devDependencies")) | .value | to_entries[] | .key' package.json))
+        else
+            packages=("react" "react-dom" "styled-components" "react-router-dom" "formik" "date-fns" "eslint" "prettier" "webpack" "babel" "typescript")
+        fi
+
+        for pkg in "${packages[@]}"; do
+            echo -e "\033[1;32m> \033[0m \033[1mInstalling\033[0m $pkg..."
+            sleep 0.$((RANDOM % 5))${RANDOM:0:1}
+            echo -e "\033[1;34m> \033[0m \033[1mDownloading metadata for $pkg..."
+            sleep 1.$((RANDOM % 5))
+
+            progress=0
+            while [ $progress -lt 100 ]; do
+                increment=$((RANDOM % 20 + 5))
+                progress=$((progress + increment))
+                if [ $progress -gt 100 ]; then progress=100; fi
+                bar_length=20
+                filled=$((progress * bar_length / 100))
+                bar=$(printf "%0.s=" $(seq 1 $filled))
+                echo -ne "\033[1;36mProgress: [${bar}] ${progress}%\033[0m\033[K\r"
+                sleep 0.$((RANDOM % 3))
+            done
+
+            echo -e ""
+            echo -e "\033[1;33m> \033[0m \033[1mBuilding\033[0m $pkg..."
+            sleep 0.$((RANDOM % 9))
+        done
+    done
+}
+
 #====================
 # Deferred Initializations
 #====================
