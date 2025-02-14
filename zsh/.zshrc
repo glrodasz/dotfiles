@@ -72,7 +72,9 @@ fi
     zsh-defer . $HOMEBREW_PREFIX/etc/profile.d/z.sh
     
     # SSH Agent alias (Including loading resident keys from FIDO authenticator)
-    alias sshadd="ssh-add -K ~/.ssh/id_rsa"
+    [[ -f ~/.ssh/id_rsa ]] && ID_RSA_OPT="-K ~/.ssh/id_rsa"
+    [[ -f ~/.ssh/id_ed25519 ]] && ID_ED25519_OPT="-K ~/.ssh/id_ed25519"
+    alias sshadd="ssh-add ${ID_RSA_OPT:-} ${ID_ED25519_OPT:-}"
 }
 
 # Linux/WSL
@@ -80,7 +82,9 @@ fi
     PURE_PROMPT_SYMBOL=">"
     
     # SSH Agent alias
-    alias sshadd="ssh-add ~/.ssh/id_rsa"
+    [[ -f ~/.ssh/id_rsa ]] && ID_RSA_OPT="~/.ssh/id_rsa"
+    [[ -f ~/.ssh/id_ed25519 ]] && ID_ED25519_OPT="~/.ssh/id_ed25519"
+    alias sshadd="ssh-add ${ID_RSA_OPT:-} ${ID_ED25519_OPT:-}"
 }
 
 #====================
