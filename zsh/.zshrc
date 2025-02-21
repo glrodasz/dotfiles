@@ -105,7 +105,7 @@ zsh-defer source $HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highl
 # Git
 alias gaem="g commit --allow-empty -m"
 alias gwip='g commit --all -m "chore: work in progress"'
-alias gwin='g commit --all -m "chore: work in progress" -n'
+alias gwin='g commit --all -m "chore: commit changes" -n'
 
 # Node Version Manager
 alias nvmu="nvm use"
