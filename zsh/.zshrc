@@ -23,6 +23,9 @@ export GRPC_PYTHON_BUILD_SYSTEM_OPENSSL=1
 export GRPC_PYTHON_BUILD_SYSTEM_ZLIB=1
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 
+# Neccessary Python Version for Google Cloud SDK
+CLOUDSDK_PYTHON=$HOME/.pyenv/versions/3.8.12/bin/python3
+
 # Prompt initialization (needs to be immediate)
 eval "$(starship init zsh)"
 
@@ -106,6 +109,7 @@ zsh-defer source $HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highl
 alias gaem="g commit --allow-empty -m"
 alias gwip='g commit --all -m "chore: work in progress" -n'
 alias gwin='g commit --all -m "chore: commit changes"'
+alias greb='git rebase -i $(git merge-base HEAD origin/main)'
 
 # Node Version Manager
 alias nvmu="nvm use"
