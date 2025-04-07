@@ -25,6 +25,10 @@
 1. Install **Oh My Zsh** `sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"`
 1. Install **ZSH config** from `~/dotfiles/zsh`
 
+### ZSH Optimizations
+1. Clone **zsh-defer** with `git clone https://github.com/romkatv/zsh-defer.git ~/.zsh-defer` (Using a hidden folder `.zsh-defer` instead)
+2. Clone **evalcache** with `git clone https://github.com/mroth/evalcache ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/evalcache`
+
 ### Configure Brew
 1. Install **brew** `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`.
 1. Run the commands to make brew available in the path.
