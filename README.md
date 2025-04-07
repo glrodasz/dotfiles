@@ -10,7 +10,7 @@
 1. Install **[Logitech G Hub](https://www.logitechg.com/en-us/innovation/g-hub.html)**
 1. Install **Purchased Apps** from **[App Store](https://support.apple.com/en-us/118212#macOS)**
 1. Install **Downloaded Apps** following `~/dotfiles/apps`
-1. Install **[Visual Studio Code](https://code.visualstudio.com/Download)** and **[WebStorm](https://www.jetbrains.com/webstorm/download/#section=mac)**
+1. Install **[Visual Studio Code](https://www.cursor.com/downloads)** and **[Cursor](https://www.cursor.com/downloads)**
 
 ### Configure Git
 > (If not available) Install **Git** through Xcode Command Line Tools `xcode-select --install`
