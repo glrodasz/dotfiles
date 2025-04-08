@@ -2,7 +2,7 @@
 
 ## Theme Colors
 1. Double-click `Snazzy.itermcolors` file.
-1. Go to Settings > Profiles > Colors > Load Presets…
+1. Go to Settings > Profiles > Colors > Color Presets…
 
 # Appareance
 1. Settings > Appareance > Theme and choose `Mininal`.
@@ -12,4 +12,4 @@
 1. Settings > Appearance > Windows > "Hide scrollbars".
 
 ## Alt key in Terminal
-1. Go to Settings > Profiles, select your profile > Keys > Key Mappings > Presets... > Natural Text Editing.
+1. Go to Settings > Profiles, select your profile > Keys > Key Bindings > Presets... > Natural Text Editing.
