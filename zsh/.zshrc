@@ -49,6 +49,10 @@ zsh-defer export ANDROID_HOME=$HOME/Library/Android/sdk
 zsh-defer export PATH="$PATH:$ANDROID_HOME/emulator"
 zsh-defer export PATH="$PATH:$ANDROID_HOME/platform-tools"
 
+# Java OpenJDK path
+zsh-defer export PATH="/opt/homebrew/bin/java:$PATH"
+zsh-defer export JAVA_HOME="/opt/homebrew/opt/openjdk@21"
+
 #====================
 # OS-Specific Config
 #====================
