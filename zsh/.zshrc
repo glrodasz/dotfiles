@@ -49,6 +49,10 @@ zsh-defer export ANDROID_HOME=$HOME/Library/Android/sdk
 zsh-defer export PATH="$PATH:$ANDROID_HOME/emulator"
 zsh-defer export PATH="$PATH:$ANDROID_HOME/platform-tools"
 
+# Java OpenJDK path
+zsh-defer export PATH="/opt/homebrew/bin/java:$PATH"
+zsh-defer export JAVA_HOME="/opt/homebrew/opt/openjdk@21"
+
 #====================
 # OS-Specific Config
 #====================
@@ -223,6 +227,11 @@ if [ -f "/Users/$USER/google-cloud-sdk/path.zsh.inc" ]; then
 fi
 if [ -f "/Users/$USER/google-cloud-sdk/completion.zsh.inc" ]; then
     zsh-defer _evalcache source "/Users/$USER/google-cloud-sdk/completion.zsh.inc"
+fi
+
+# Docker CLI completions
+if [ -d "/Users/$USER/.docker/completions" ]; then
+    zsh-defer eval 'fpath=(/Users/$USER/.docker/completions $fpath); autoload -Uz compinit; compinit'
 fi
 
 #====================
