@@ -122,6 +122,8 @@ alias npmd="npm run dev"
 alias npms="npm start"
 alias yarnd="yarn dev"
 alias yarns="yarn start"
+alias pnpmd="pnpm run dev"
+alias pnpms="pnpm start"
 alias denod="deno run dev"
 alias denos="deno run start"
 
