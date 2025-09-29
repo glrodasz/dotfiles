@@ -23,8 +23,8 @@ export GRPC_PYTHON_BUILD_SYSTEM_OPENSSL=1
 export GRPC_PYTHON_BUILD_SYSTEM_ZLIB=1
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 
-# Neccessary Python Version for Google Cloud SDK
-CLOUDSDK_PYTHON=$HOME/.pyenv/versions/3.8.12/bin/python3
+# Dynamic Python Version for Google Cloud SDK
+CLOUDSDK_PYTHON=$(pyenv which python3 2>/dev/null)
 
 # Prompt initialization (needs to be immediate)
 eval "$(starship init zsh)"
