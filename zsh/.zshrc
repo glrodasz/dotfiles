@@ -5,8 +5,8 @@
 # How to profile zsh
 # for i in $(seq 1 10); do /usr/bin/time zsh -i -c exit; done
 
-# Amazon Q pre block. Keep at the top of this file.
-[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh"
+# Kiro CLI pre block. Keep at the top of this file.
+[[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.pre.zsh"
 
 source ~/.zsh-defer/zsh-defer.plugin.zsh
 
@@ -112,7 +112,7 @@ zsh-defer source $HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highl
 # Git
 alias gaem="g commit --allow-empty -m"
 alias gwip='g commit --all -m "chore: work in progress" -n'
-alias gwin='g commit --all -m "chore: commit changes"'
+alias gwin='g add -A && g commit -m "chore: commit changes"'
 alias greb='git rebase -i $(git merge-base HEAD origin/main)'
 
 # Node Version Manager
@@ -239,5 +239,5 @@ fi
 #====================
 [[ -f ~/machine_aliases.zsh ]] && zsh-defer source ~/machine_aliases.zsh
 
-# Amazon Q post block. Keep at the bottom of this file.
-[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh"
+# Kiro CLI post block. Keep at the bottom of this file.
+[[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh"
