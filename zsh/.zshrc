@@ -98,7 +98,7 @@ fi
 # Plugins & Shell
 #====================
 # Essential plugins and evalcache for immediate eval commands
-plugins=(git evalcache fzf-tab)
+plugins=(git evalcache fzf-tab zsh-autosuggestions)
 source $ZSH/oh-my-zsh.sh
 
 # Defer additional plugins
