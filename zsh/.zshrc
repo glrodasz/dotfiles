@@ -14,6 +14,7 @@ source ~/.zsh-defer/zsh-defer.plugin.zsh
 # Core Environment & Prompt
 #====================
 export ZSH="$HOME/.oh-my-zsh"
+export ZSH_CUSTOM="$HOME/.oh-my-zsh/custom"
 export NVM_DIR="$HOME/.nvm"
 
 # Performance and Compatibility Settings
@@ -94,16 +95,23 @@ fi
     alias sshadd="ssh-add ${ID_RSA_OPT:-} ${ID_ED25519_OPT:-}"
 }
 
+# Load Oh My Zsh custom plugins
+load_omz_plugins() {
+    local plugin
+    for plugin in "$@"; do
+        zsh-defer source "$ZSH_CUSTOM/plugins/$plugin/$plugin.plugin.zsh"
+    done
+}
+
 #====================
 # Plugins & Shell
 #====================
 # Essential plugins and evalcache for immediate eval commands
-plugins=(git evalcache fzf-tab zsh-autosuggestions)
+plugins=(git evalcache)
 source $ZSH/oh-my-zsh.sh
 
 # Defer additional plugins
-zsh-defer source ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/z/z.plugin.zsh
-zsh-defer source ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/poetry/poetry.plugin.zsh
+load_omz_plugins z poetry
 zsh-defer source $HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 #====================
