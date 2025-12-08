@@ -95,8 +95,8 @@ fi
     alias sshadd="ssh-add ${ID_RSA_OPT:-} ${ID_ED25519_OPT:-}"
 }
 
-# Load Oh My Zsh custom plugins
-load_omz_plugins() {
+# Load Oh My Zsh custom plugins with defer
+load_omz_plugins_with_defer() {
     local plugin
     for plugin in "$@"; do
         zsh-defer source "$ZSH_CUSTOM/plugins/$plugin/$plugin.plugin.zsh"
@@ -111,7 +111,7 @@ plugins=(git evalcache)
 source $ZSH/oh-my-zsh.sh
 
 # Defer additional plugins
-load_omz_plugins z poetry
+load_omz_plugins_with_defer z poetry
 zsh-defer source $HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 #====================
