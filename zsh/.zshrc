@@ -178,6 +178,18 @@ findproc() {
     ps -fa | egrep "$1|PID"
 }
 
+# List Python versions
+pythonver() {
+    curl -s https://api.github.com/repos/python/cpython/tags \
+      | jq -r 'map(select(.name))[:5] | .[].name'
+}
+
+# List Node versions
+nodever() {
+    curl -s https://api.github.com/repos/nodejs/node/tags \
+      | jq -r 'map(select(.name))[:5] | .[].name'
+}
+
 # Get a lucky message
 lucky() {
     local cow=$(cowsay -l | tail -n +2 | tr ' ' '\n' | shuf -n 1)
