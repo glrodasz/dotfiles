@@ -178,16 +178,48 @@ findproc() {
     ps -fa | egrep "$1|PID"
 }
 
+# List GitHub repository tags
+_github_tags() {
+    local repo=$1
+    local count=${2:-5}
+    local per_page=$((count > 100 ? 100 : count))
+    local page=1
+    local results=""
+    local result_count=0
+    
+    while [ $result_count -lt $count ]; do
+        local page_results=$(curl -s "https://api.github.com/repos/$repo/tags?per_page=$per_page&page=$page" \
+          | jq -r "map(select(.name)) | .[].name")
+        
+        if [ -z "$page_results" ]; then
+            break
+        fi
+        
+        local lines=$(echo "$page_results" | wc -l | tr -d ' ')
+        if [ $lines -eq 0 ]; then
+            break
+        fi
+        
+        results="$results$page_results"$'\n'
+        result_count=$((result_count + lines))
+        page=$((page + 1))
+        
+        if [ $page -gt 10 ]; then
+            break
+        fi
+    done
+    
+    echo "$results" | head -n $count
+}
+
 # List Python versions
 pythonver() {
-    curl -s https://api.github.com/repos/python/cpython/tags \
-      | jq -r 'map(select(.name))[:5] | .[].name'
+    _github_tags "python/cpython" "$@"
 }
 
 # List Node versions
 nodever() {
-    curl -s https://api.github.com/repos/nodejs/node/tags \
-      | jq -r 'map(select(.name))[:5] | .[].name'
+    _github_tags "nodejs/node" "$@"
 }
 
 # Get a lucky message
