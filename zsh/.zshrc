@@ -270,31 +270,31 @@ busy() {
 #====================
 # Development Tools
 zsh-defer . "$NVM_DIR/nvm.sh" --no-use
-zsh-defer . "/Users/$USER/.deno/env"
+zsh-defer . "$HOME/.deno/env"
 
 # Combine defer + evalcache for expensive operations
 zsh-defer _evalcache pyenv init -
 zsh-defer _evalcache pyenv virtualenv-init -
 
 # Google Cloud SDK
-if [ -f "/Users/$USER/google-cloud-sdk/path.zsh.inc" ]; then 
-    zsh-defer _evalcache source "/Users/$USER/google-cloud-sdk/path.zsh.inc"
+if [ -f "$HOME/google-cloud-sdk/path.zsh.inc" ]; then 
+    zsh-defer _evalcache source "$HOME/google-cloud-sdk/path.zsh.inc"
 fi
-if [ -f "/Users/$USER/google-cloud-sdk/completion.zsh.inc" ]; then
-    zsh-defer _evalcache source "/Users/$USER/google-cloud-sdk/completion.zsh.inc"
+if [ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]; then
+    zsh-defer _evalcache source "$HOME/google-cloud-sdk/completion.zsh.inc"
 fi
 
 # Docker CLI completions
-if [ -d "/Users/$USER/.docker/completions" ]; then
-    zsh-defer eval 'fpath=(/Users/$USER/.docker/completions $fpath); autoload -Uz compinit; compinit'
+if [ -d "$HOME/.docker/completions" ]; then
+    zsh-defer eval 'fpath=($HOME/.docker/completions $fpath); autoload -Uz compinit; compinit'
 fi
 
 #====================
 # Local Config
 #====================
-[[ -f ~/machine_aliases.zsh ]] && zsh-defer source ~/machine_aliases.zsh
+# .zshrc.local for secrets and machine-specific configurations
+# This file should NOT be tracked in git.
+[[ -f ~/.zshrc.local ]] && zsh-defer source ~/.zshrc.local
 
 # Kiro CLI post block. Keep at the bottom of this file.
 [[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh"
-
-
