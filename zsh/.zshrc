@@ -54,6 +54,9 @@ zsh-defer export PATH="$PATH:$ANDROID_HOME/platform-tools"
 zsh-defer export PATH="/opt/homebrew/bin/java:$PATH"
 zsh-defer export JAVA_HOME="/opt/homebrew/opt/openjdk@21"
 
+# Antigravity path
+zsh-defer export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
+
 #====================
 # OS-Specific Config
 #====================
@@ -293,3 +296,5 @@ fi
 
 # Kiro CLI post block. Keep at the bottom of this file.
 [[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh"
+
+
