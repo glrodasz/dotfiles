@@ -128,9 +128,9 @@ alias greb='git rebase -i $(git merge-base HEAD origin/main)'
 
 # Node Version Manager
 alias nvmu="nvm use"
-alias nvmx="nvm use 16"
-alias nvmy="nvm use 20"
-alias nvmz="nvm use 22"
+alias nvmx="nvm use 22"
+alias nvmy="nvm use 24"
+alias nvmz="nvm use 25"
 
 # Package Managers
 alias npmd="npm run dev"
@@ -158,6 +158,7 @@ alias cl="clear"
 alias cafe="cat /dev/urandom | hexdump | grep \"ca fe\""
 alias sagent="eval `ssh-agent`"
 alias mostused='history | awk '\''{print $2}'\'' | sort | uniq -c | sort -nr | head -n 10'
+alias secret="openssl rand -hex 32"
 
 #====================
 # Functions
