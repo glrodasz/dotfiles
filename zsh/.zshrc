@@ -38,7 +38,7 @@ eval "$(starship init zsh)"
 export PATH="/usr/local/bin:/usr/local/sbin:$HOME/.local/bin:$PATH"
 
 # pnpm
-zsh-defer export PATH="$PNPM_HOME:$PATH"
+export PATH="$PNPM_HOME:$PATH"
 
 # Python-related Paths (Pyenv)
 zsh-defer export PATH="$HOME/.pyenv/bin:$PATH"
