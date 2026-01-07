@@ -16,6 +16,7 @@ source ~/.zsh-defer/zsh-defer.plugin.zsh
 export ZSH="$HOME/.oh-my-zsh"
 export ZSH_CUSTOM="$HOME/.oh-my-zsh/custom"
 export NVM_DIR="$HOME/.nvm"
+export PNPM_HOME="$HOME/Library/pnpm"
 
 # Performance and Compatibility Settings
 DISABLE_AUTO_UPDATE="true"
@@ -35,6 +36,9 @@ eval "$(starship init zsh)"
 #====================
 # System Paths (including $HOME/.local/bin for user-specific scripts) (needed immediately)
 export PATH="/usr/local/bin:/usr/local/sbin:$HOME/.local/bin:$PATH"
+
+# pnpm
+zsh-defer export PATH="$PNPM_HOME:$PATH"
 
 # Python-related Paths (Pyenv)
 zsh-defer export PATH="$HOME/.pyenv/bin:$PATH"
