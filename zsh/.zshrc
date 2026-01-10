@@ -148,7 +148,7 @@ alias denos="deno run start"
 
 # Cleanup
 alias rmnpmi="rm -rf node_modules && npm cache clean --force && npm i"
-alias rmyarn="rm -rf node_modules && yarn cache clean && yarn --force"
+alias rmyarn="rm -rf node_modules && yarn cache clean && yarn --check-cache"
 alias rmmodules="find . -name node_modules -type d -prune -exec rm -rf '{}' +"
 
 # Python
