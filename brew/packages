@@ -30,11 +30,13 @@ nmap
 node
 oven-sh/bun/bun
 pipx
+pnpm
 poetry
 postgresql@14
 pre-commit
 pulumi
 pyenv-virtualenv
+redis
 starship
 swagger-codegen
 terraform
