@@ -53,7 +53,7 @@
 
 ### Configure Extra options
 1. Configure **Macbook** options from `~/dotfiles/mac`
-1. Configure extra apps here: https://share.lazyapp.io/do-not-forget-to-backup-09d35f99-43f1-5f90-9bb3-708e1b1d853c
+1. Configure extra apps in your `DO NOT FORGET to backup` Apple Note.
 
 ## 🍓 Raspberry Pi OS
 Follow **Configure Git**, **Configure ZSH**, **Configure Development Environment**, and **Configure Terminal** instructions and `~/dotfiles/raspberry` instructions.
