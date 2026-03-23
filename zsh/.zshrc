@@ -40,8 +40,10 @@ export PATH="/usr/local/bin:/usr/local/sbin:$HOME/.local/bin:$PATH"
 # pnpm
 export PATH="$PNPM_HOME:$PATH"
 
-# Python-related Paths (Pyenv)
-zsh-defer export PATH="$HOME/.pyenv/bin:$PATH"
+# pyenv
+export PYENV_ROOT="${PYENV_ROOT:-$HOME/.pyenv}"
+[[ -d "$PYENV_ROOT/bin" ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+[[ -d "$PYENV_ROOT/shims" ]] && export PATH="$PYENV_ROOT/shims:$PATH"
 
 # Ruby-related Paths (RVM and additional Ruby binaries)
 zsh-defer export PATH="$HOME/.rvm/bin:/usr/local/opt/ruby/bin:$PATH"
@@ -276,10 +278,6 @@ busy() {
 # Development Tools
 zsh-defer . "$NVM_DIR/nvm.sh" --no-use
 zsh-defer . "$HOME/.deno/env"
-
-# Combine defer + evalcache for expensive operations
-zsh-defer _evalcache pyenv init -
-zsh-defer _evalcache pyenv virtualenv-init -
 
 # Google Cloud SDK
 if [ -f "$HOME/google-cloud-sdk/path.zsh.inc" ]; then 
