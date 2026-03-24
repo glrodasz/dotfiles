@@ -42,6 +42,7 @@ swagger-codegen
 terraform
 tldr
 tree
+uv
 watchman
 wget
 wrk
