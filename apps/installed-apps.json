@@ -12,7 +12,7 @@
   {
     "name": "Alfred 5",
     "source": "web",
-    "url": "https://www.alfredapp.com/"
+    "url": "https://www.alfredapp.com"
   },
   {
     "name": "Amazon Kindle",
@@ -42,137 +42,137 @@
   {
     "name": "Beeper Desktop",
     "source": "web",
-    "url": ""
+    "url": "https://www.beeper.com/download"
   },
   {
     "name": "Canva",
-    "source": "",
-    "url": ""
+    "source": "web",
+    "url": "https://www.canva.com/download/mac"
   },
   {
     "name": "ChatGPT",
     "source": "web",
-    "url": "https://chatgpt.com/download/"
+    "url": "https://chatgpt.com/download"
   },
   {
     "name": "Claude",
     "source": "web",
-    "url": ""
+    "url": "https://claude.com/download"
   },
   {
     "name": "CodexBar",
     "source": "web",
-    "url": "https://codexbar.app/"
+    "url": "https://codexbar.app"
   },
   {
     "name": "Cursor",
     "source": "web",
-    "url": ""
+    "url": "https://www.cursor.com/download"
   },
   {
     "name": "Cursor Pro",
-    "source": "",
-    "url": ""
+    "source": "appstore",
+    "url": "https://apps.apple.com/se/app/cursor-pro/id1447043133"
   },
   {
     "name": "DaisyDisk",
-    "source": "",
-    "url": ""
+    "source": "web",
+    "url": "https://daisydiskapp.com"
   },
   {
     "name": "Delete Apps",
-    "source": "",
-    "url": ""
+    "source": "appstore",
+    "url": "https://apps.apple.com/se/app/delete-apps-uninstaller/id1033808943"
   },
   {
     "name": "Descript",
-    "source": "",
-    "url": ""
+    "source": "web",
+    "url": "https://www.descript.com/download"
   },
   {
     "name": "Discord",
-    "source": "",
-    "url": ""
+    "source": "web",
+    "url": "https://discord.com/download"
   },
   {
     "name": "Docker",
-    "source": "",
-    "url": ""
+    "source": "web",
+    "url": "https://www.docker.com/products/docker-desktop"
   },
   {
     "name": "ElegooSlicer",
-    "source": "",
-    "url": ""
+    "source": "web",
+    "url": "https://www.elegoo.com/pages/download"
   },
   {
     "name": "Elgato Camera Hub",
     "source": "web",
-    "url": ""
+    "url": "https://www.elgato.com/en/gaming/downloads"
   },
   {
     "name": "Elgato Control Center",
     "source": "web",
-    "url": ""
+    "url": "https://www.elgato.com/us/en/s/downloads"
   },
   {
     "name": "Elgato Stream Deck",
     "source": "web",
-    "url": ""
+    "url": "https://www.elgato.com/us/en/s/downloads"
   },
   {
     "name": "Figma",
     "source": "web",
-    "url": ""
+    "url": "https://www.figma.com/downloads"
   },
   {
     "name": "Firefox",
-    "source": "",
-    "url": ""
+    "source": "web",
+    "url": "https://www.firefox.com/en-US"
   },
   {
     "name": "Firefox Developer Edition",
-    "source": "",
-    "url": ""
+    "source": "web",
+    "url": "https://www.firefox.com/en-US/channel/desktop/developer"
   },
   {
     "name": "FlagTimes",
     "source": "web",
-    "url": ""
+    "url": "https://www.flagtimes.com"
   },
   {
     "name": "Focusrite Control",
-    "source": "",
-    "url": ""
+    "source": "web",
+    "url": "https://downloads.focusrite.com/focusrite/scarlett-1st-gen/scarlett-solo-1st-gen"
   },
   {
     "name": "Foxit PDF Reader",
-    "source": "",
-    "url": ""
+    "source": "web",
+    "url": "https://www.foxit.com/pdf-reader"
   },
   {
     "name": "Game Capture HD",
-    "source": "",
-    "url": ""
+    "source": "web",
+    "url": "https://www.elgato.com/en/gaming/downloads"
   },
   {
     "name": "Ghostty",
     "source": "web",
-    "url": ""
+    "url": "https://ghostty.org/download"
   },
   {
     "name": "Google Chrome",
     "source": "web",
-    "url": ""
+    "url": "https://www.google.com/chrome"
   },
   {
     "name": "Google Chrome Canary",
-    "source": "",
-    "url": ""
+    "source": "web",
+    "url": "https://www.google.com/chrome/canary"
   },
   {
     "name": "Google Drive",
     "source": "web",
-    "url": ""
+    "url": "https://support.google.com/a/users/answer/13022292"
   },
   {
     "name": "iA Presenter",
@@ -242,7 +242,7 @@
   {
     "name": "Moom",
     "source": "web",
-    "url": "https://manytricks.com/moom/"
+    "url": "https://manytricks.com/moom"
   },
   {
     "name": "MuteMe-Client",
