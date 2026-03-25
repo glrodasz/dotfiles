@@ -1,0 +1,427 @@
+[
+  {
+    "name": "1Password",
+    "source": "web",
+    "url": "https://1password.com/downloads/mac"
+  },
+  {
+    "name": "1Password for Safari",
+    "source": "appstore",
+    "url": "https://apps.apple.com/us/app/1password-for-safari/id1569813296"
+  },
+  {
+    "name": "Alfred 5",
+    "source": "web",
+    "url": "https://www.alfredapp.com/"
+  },
+  {
+    "name": "Amazon Kindle",
+    "source": "appstore",
+    "url": "https://apps.apple.com/se/app/amazon-kindle-reading-app/id302584613"
+  },
+  {
+    "name": "Android Studio",
+    "source": "web",
+    "url": "https://developer.android.com/studio"
+  },
+  {
+    "name": "Audacity",
+    "source": "web",
+    "url": "https://www.audacityteam.org/download/mac"
+  },
+  {
+    "name": "AutoMute",
+    "source": "appstore",
+    "url": "https://apps.apple.com/us/app/automute-no-more-oopsies/id1118136179"
+  },
+  {
+    "name": "Bear",
+    "source": "appstore",
+    "url": "https://apps.apple.com/us/app/bear/id1091189122"
+  },
+  {
+    "name": "Beeper Desktop",
+    "source": "web",
+    "url": ""
+  },
+  {
+    "name": "Canva",
+    "source": "",
+    "url": ""
+  },
+  {
+    "name": "ChatGPT",
+    "source": "web",
+    "url": "https://chatgpt.com/download/"
+  },
+  {
+    "name": "Claude",
+    "source": "web",
+    "url": ""
+  },
+  {
+    "name": "CodexBar",
+    "source": "web",
+    "url": "https://codexbar.app/"
+  },
+  {
+    "name": "Cursor",
+    "source": "web",
+    "url": ""
+  },
+  {
+    "name": "Cursor Pro",
+    "source": "",
+    "url": ""
+  },
+  {
+    "name": "DaisyDisk",
+    "source": "",
+    "url": ""
+  },
+  {
+    "name": "Delete Apps",
+    "source": "",
+    "url": ""
+  },
+  {
+    "name": "Descript",
+    "source": "",
+    "url": ""
+  },
+  {
+    "name": "Discord",
+    "source": "",
+    "url": ""
+  },
+  {
+    "name": "Docker",
+    "source": "",
+    "url": ""
+  },
+  {
+    "name": "ElegooSlicer",
+    "source": "",
+    "url": ""
+  },
+  {
+    "name": "Elgato Camera Hub",
+    "source": "web",
+    "url": ""
+  },
+  {
+    "name": "Elgato Control Center",
+    "source": "web",
+    "url": ""
+  },
+  {
+    "name": "Elgato Stream Deck",
+    "source": "web",
+    "url": ""
+  },
+  {
+    "name": "Figma",
+    "source": "web",
+    "url": ""
+  },
+  {
+    "name": "Firefox",
+    "source": "",
+    "url": ""
+  },
+  {
+    "name": "Firefox Developer Edition",
+    "source": "",
+    "url": ""
+  },
+  {
+    "name": "FlagTimes",
+    "source": "web",
+    "url": ""
+  },
+  {
+    "name": "Focusrite Control",
+    "source": "",
+    "url": ""
+  },
+  {
+    "name": "Foxit PDF Reader",
+    "source": "",
+    "url": ""
+  },
+  {
+    "name": "Game Capture HD",
+    "source": "",
+    "url": ""
+  },
+  {
+    "name": "Ghostty",
+    "source": "web",
+    "url": ""
+  },
+  {
+    "name": "Google Chrome",
+    "source": "web",
+    "url": ""
+  },
+  {
+    "name": "Google Chrome Canary",
+    "source": "",
+    "url": ""
+  },
+  {
+    "name": "Google Drive",
+    "source": "web",
+    "url": ""
+  },
+  {
+    "name": "iA Presenter",
+    "source": "",
+    "url": ""
+  },
+  {
+    "name": "iHosts",
+    "source": "",
+    "url": ""
+  },
+  {
+    "name": "iTerm",
+    "source": "",
+    "url": ""
+  },
+  {
+    "name": "Keystroke Pro",
+    "source": "",
+    "url": ""
+  },
+  {
+    "name": "Kiro CLI",
+    "source": "",
+    "url": ""
+  },
+  {
+    "name": "lghub",
+    "source": "web",
+    "url": ""
+  },
+  {
+    "name": "logioptionsplus",
+    "source": "web",
+    "url": ""
+  },
+  {
+    "name": "Loopback",
+    "source": "",
+    "url": ""
+  },
+  {
+    "name": "Lungo",
+    "source": "",
+    "url": ""
+  },
+  {
+    "name": "Maccy",
+    "source": "appstore",
+    "url": "https://apps.apple.com/us/app/maccy/id1527619437"
+  },
+  {
+    "name": "Magnet",
+    "source": "appstore",
+    "url": "https://apps.apple.com/us/app/magnet/id441258766"
+  },
+  {
+    "name": "Mate Translate",
+    "source": "web",
+    "url": ""
+  },
+  {
+    "name": "Microsoft Edge",
+    "source": "",
+    "url": ""
+  },
+  {
+    "name": "Moom",
+    "source": "web",
+    "url": "https://manytricks.com/moom/"
+  },
+  {
+    "name": "MuteMe-Client",
+    "source": "web",
+    "url": ""
+  },
+  {
+    "name": "NordVPN",
+    "source": "",
+    "url": ""
+  },
+  {
+    "name": "Notion",
+    "source": "appstore",
+    "url": "https://www.notion.com/desktop"
+  },
+  {
+    "name": "Notion Calendar",
+    "source": "web",
+    "url": ""
+  },
+  {
+    "name": "Numbers",
+    "source": "",
+    "url": ""
+  },
+  {
+    "name": "Numi",
+    "source": "",
+    "url": ""
+  },
+  {
+    "name": "OBS",
+    "source": "",
+    "url": ""
+  },
+  {
+    "name": "Ollama",
+    "source": "web",
+    "url": ""
+  },
+  {
+    "name": "Pika",
+    "source": "appstore",
+    "url": "https://superhighfives.com/pika"
+  },
+  {
+    "name": "Pitch",
+    "source": "",
+    "url": ""
+  },
+  {
+    "name": "Postico 2",
+    "source": "",
+    "url": ""
+  },
+  {
+    "name": "Postman",
+    "source": "",
+    "url": ""
+  },
+  {
+    "name": "Pure Paste",
+    "source": "",
+    "url": ""
+  },
+  {
+    "name": "Riverside Studio",
+    "source": "",
+    "url": ""
+  },
+  {
+    "name": "Robo 3T",
+    "source": "",
+    "url": ""
+  },
+  {
+    "name": "RunJS",
+    "source": "",
+    "url": ""
+  },
+  {
+    "name": "Safari",
+    "source": "web",
+    "url": ""
+  },
+  {
+    "name": "Safari Technology Preview",
+    "source": "",
+    "url": ""
+  },
+  {
+    "name": "Shottr",
+    "source": "web",
+    "url": ""
+  },
+  {
+    "name": "Signal",
+    "source": "web",
+    "url": ""
+  },
+  {
+    "name": "Slack",
+    "source": "web",
+    "url": "https://slack.com/downloads/mac"
+  },
+  {
+    "name": "SoundSource",
+    "source": "",
+    "url": ""
+  },
+  {
+    "name": "Spark Desktop",
+    "source": "appstore",
+    "url": "https://apps.apple.com/us/app/spark-mail-ai-email-inbox/id6445813049"
+  },
+  {
+    "name": "Spotify",
+    "source": "appstore",
+    "url": "https://www.spotify.com/us/download/other"
+  },
+  {
+    "name": "Synergy",
+    "source": "",
+    "url": ""
+  },
+  {
+    "name": "TestFlight",
+    "source": "",
+    "url": ""
+  },
+  {
+    "name": "The Unarchiver",
+    "source": "",
+    "url": ""
+  },
+  {
+    "name": "Time Zone Converter and Clock",
+    "source": "appstore",
+    "url": "https://apps.apple.com/us/app/time-zone-converter-and-clock/id1255311569"
+  },
+  {
+    "name": "Unsplash Wallpapers",
+    "source": "appstore",
+    "url": "https://apps.apple.com/us/app/unsplash-wallpapers/id1284863847"
+  },
+  {
+    "name": "VirtualBox",
+    "source": "",
+    "url": ""
+  },
+  {
+    "name": "Visual Studio Code",
+    "source": "web",
+    "url": ""
+  },
+  {
+    "name": "Whimsical",
+    "source": "",
+    "url": ""
+  },
+  {
+    "name": "Wondershare Filmora Mac",
+    "source": "",
+    "url": ""
+  },
+  {
+    "name": "Xcode",
+    "source": "",
+    "url": ""
+  },
+  {
+    "name": "YubiKey Manager",
+    "source": "",
+    "url": ""
+  },
+  {
+    "name": "zoom.us",
+    "source": "web",
+    "url": ""
+  }
+]

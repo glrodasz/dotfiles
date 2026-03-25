@@ -1,52 +1,140 @@
 #!/bin/bash
 
-# Get the directory where the script is located
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+JSON_FILE="$SCRIPT_DIR/installed-apps.json"
 
-# Generate the current list of installed applications
-current_apps=$(mktemp)
-find /Applications -maxdepth 1 -name "*.app" -print0 | while IFS= read -r -d '' file; do
-    basename "$file"
-done > "$current_apps"
-
-# Define the path to the existing list of installed applications
-existing_apps="$SCRIPT_DIR/installed-apps"
-
-# Check if the existing_apps file exists, if not create an empty one
-if [ ! -f "$existing_apps" ]; then
-    touch "$existing_apps"
+if ! command -v jq &>/dev/null; then
+  echo "Error: jq is required. Install it with: brew install jq"
+  exit 1
 fi
 
-# Combine both lists and remove duplicates
-combined_apps=$(sort -u "$current_apps" "$existing_apps")
+if [ ! -f "$JSON_FILE" ] || ! jq empty "$JSON_FILE" 2>/dev/null; then
+  echo "[]" > "$JSON_FILE"
+fi
 
-# Prepare the options for whiptail
-options=()
-while IFS= read -r app; do
-    # Skip empty lines
-    [ -z "$app" ] && continue
-    
-    if grep -Fxq "$app" "$existing_apps" 2>/dev/null; then
-        options+=("$app" "" ON)
-    else
-        options+=("$app" "" OFF)
+existing_json=$(cat "$JSON_FILE")
+
+get_existing_url() {
+  local name="$1"
+  echo "$existing_json" | jq -r --arg n "$name" '(.[] | select(.name == $n) | .url) // empty'
+}
+
+lookup_appstore_url() {
+  local bundle_id="$1"
+  [ -z "$bundle_id" ] && return
+  local response
+  response=$(curl -sf "https://itunes.apple.com/lookup?bundleId=$bundle_id&country=us" 2>/dev/null)
+  [ -z "$response" ] && return
+  echo "$response" | jq -r '.results[0].trackViewUrl // empty' 2>/dev/null
+}
+
+echo "Scanning /Applications..."
+
+bundle_ids_dir=$(mktemp -d)
+all_apps_json="[]"
+
+while IFS= read -r -d '' app_path; do
+  app_file=$(basename "$app_path")
+  app_name="${app_file%.app}"
+
+  existing_url=$(get_existing_url "$app_name")
+  existing_source=$(echo "$existing_json" | jq -r --arg n "$app_name" '(.[] | select(.name == $n) | .source) // empty')
+
+  source_type="${existing_source:-}"
+  url="${existing_url:-}"
+
+  if [ -z "$url" ]; then
+    bundle_id=$(defaults read "$app_path/Contents/Info" CFBundleIdentifier 2>/dev/null)
+    if [ -n "$bundle_id" ]; then
+      echo "$bundle_id" > "$bundle_ids_dir/$app_name"
     fi
-done <<< "$combined_apps"
+  fi
 
-# Use whiptail to present the options
-selected_apps=$(whiptail --title "Select Installed Apps" --checklist \
-"Choose which applications to keep in the list:" 20 78 15 \
-"${options[@]}" 3>&1 1>&2 2>&3)
+  all_apps_json=$(echo "$all_apps_json" | jq \
+    --arg name "$app_name" \
+    --arg source "$source_type" \
+    --arg url "$url" \
+    '. + [{"name": $name, "source": $source, "url": $url}]')
+done < <(find /Applications -maxdepth 1 -name "*.app" -print0 2>/dev/null)
 
-# Check if the user canceled the operation
-if [ $? -eq 0 ]; then
-    # Update the installed-apps file with the selected applications
-    # Put each app on its own line while preserving spaces within app names
-    echo "$selected_apps" | tr -d '"' | sed 's/\.app /.app\n/g' > "$existing_apps"
-    echo "The installed-apps file has been updated."
-else
-    echo "Operation canceled."
+existing_names=$(echo "$all_apps_json" | jq -r '.[].name')
+while IFS= read -r entry; do
+  [ -z "$entry" ] && continue
+  name=$(echo "$entry" | jq -r '.name')
+  if ! echo "$existing_names" | grep -Fxq "$name"; then
+    all_apps_json=$(echo "$all_apps_json" | jq --argjson entry "$entry" '. + [$entry]')
+  fi
+done < <(echo "$existing_json" | jq -c '.[]')
+
+all_apps_json=$(echo "$all_apps_json" | jq 'sort_by(.name | ascii_downcase)')
+
+options=()
+existing_app_names=$(echo "$existing_json" | jq -r '.[].name')
+while IFS= read -r app_name; do
+  [ -z "$app_name" ] && continue
+  if echo "$existing_app_names" | grep -Fxq "$app_name"; then
+    options+=("$app_name" "" ON)
+  else
+    options+=("$app_name" "" OFF)
+  fi
+done < <(echo "$all_apps_json" | jq -r '.[].name')
+
+selected=$(whiptail --title "Select Installed Apps" --checklist \
+  "Choose which applications to keep in the list:" 30 78 20 \
+  "${options[@]}" 3>&1 1>&2 2>&3)
+
+if [ $? -ne 0 ]; then
+  echo "Operation canceled."
+  exit 0
 fi
 
-# Clean up
-rm "$current_apps"
+result="[]"
+while IFS= read -r name; do
+  [ -z "$name" ] && continue
+  entry=$(echo "$all_apps_json" | jq -c --arg n "$name" '[.[] | select(.name == $n)][0]')
+  [ "$entry" = "null" ] && continue
+  result=$(echo "$result" | jq --argjson e "$entry" '. + [$e]')
+done < <(echo "$selected" | sed 's/" "/"\n"/g' | tr -d '"')
+
+result=$(echo "$result" | jq 'sort_by(.name | ascii_downcase)')
+
+url_results_dir=$(mktemp -d)
+pending=0
+while IFS= read -r entry; do
+  [ -z "$entry" ] && continue
+  name=$(echo "$entry" | jq -r '.name')
+  url=$(echo "$entry" | jq -r '.url')
+  if [ -z "$url" ] && [ -f "$bundle_ids_dir/$name" ]; then
+    bundle_id=$(cat "$bundle_ids_dir/$name")
+    if [ -n "$bundle_id" ]; then
+      echo "  Looking up $name..."
+      (
+        store_url=$(lookup_appstore_url "$bundle_id")
+        if [ -n "$store_url" ]; then
+          printf '%s\n%s' "appstore" "$store_url" > "$url_results_dir/$name"
+        else
+          printf '%s\n' "web" > "$url_results_dir/$name"
+        fi
+      ) &
+      pending=$((pending + 1))
+    fi
+  fi
+done < <(echo "$result" | jq -c '.[]')
+
+if [ "$pending" -gt 0 ]; then
+  echo "  Waiting for $pending lookups..."
+  wait
+  for f in "$url_results_dir"/*; do
+    [ -f "$f" ] || continue
+    name=$(basename "$f")
+    src=$(head -1 "$f")
+    url=$(tail -1 "$f")
+    [ "$src" = "web" ] && url=""
+    result=$(echo "$result" | jq --arg n "$name" --arg s "$src" --arg u "$url" \
+      'map(if .name == $n then .source = $s | .url = $u else . end)')
+  done
+fi
+rm -rf "$bundle_ids_dir" "$url_results_dir"
+
+echo "$result" | jq '.' > "$JSON_FILE"
+echo "Updated $JSON_FILE with $(echo "$result" | jq length) apps."
