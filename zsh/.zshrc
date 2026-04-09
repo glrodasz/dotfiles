@@ -183,6 +183,19 @@ findport() {
     sudo lsof -n -i :$1 | egrep "LISTEN|PID"
 }
 
+# Kill all processes listening on given port(s)
+killport() {
+    for port in "$@"; do
+        local pids=$(sudo lsof -t -n -i :$port)
+        if [[ -n "$pids" ]]; then
+            echo "Killing processes on port $port: $pids"
+            echo "$pids" | xargs kill -9
+        else
+            echo "No processes found on port $port"
+        fi
+    done
+}
+
 # Find a process given a name
 findproc() {
     ps -fa | egrep "$1|PID"
