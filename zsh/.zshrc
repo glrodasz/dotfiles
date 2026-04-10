@@ -156,6 +156,7 @@ alias rmmodules="find . -name node_modules -type d -prune -exec rm -rf '{}' +"
 # Python
 alias py2="pyenv global 2"
 alias py3="pyenv global 3"
+alias pynit="source .venv/bin/activate"
 
 # System Utils
 alias rmorig="rm -rf **/*.orig"
