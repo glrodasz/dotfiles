@@ -131,6 +131,7 @@ alias gaem="g commit --allow-empty -m"
 alias gwip='g commit --all -m "chore: work in progress" -n'
 alias gwin='g add -A && g commit -m "chore: commit changes"'
 alias greb='git rebase -i $(git merge-base HEAD origin/main)'
+alias gfresh="gcm && g fetch && ggpull"
 
 # Node Version Manager
 alias nvmu="nvm use"
