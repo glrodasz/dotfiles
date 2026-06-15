@@ -133,6 +133,7 @@ alias gwin='g add -A && g commit -m "chore: commit changes"'
 alias greb='git rebase -i $(git merge-base HEAD origin/main)'
 alias gfresh="gcm && g fetch && ggpull"
 alias givscode="git update-index --assume-unchanged .vscode/settings.json; grep -qxF '.vscode/settings.json' .git/info/exclude || echo '.vscode/settings.json' >> .git/info/exclude"
+alias grvscode="git restore .vscode/settings.json"
 
 # Node Version Manager
 alias nvmu="nvm use"
