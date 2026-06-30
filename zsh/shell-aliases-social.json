@@ -1,0 +1,129 @@
+{
+  "meta": {
+    "author": "guillermo.rodas",
+    "source": "~/.zshrc",
+    "generated": "2026-06-30"
+  },
+  "entries": [
+    {
+      "name": "gwin",
+      "type": "alias",
+      "category": "git",
+      "command": "g add -A && g commit -m \"chore: commit changes\"",
+      "description": "Stage everything and commit in one shot",
+      "usage_frequency": "high"
+    },
+    {
+      "name": "gfresh",
+      "type": "alias",
+      "category": "git",
+      "command": "gcm && g fetch && ggpull",
+      "description": "Sync with main in one command: checkout + fetch + pull",
+      "usage_frequency": "high"
+    },
+    {
+      "name": "greb",
+      "type": "alias",
+      "category": "git",
+      "command": "git rebase -i $(git merge-base HEAD origin/main)",
+      "description": "Interactive rebase from the point your branch diverged from main",
+      "usage_frequency": "medium"
+    },
+    {
+      "name": "gaem",
+      "type": "alias",
+      "category": "git",
+      "command": "g commit --allow-empty -m",
+      "description": "Empty commit to trigger CI — gaem \"trigger ci\"",
+      "usage_frequency": "medium"
+    },
+    {
+      "name": "givscode",
+      "type": "alias",
+      "category": "git",
+      "command": "git update-index --assume-unchanged .vscode/settings.json; grep -qxF '.vscode/settings.json' .git/info/exclude || echo '.vscode/settings.json' >> .git/info/exclude",
+      "description": "Silence .vscode/settings.json from git without touching .gitignore",
+      "usage_frequency": "medium"
+    },
+    {
+      "name": "npmd / pnpmd / yarnd / denod",
+      "type": "alias",
+      "category": "dev",
+      "command": "npm run dev / pnpm run dev / yarn dev / deno run dev",
+      "description": "Universal dev server shortcut — same muscle memory across all package managers",
+      "usage_frequency": "high"
+    },
+    {
+      "name": "rmnpmi",
+      "type": "alias",
+      "category": "cleanup",
+      "command": "rm -rf node_modules && npm cache clean --force && npm i",
+      "description": "Nuclear npm reset: wipe node_modules, clear cache, reinstall",
+      "usage_frequency": "medium"
+    },
+    {
+      "name": "rmmodules",
+      "type": "alias",
+      "category": "cleanup",
+      "command": "find . -name node_modules -type d -prune -exec rm -rf '{}' +",
+      "description": "Recursively delete every node_modules folder in the current tree",
+      "usage_frequency": "medium"
+    },
+    {
+      "name": "secret",
+      "type": "alias",
+      "category": "utility",
+      "command": "openssl rand -hex 32",
+      "description": "Generate a cryptographically secure 32-byte hex secret instantly",
+      "usage_frequency": "medium"
+    },
+    {
+      "name": "findport",
+      "type": "function",
+      "category": "utility",
+      "command": "sudo lsof -n -i :$1 | egrep \"LISTEN|PID\"",
+      "description": "What process is listening on this port?",
+      "usage_frequency": "medium"
+    },
+    {
+      "name": "killport",
+      "type": "function",
+      "category": "utility",
+      "command": "for port in \"$@\"; do ... kill -9 $(lsof -t -n -i :$port); done",
+      "description": "Kill all processes on one or more ports — accepts multiple args",
+      "usage_frequency": "medium"
+    },
+    {
+      "name": "fbr",
+      "type": "function",
+      "category": "git",
+      "command": "git fetch && git branch -a | fzf | git checkout ...",
+      "description": "Fuzzy-find and checkout any local or remote branch via fzf",
+      "usage_frequency": "medium"
+    },
+    {
+      "name": "findproc",
+      "type": "function",
+      "category": "utility",
+      "command": "ps -fa | egrep \"$1|PID\"",
+      "description": "Find a running process by name using regex",
+      "usage_frequency": "low"
+    },
+    {
+      "name": "busy",
+      "type": "function",
+      "category": "fun",
+      "command": "while true; do ... fake npm install with progress bars ...; done",
+      "description": "Fake package installation animation — great for demos or looking busy",
+      "usage_frequency": "low"
+    },
+    {
+      "name": "lucky",
+      "type": "function",
+      "category": "fun",
+      "command": "fortune | cowsay -f $(random cow) | lolcat",
+      "description": "Random fortune from a random cow in rainbow colors",
+      "usage_frequency": "low"
+    }
+  ]
+}

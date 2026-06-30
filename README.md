@@ -1,6 +1,29 @@
 # ~dotfiles
 <img src="iterm.png" alt="iterm" width="600">
 
+## 🛠️ Makefile
+
+Run `make` or `make help` from `~/dotfiles` to list all targets.
+
+### Symlinks (`slink-*`)
+- `make slink` — symlink all configs (skills, zsh, vim)
+- `make slink-skills` — symlink `skills/*` into Cursor and Claude
+- `make slink-skills-cursor` — symlink skills into `~/.cursor/skills-cursor`
+- `make slink-skills-claude` — symlink skills into `~/.claude/skills`
+- `make slink-zsh` — symlink `~/.zshrc`
+- `make slink-vim` — symlink `~/.vimrc` and solarized colors
+
+### Install (`install-*`)
+- `make install` — install brew and npm packages from backups
+- `make install-brew` — install packages from `brew/packages`
+- `make install-npm` — install global npm packages
+
+### Backup (`backup-*`)
+- `make backup` — regenerate all backup files
+- `make backup-brew` — update `brew/packages` via interactive script
+- `make backup-apps` — update `apps/installed-apps.json` via interactive script
+- `make backup-npm` — print global npm packages for manual backup
+
 ## ⏰ Install steps in a new machine
 
 ### Install Fundamental Apps

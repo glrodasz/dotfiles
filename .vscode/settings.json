@@ -1,0 +1,19 @@
+{
+	"workbench.colorCustomizations": {
+		"glaze.active": "Catppuccin Frappé",
+		"[Catppuccin Frappé]": {
+			"titleBar.activeBackground": "#643133",
+			"titleBar.activeForeground": "#ddddea",
+			"titleBar.inactiveBackground": "#4d2b2e",
+			"titleBar.inactiveForeground": "#b7b3c3",
+			"titleBar.border": "#622b27",
+			"statusBar.background": "#713335",
+			"statusBar.foreground": "#ddddea",
+			"statusBar.border": "#6f2d2a",
+			"activityBar.background": "#49272b",
+			"activityBar.foreground": "#d6c5db",
+			"activityBar.activeBackground": "#461f1d",
+			"activityBar.activeBorder": "#461f1d"
+		}
+	}
+}
