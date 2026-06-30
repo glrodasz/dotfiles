@@ -13,6 +13,8 @@ flyctl
 fortune
 fzf
 gh
+git-filter-repo
+git-lfs
 gum
 httpie
 jq
@@ -23,11 +25,13 @@ kubectx
 kubernetes-cli
 kustomize
 lolcat
+mas
 mysql-client
 neofetch
 newt
 nmap
 node
+openjdk@21
 oven-sh/bun/bun
 pipx
 pnpm
@@ -46,6 +50,7 @@ uv
 watchman
 wget
 wrk
+xcodegen
 yarn
 yq
 z

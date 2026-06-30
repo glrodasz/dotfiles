@@ -120,6 +120,11 @@
     "url": "https://www.elgato.com/us/en/s/downloads"
   },
   {
+    "name": "Exporter",
+    "source": "appstore",
+    "url": "https://apps.apple.com/us/app/exporter/id1099120373?mt=12&uo=4"
+  },
+  {
     "name": "Figma",
     "source": "web",
     "url": "https://www.figma.com/downloads"
@@ -176,8 +181,8 @@
   },
   {
     "name": "iA Presenter",
-    "source": "",
-    "url": ""
+    "source": "appstore",
+    "url": "https://apps.apple.com/us/app/ia-presenter/id6450214174?uo=4"
   },
   {
     "name": "iHosts",
@@ -190,13 +195,18 @@
     "url": ""
   },
   {
+    "name": "Keka",
+    "source": "appstore",
+    "url": "https://apps.apple.com/us/app/keka/id470158793?mt=12&uo=4"
+  },
+  {
     "name": "Keystroke Pro",
     "source": "",
     "url": ""
   },
   {
     "name": "Kiro CLI",
-    "source": "",
+    "source": "web",
     "url": ""
   },
   {
@@ -210,14 +220,19 @@
     "url": ""
   },
   {
+    "name": "Loom",
+    "source": "web",
+    "url": ""
+  },
+  {
     "name": "Loopback",
     "source": "",
     "url": ""
   },
   {
     "name": "Lungo",
-    "source": "",
-    "url": ""
+    "source": "appstore",
+    "url": "https://apps.apple.com/us/app/lungo/id1263070803?mt=12&uo=4"
   },
   {
     "name": "Maccy",
@@ -251,7 +266,7 @@
   },
   {
     "name": "NordVPN",
-    "source": "",
+    "source": "web",
     "url": ""
   },
   {
@@ -296,18 +311,18 @@
   },
   {
     "name": "Postico 2",
-    "source": "",
+    "source": "web",
     "url": ""
   },
   {
     "name": "Postman",
-    "source": "",
+    "source": "web",
     "url": ""
   },
   {
     "name": "Pure Paste",
-    "source": "",
-    "url": ""
+    "source": "appstore",
+    "url": "https://apps.apple.com/us/app/pure-paste/id1611378436?mt=12&uo=4"
   },
   {
     "name": "Riverside Studio",
@@ -366,7 +381,7 @@
   },
   {
     "name": "Synergy",
-    "source": "",
+    "source": "web",
     "url": ""
   },
   {
@@ -385,6 +400,11 @@
     "url": "https://apps.apple.com/us/app/time-zone-converter-and-clock/id1255311569"
   },
   {
+    "name": "Timepass",
+    "source": "web",
+    "url": ""
+  },
+  {
     "name": "Unsplash Wallpapers",
     "source": "appstore",
     "url": "https://apps.apple.com/us/app/unsplash-wallpapers/id1284863847"
@@ -400,6 +420,11 @@
     "url": ""
   },
   {
+    "name": "Voicenotes",
+    "source": "web",
+    "url": ""
+  },
+  {
     "name": "Whimsical",
     "source": "",
     "url": ""
@@ -411,8 +436,8 @@
   },
   {
     "name": "Xcode",
-    "source": "",
-    "url": ""
+    "source": "appstore",
+    "url": "https://apps.apple.com/us/app/xcode/id497799835?mt=12&uo=4"
   },
   {
     "name": "YubiKey Manager",
