@@ -1,6 +1,9 @@
-# Install
+# Zsh
 
-## .zshrc
+Shell config from `~/dotfiles/zsh`.
+
+## Install
+
 ```bash
-ln -fs ~/dotfiles/zsh/.zshrc ~/.zshrc
+make slink-zsh
 ```

@@ -1,12 +1,19 @@
-# Install
+# npm
 
-## Backup packages
+Global npm package backup from `~/dotfiles/npm`.
+
+## Install
+
 ```bash
-npm list -g --depth 0
+make install-npm
 ```
 
-## Install packages
-```bash
-npm install -g public-ip-cli internal-ip-cli trash-cli vercel serve
-```
 > Install the packages using both the nvm LTS version and the OS Node version.
+
+## Backup
+
+```bash
+make backup-npm
+```
+
+Prints global packages for manual backup.
