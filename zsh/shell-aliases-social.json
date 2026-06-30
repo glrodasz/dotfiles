@@ -14,6 +14,14 @@
       "usage_frequency": "high"
     },
     {
+      "name": "gwip",
+      "type": "alias",
+      "category": "git",
+      "command": "g commit --all -m \"chore: work in progress\" -n",
+      "description": "Quick no-verify WIP commit of everything tracked",
+      "usage_frequency": "medium"
+    },
+    {
       "name": "gfresh",
       "type": "alias",
       "category": "git",
@@ -46,12 +54,28 @@
       "usage_frequency": "medium"
     },
     {
+      "name": "fbr",
+      "type": "function",
+      "category": "git",
+      "command": "git fetch && git branch -a | fzf | git checkout ...",
+      "description": "Fuzzy-find and checkout any local or remote branch via fzf",
+      "usage_frequency": "medium"
+    },
+    {
       "name": "npmd / pnpmd / yarnd / denod",
       "type": "alias",
       "category": "dev",
       "command": "npm run dev / pnpm run dev / yarn dev / deno run dev",
       "description": "Universal dev server shortcut — same muscle memory across all package managers",
       "usage_frequency": "high"
+    },
+    {
+      "name": "pyinit",
+      "type": "alias",
+      "category": "dev",
+      "command": "source .venv/bin/activate",
+      "description": "Activate the local Python venv without typing the full path",
+      "usage_frequency": "medium"
     },
     {
       "name": "rmnpmi",
@@ -70,11 +94,27 @@
       "usage_frequency": "medium"
     },
     {
+      "name": "rm",
+      "type": "alias",
+      "category": "cleanup",
+      "command": "trash",
+      "description": "Route rm through trash so deletes are recoverable, not gone forever",
+      "usage_frequency": "high"
+    },
+    {
       "name": "secret",
       "type": "alias",
       "category": "utility",
       "command": "openssl rand -hex 32",
       "description": "Generate a cryptographically secure 32-byte hex secret instantly",
+      "usage_frequency": "medium"
+    },
+    {
+      "name": "mostused",
+      "type": "alias",
+      "category": "utility",
+      "command": "history | awk '{print $2}' | sort | uniq -c | sort -nr | head -n 10",
+      "description": "Show your top 10 most-used commands from shell history",
       "usage_frequency": "medium"
     },
     {
@@ -94,19 +134,27 @@
       "usage_frequency": "medium"
     },
     {
-      "name": "fbr",
-      "type": "function",
-      "category": "git",
-      "command": "git fetch && git branch -a | fzf | git checkout ...",
-      "description": "Fuzzy-find and checkout any local or remote branch via fzf",
-      "usage_frequency": "medium"
-    },
-    {
       "name": "findproc",
       "type": "function",
       "category": "utility",
       "command": "ps -fa | egrep \"$1|PID\"",
       "description": "Find a running process by name using regex",
+      "usage_frequency": "low"
+    },
+    {
+      "name": "pythonver / nodever",
+      "type": "function",
+      "category": "utility",
+      "command": "curl api.github.com/repos/{python|nodejs}/.../tags | jq ...",
+      "description": "List the latest Python or Node release tags straight from GitHub",
+      "usage_frequency": "low"
+    },
+    {
+      "name": "cafe",
+      "type": "alias",
+      "category": "fun",
+      "command": "cat /dev/urandom | hexdump | grep \"ca fe\"",
+      "description": "Watch random bytes scroll until they spell 'ca fe' — pointless and mesmerizing",
       "usage_frequency": "low"
     },
     {
