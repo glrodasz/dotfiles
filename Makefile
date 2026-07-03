@@ -22,18 +22,20 @@ slink-skills: slink-skills-cursor slink-skills-claude ## Symlink skills into Cur
 
 slink-skills-cursor: ## Symlink skills into ~/.cursor/skills-cursor
 	@mkdir -p $(CURSOR_SKILLS)
+	@echo "Cursor"
 	@for s in $(SKILLS); do \
 		rm -rf "$(CURSOR_SKILLS)/$$s"; \
 		ln -s "$(DOTFILES)/skills/$$s" "$(CURSOR_SKILLS)/$$s"; \
-		echo "linked $$s -> cursor"; \
+		echo "  linked $$s"; \
 	done
 
 slink-skills-claude: ## Symlink skills into ~/.claude/skills
 	@mkdir -p $(CLAUDE_SKILLS)
+	@echo "Claude"
 	@for s in $(SKILLS); do \
 		rm -rf "$(CLAUDE_SKILLS)/$$s"; \
 		ln -s "$(DOTFILES)/skills/$$s" "$(CLAUDE_SKILLS)/$$s"; \
-		echo "linked $$s -> claude"; \
+		echo "  linked $$s"; \
 	done
 
 slink-zsh: ## Symlink ~/.zshrc
