@@ -1,35 +1,40 @@
 ---
 name: shell-aliases-social
-description: Regenerate ~/dotfiles/zsh/shell-aliases-social.json from the current ~/.zshrc — curated, universally-useful aliases and functions with usage frequency from shell history. Use when the user wants to refresh or update their shell aliases social media JSON.
+description: >
+  Regenerate a shareable shell-aliases JSON from the user's shell config — curated,
+  universally-useful aliases and functions with usage frequency from shell history.
+  Use when the user wants to refresh or update their shell aliases social media JSON.
 ---
 
 # Regenerate shell-aliases-social.json
 
-Read the current shell config and history, curate the most interesting and universally-useful aliases and functions, and overwrite `~/dotfiles/zsh/shell-aliases-social.json`.
+Read the user's shell config and history, curate the most interesting and universally-useful aliases and functions, and write them to a shareable JSON file.
 
-## Steps
+## Inputs (defaults, overridable by invocation args)
 
-1. **Read sources**
-   - `~/dotfiles/zsh/.zshrc` — main aliases and functions
-   - `~/.zshrc.local` — any local additions
-   - `~/.zsh_history` — for usage frequency (sample top 100 most-used commands)
+- **Shell config**: `~/.zshrc` (or the actual config, e.g. `~/dotfiles/zsh/.zshrc` if symlinked), plus `~/.zshrc.local` if present
+- **History**: `~/.zsh_history` — sample the top 100 most-used commands for frequency
+- **Output**: `<dotfiles repo>/zsh/shell-aliases-social.json`; if no dotfiles repo, ask where to write
+- **Author**: `git config user.name` (or GitHub handle) — never hardcode
 
-2. **Curate entries** — include an alias/function if it meets at least one criterion:
-   - Used frequently (appears often in shell history)
-   - Universally useful (any developer could benefit, not project-specific)
-   - Creative or fun (worth sharing for inspiration)
+## Curate entries
 
-   **Always skip:**
-   - Company-specific helpers (references to internal domains, project IDs, service accounts)
-   - Simple one-word wrappers with no added value
-   - Internal helper functions prefixed with `_`
+Include an alias/function if it meets at least one criterion:
+- Used frequently (appears often in shell history)
+- Universally useful (any developer could benefit, not project-specific)
+- Creative or fun (worth sharing for inspiration)
 
-3. **Write** `~/dotfiles/zsh/shell-aliases-social.json` using this schema:
+**Always skip:**
+- Anything referencing private/internal domains, project IDs, service accounts, hostnames, or credentials
+- Simple one-word wrappers with no added value
+- Internal helper functions prefixed with `_`
+
+## Schema
 
 ```json
 {
   "meta": {
-    "author": "guillermo.rodas",
+    "author": "<from git config>",
     "source": "~/.zshrc",
     "generated": "YYYY-MM-DD"
   },
@@ -46,8 +51,6 @@ Read the current shell config and history, curate the most interesting and unive
 }
 ```
 
-4. **Verify** — confirm the output is valid JSON and no sensitive information leaked into the file.
+## Verify & report
 
-## Output
-
-Overwrite `~/dotfiles/zsh/shell-aliases-social.json` and report a summary of what changed (added, removed, or updated entries) compared to the previous version.
+Confirm the output is valid JSON and no sensitive information leaked into the file — the output is typically committed to a public repo. Then report a summary of what changed (added, removed, updated entries) compared to the previous version.
