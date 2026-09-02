@@ -132,7 +132,6 @@ alias gwip='g commit --all -m "chore: work in progress" -n'
 alias gwin='g add -A && g commit -m "chore: commit changes"'
 alias greb='git rebase -i $(git merge-base HEAD origin/main)'
 alias gfresh="gcm && g fetch && ggpull"
-alias givscode="git update-index --assume-unchanged .vscode/settings.json; grep -qxF '.vscode/settings.json' .git/info/exclude || echo '.vscode/settings.json' >> .git/info/exclude"
 alias grvscode="git restore .vscode/settings.json"
 
 # Node Version Manager
@@ -173,6 +172,16 @@ alias secret="openssl rand -hex 32"
 #====================
 # Functions
 #====================
+# Ignore local .vscode/settings.json changes
+givscode() {
+    local exclude
+    exclude=$(git rev-parse --git-path info/exclude 2>/dev/null) || return 1
+    git update-index --assume-unchanged .vscode/settings.json
+    mkdir -p "${exclude:h}"
+    grep -qxF '.vscode/settings.json' "$exclude" 2>/dev/null ||
+        echo '.vscode/settings.json' >> "$exclude"
+}
+
 # Git branch fuzzy finder
 fbr() {
     git fetch
