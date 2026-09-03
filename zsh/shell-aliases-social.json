@@ -2,7 +2,7 @@
   "meta": {
     "author": "guillermo.rodas",
     "source": "~/.zshrc",
-    "generated": "2026-06-30"
+    "generated": "2026-09-03"
   },
   "entries": [
     {
@@ -67,6 +67,14 @@
       "category": "dev",
       "command": "npm run dev / pnpm run dev / yarn dev / deno run dev",
       "description": "Universal dev server shortcut — same muscle memory across all package managers",
+      "usage_frequency": "high"
+    },
+    {
+      "name": "nvmu",
+      "type": "alias",
+      "category": "dev",
+      "command": "nvm use",
+      "description": "Switch Node version to whatever .nvmrc demands, without the extra keystrokes",
       "usage_frequency": "high"
     },
     {
