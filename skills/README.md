@@ -20,3 +20,8 @@ Individual targets: `make slink-skills-cursor`, `make slink-skills-claude`.
 - `skills-audit` — reviews every skill here against that rubric and
   `skills-audit/references/house-style.md`, then standardizes them.
   Quick mechanical check: `python3 skills-audit/scripts/lint_skills.py`.
+
+## Sharing
+
+- `skills-social` — regenerates `skills-social.json`, a shareable catalog of every skill
+  here (category, tagline, trigger), for rendering a social-media card.
