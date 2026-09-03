@@ -8,16 +8,19 @@ description: >
 
 # Regenerate shell-aliases-social.json
 
-Read the user's shell config and history, curate the most interesting and universally-useful aliases and functions, and write them to a shareable JSON file.
+Read the user's shell config and history, curate the most interesting and
+universally-useful aliases and functions, and write them to a shareable JSON file.
 
 ## Inputs (defaults, overridable by invocation args)
 
-- **Shell config**: `~/.zshrc` (or the actual config, e.g. `~/dotfiles/zsh/.zshrc` if symlinked), plus `~/.zshrc.local` if present
+- **Shell config**: `~/.zshrc` (or the actual config, e.g. `~/dotfiles/zsh/.zshrc` if
+  symlinked), plus `~/.zshrc.local` if present
 - **History**: `~/.zsh_history` — sample the top 100 most-used commands for frequency
-- **Output**: `<dotfiles repo>/zsh/shell-aliases-social.json`; if no dotfiles repo, ask where to write
+- **Output**: `<dotfiles repo>/zsh/shell-aliases-social.json`; if no dotfiles repo, ask
+  where to write
 - **Author**: `git config user.name` (or GitHub handle) — never hardcode
 
-## Curate entries
+## Phase 1 — Curate entries
 
 Include an alias/function if it meets at least one criterion:
 - Used frequently (appears often in shell history)
@@ -25,11 +28,12 @@ Include an alias/function if it meets at least one criterion:
 - Creative or fun (worth sharing for inspiration)
 
 **Always skip:**
-- Anything referencing private/internal domains, project IDs, service accounts, hostnames, or credentials
+- Anything referencing private/internal domains, project IDs, service accounts,
+  hostnames, or credentials
 - Simple one-word wrappers with no added value
 - Internal helper functions prefixed with `_`
 
-## Schema
+## Phase 2 — Write the JSON
 
 ```json
 {
@@ -51,6 +55,12 @@ Include an alias/function if it meets at least one criterion:
 }
 ```
 
-## Verify & report
+## Phase 3 — Verify
 
-Confirm the output is valid JSON and no sensitive information leaked into the file — the output is typically committed to a public repo. Then report a summary of what changed (added, removed, updated entries) compared to the previous version.
+Confirm the output is valid JSON and no sensitive information leaked into the file — the
+output is typically committed to a public repo.
+
+## Report
+
+A summary of what changed (added, removed, updated entries) compared to the previous
+version.

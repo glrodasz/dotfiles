@@ -285,10 +285,10 @@ def lint_skill(skill_dir: Path) -> list[Finding]:
     # house-style structure
     if STEP_HEADING_RE.search(body) and not PHASE_HEADING_RE.search(body):
         add("style", "HS002", "H2 headings use 'Step N —'; house style uses 'Phase N —'")
-    if not re.search(r"^##\s+(verif|report|phase\s+\d+\s*[—–-]\s*verif)", body, re.I | re.M):
+    if not re.search(r"^##\s+(verif|report|phase\s+\d+\s*[—–-]\s*(verif|report))", body, re.I | re.M):
         add("style", "HS001", "no `## Verify` / `## Report` section — every skill ends by checking and reporting its work")
     if not re.search(r"^##\s+notes\s*&\s*edge cases", body, re.I | re.M):
-        add("style", "HS007", "no `## Notes & edge cases` section")
+        add("info", "HS007", "no `## Notes & edge cases` section (fine when there is nothing to put there)")
 
     return findings
 

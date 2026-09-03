@@ -1,53 +1,60 @@
 ---
 name: context7-mcp
-description: This skill should be used when the user asks about libraries, frameworks, API references, or needs code examples. Activates for setup questions, code generation involving libraries, or mentions of specific frameworks like React, Vue, Next.js, Prisma, Supabase, etc.
+description: >
+  Fetch current library and framework documentation through Context7 instead of answering
+  from training data. Use when the user asks about libraries, frameworks, API references,
+  or needs code examples — setup questions ("How do I configure Next.js middleware?"),
+  code generation involving libraries ("Write a Prisma query for…"), API references
+  ("What are the Supabase auth methods?"), or mentions of specific frameworks like React,
+  Vue, Next.js, Svelte, Express, Tailwind, Prisma, Supabase.
 ---
 
-When the user asks about libraries, frameworks, or needs code examples, use Context7 to fetch current documentation instead of relying on training data.
+# Context7 Documentation Lookup
 
-## When to Use This Skill
+When the user asks about libraries, frameworks, or needs code examples, use Context7 to
+fetch current documentation instead of relying on training data.
 
-Activate this skill when the user:
+## Phase 1 — Resolve the library ID
 
-- Asks setup or configuration questions ("How do I configure Next.js middleware?")
-- Requests code involving libraries ("Write a Prisma query for...")
-- Needs API references ("What are the Supabase auth methods?")
-- Mentions specific frameworks (React, Vue, Svelte, Express, Tailwind, etc.)
+Call `context7:resolve-library-id` with:
 
-## How to Fetch Documentation
+- `libraryName`: the library name extracted from the user's question
+- `query`: the user's full question (improves relevance ranking)
 
-### Step 1: Resolve the Library ID
-
-Call `resolve-library-id` with:
-
-- `libraryName`: The library name extracted from the user's question
-- `query`: The user's full question (improves relevance ranking)
-
-### Step 2: Select the Best Match
+## Phase 2 — Select the best match
 
 From the resolution results, choose based on:
 
 - Exact or closest name match to what the user asked for
 - Higher benchmark scores indicate better documentation quality
-- If the user mentioned a version (e.g., "React 19"), prefer version-specific IDs
+- If the user mentioned a version (e.g. "React 19"), prefer version-specific IDs
 
-### Step 3: Fetch the Documentation
+## Phase 3 — Fetch the documentation
 
-Call `query-docs` with:
+Call `context7:query-docs` with:
 
-- `libraryId`: The selected Context7 library ID (e.g., `/vercel/next.js`)
-- `query`: The user's specific question
+- `libraryId`: the selected Context7 library ID (e.g. `/vercel/next.js`)
+- `query`: the user's specific question
 
-### Step 4: Use the Documentation
+## Phase 4 — Answer with the docs
 
-Incorporate the fetched documentation into your response:
+Incorporate the fetched documentation into the response:
 
 - Answer the user's question using current, accurate information
 - Include relevant code examples from the docs
 - Cite the library version when relevant
 
-## Guidelines
+## Verify
 
-- **Be specific**: Pass the user's full question as the query for better results
-- **Version awareness**: When users mention versions ("Next.js 15", "React 19"), use version-specific library IDs if available from the resolution step
-- **Prefer official sources**: When multiple matches exist, prefer official/primary packages over community forks
+Before sending, confirm the answer rests on the fetched docs, not on memory: every API
+name or option mentioned appears in the `query-docs` result, and the version cited is the
+one that was resolved. If resolution or the query returned nothing useful, say so
+explicitly rather than answering from training data as if it were current.
+
+## Notes & edge cases
+
+- **Be specific**: pass the user's full question as the query for better results.
+- **Version awareness**: when users mention versions ("Next.js 15", "React 19"), use
+  version-specific library IDs if available from the resolution step.
+- **Prefer official sources**: when multiple matches exist, prefer official/primary
+  packages over community forks.
