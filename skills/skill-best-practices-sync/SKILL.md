@@ -73,7 +73,7 @@ per rule, tags on every line. Do not paste source prose in; distill it.
 - <hunk that was navigation noise, marketing, etc.>
 ```
 
-If nothing changed: a one-line "All 4 sources unchanged since <last fetched_at>."
+If nothing changed: a one-line "All <N> sources unchanged since <last fetched_at>."
 
 ## Notes & edge cases
 
@@ -91,4 +91,4 @@ If nothing changed: a one-line "All 4 sources unchanged since <last fetched_at>.
   in `normalize()` rather than ignoring the source.
 - **`[O2]` is low relevance**: only its skills, `AGENTS.md`, and common-mistakes sections
   matter. A big diff there is usually not a digest change.
-- Do not commit; the user decides when the dotfiles repo gets a commit.
+- **Commits**: do not commit; the user decides when the dotfiles repo gets a commit.

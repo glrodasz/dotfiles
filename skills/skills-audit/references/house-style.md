@@ -34,6 +34,8 @@ recent, most consistent skills (`branch-test-plan`, `branch-comment-cleanup`,
   goal and the guardrail (what is never touched, what is never written to disk).
 - Sections are H2, in this order when they apply:
   - `## Hard rules (never violate)` — numbered, only for skills that edit user files.
+  - `## Inputs` — default paths, sources and output, and how invocation args override
+    them; only for skills that take arguments or default paths.
   - `## Phase 0 — <Scope / Understand the target>` … `## Phase N — Verify` — em-dash
     (`—`) separator, "Phase" not "Step", sentence-case titles.
   - `## Report` — followed by a fenced template the model fills in. Report templates

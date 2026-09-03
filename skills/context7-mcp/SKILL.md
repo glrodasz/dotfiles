@@ -38,13 +38,9 @@ Call `context7:query-docs` with:
 
 ## Phase 4 — Answer with the docs
 
-Incorporate the fetched documentation into the response:
+Answer from the fetched docs: include their code examples and cite the resolved version.
 
-- Answer the user's question using current, accurate information
-- Include relevant code examples from the docs
-- Cite the library version when relevant
-
-## Verify
+## Phase 5 — Verify
 
 Before sending, confirm the answer rests on the fetched docs, not on memory: every API
 name or option mentioned appears in the `query-docs` result, and the version cited is the
@@ -53,8 +49,5 @@ explicitly rather than answering from training data as if it were current.
 
 ## Notes & edge cases
 
-- **Be specific**: pass the user's full question as the query for better results.
-- **Version awareness**: when users mention versions ("Next.js 15", "React 19"), use
-  version-specific library IDs if available from the resolution step.
 - **Prefer official sources**: when multiple matches exist, prefer official/primary
   packages over community forks.

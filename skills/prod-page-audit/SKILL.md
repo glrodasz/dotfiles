@@ -8,7 +8,7 @@ description: >
   social previews, or viewport issues.
 ---
 
-# Production Page Check
+# Production Page Audit
 
 Audit + auto-fix workflow for web pages before they go to production.
 

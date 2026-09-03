@@ -190,7 +190,3 @@ SPA Focus Reset  [PASS / FIXED / N/A]
   style definitions for `outline`.
 - **Next.js App Router**: route-change focus reset lives in a client component wrapping
   `usePathname()`; the skip-link target goes on `<main>` in `app/layout.tsx`.
-- **The three traps**: (1) `border-radius` in the global focus rule changes element shape
-  on focus; (2) `overflow: hidden` parents clip inner outlines — move the ring to the
-  parent via `:has(:focus-visible)`; (3) skip-link on `:focus` instead of `:focus-visible`
-  reveals on mouse click.

@@ -104,7 +104,8 @@ Only after a yes. For each approved skill:
 1. Edit `SKILL.md` in place. Keep every trigger phrase; keep every hard rule; keep the
    content order unless the fix *is* the order.
 2. Prefer the smallest diff that satisfies the rule: reflow a description into `>` form,
-   rename `Step N —` to `Phase N —`, add a missing `## Verify`, wrap long prose lines.
+   rename `Step N —` to `Phase N —`, add a missing `## Phase N — Verify`, wrap long prose
+   lines.
 3. When a skill's body is near the line budget, move the largest self-contained block
    into `references/<descriptive-name>.md`, add a Contents list if it exceeds 100 lines,
    and link it from SKILL.md with a "read this when…" sentence.
@@ -137,4 +138,4 @@ Report what was applied, what was skipped and why, and what remains in "Needs yo
   "verb + what — Use when …" is a Fix; adding *new* trigger phrases is Needs-your-call.
 - **Style findings are not failures.** A skill may deviate deliberately; say so in the
   report and move on when the user confirms.
-- Do not commit; the user decides when the dotfiles repo gets a commit.
+- **Commits**: do not commit; the user decides when the dotfiles repo gets a commit.

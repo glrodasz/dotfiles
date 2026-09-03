@@ -6,12 +6,14 @@ description: >
   Use when the user wants to refresh or update their shell aliases social media JSON.
 ---
 
-# Regenerate shell-aliases-social.json
+# Shell Aliases Social JSON
 
 Read the user's shell config and history, curate the most interesting and
 universally-useful aliases and functions, and write them to a shareable JSON file.
 
-## Inputs (defaults, overridable by invocation args)
+## Inputs
+
+Defaults; each is overridable by invocation args.
 
 - **Shell config**: `~/.zshrc` (or the actual config, e.g. `~/dotfiles/zsh/.zshrc` if
   symlinked), plus `~/.zshrc.local` if present
@@ -62,5 +64,17 @@ output is typically committed to a public repo.
 
 ## Report
 
-A summary of what changed (added, removed, updated entries) compared to the previous
-version.
+Compare against the previous version of the file and print:
+
+```
+## Shell aliases social — <date>
+
+### Added
+- <entry name — why it qualified>
+
+### Removed
+- <entry name — why it was dropped>
+
+### Updated
+- <entry name — what changed: command, description, or frequency>
+```

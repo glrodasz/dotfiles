@@ -99,10 +99,13 @@ Scenario table shape:
 - **P1** — edge cases and error paths
 - **P2** — cosmetic, rare, or low-blast-radius
 
-## Verification & output
+## Phase 5 — Verify
 
-- Before writing, confirm every cited path still exists — a stale `file:line` makes the
-  whole plan untrustworthy.
+Before writing, confirm every cited path still exists — a stale `file:line` makes the
+whole plan untrustworthy.
+
+## Report
+
 - Print the plan in the chat response. **Do not write files or post to GitHub as part of
   the run.**
 - After printing, offer two follow-ups and wait for an explicit yes:
