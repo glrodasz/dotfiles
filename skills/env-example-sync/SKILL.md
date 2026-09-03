@@ -1,5 +1,5 @@
 ---
-name: sync-env-example
+name: env-example-sync
 description: >
   Reorder a .env to mirror its .env.example, add missing keys as commented defaults, and
   quarantine .env-only lines. Use when the user wants to sync, mirror, align, or diff a
@@ -7,7 +7,7 @@ description: >
 disable-model-invocation: true
 ---
 
-# Sync .env to .env.example
+# Env Example Sync
 
 Make a `.env` mirror its `.env.example` so the two are trivially diffable, **without** ever
 changing the user's real values.

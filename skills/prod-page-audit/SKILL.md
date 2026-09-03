@@ -57,8 +57,8 @@ modern browsers.
 1. Extract brand identity: primary color from CSS custom properties or dominant styles;
    initials from `<title>` / `og:site_name`; any existing logo SVG.
 2. Generate an SVG favicon — brand initial(s) on a rounded rect in the primary color.
-3. Save as `favicon.svg`; convert to PNG/ICO with sharp, Jimp, or Pillow if available,
-   otherwise note conversion is a build-time step.
+3. Save as `favicon.svg`; convert to PNG/ICO with sharp in Node projects or Pillow in
+   Python projects. If neither is installed, note conversion is a build-time step.
 4. Inject the standard `<head>` links: SVG icon, 32×32 PNG, apple-touch-icon, manifest.
 5. Generate `site.webmanifest` if missing (name, short_name, 192/512 icons,
    theme/background color, `display: standalone`).
@@ -74,8 +74,9 @@ missing or placeholder, generate one:
 1. Pick the source by page type: article → hero image; product → product image;
    landing/portfolio → generate a branded card.
 2. Generate at 1200×630 with ~60px safe-zone padding: brand background, logo, title (max
-   2 lines), subtitle, site name/URL in a corner. Use sharp + resvg, Pillow, or an HTML
-   template screenshot at build time — whatever the project supports.
+   2 lines), subtitle, site name/URL in a corner. Render with sharp + resvg in Node
+   projects or Pillow in Python projects; fall back to an HTML template screenshot at
+   build time only when neither is installed.
 3. Save under `/public/og/` and inject `og:image` (+ width/height) and
    `twitter:card: summary_large_image`.
 

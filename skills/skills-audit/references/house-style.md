@@ -17,8 +17,7 @@ recent, most consistent skills (`branch-test-plan`, `branch-comment-cleanup`,
 - Fields: `name`, `description`, and only when the skill must never auto-trigger,
   `disable-model-invocation: true`. Nothing else.
 - Names are kebab-case noun phrases naming the deliverable or target
-  (`branch-test-plan`, `prod-page-audit`, `shell-aliases-social`). Verb-first names
-  (`sync-env-example`) are the exception, not the pattern.
+  (`branch-test-plan`, `prod-page-audit`, `env-example-sync`). No verb-first names.
 - `description` uses the YAML folded block (`description: >`) when it exceeds one line,
   wrapped at ~90 columns, indented two spaces.
 - Description shape, in order:

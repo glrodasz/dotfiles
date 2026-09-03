@@ -3,7 +3,9 @@ name: shell-aliases-social
 description: >
   Regenerate a shareable shell-aliases JSON from the user's shell config — curated,
   universally-useful aliases and functions with usage frequency from shell history.
-  Use when the user wants to refresh or update their shell aliases social media JSON.
+  Use when the user wants to refresh, update, regenerate, share, or export their shell
+  aliases, asks for the shell aliases social media JSON or aliases JSON, or wants a
+  shareable list of their zsh aliases and functions.
 ---
 
 # Shell Aliases Social JSON
