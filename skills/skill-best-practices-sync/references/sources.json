@@ -1,0 +1,48 @@
+{
+  "sources": [
+    {
+      "slug": "anthropic-skill-authoring",
+      "title": "Anthropic — Skill authoring best practices",
+      "url": "https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices",
+      "fetch_url": "https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices.md",
+      "format": "markdown",
+      "relevance": "primary",
+      "notes": "Canonical guide for Claude skills: frontmatter rules, progressive disclosure, workflows, checklist.",
+      "sha256": "542eee1e150ff7e2853099dd9e24b94626817d5a50ba50af4a4c35101a355f13",
+      "fetched_at": "2026-09-03T10:56:27Z"
+    },
+    {
+      "slug": "agentskills-best-practices",
+      "title": "agentskills.io — Best practices for skill creators",
+      "url": "https://agentskills.io/skill-creation/best-practices",
+      "fetch_url": "https://agentskills.io/skill-creation/best-practices.md",
+      "format": "markdown",
+      "relevance": "primary",
+      "notes": "Open Agent Skills spec. Adds gotchas sections, scoping, 500-line / 5k-token budget, procedures over declarations.",
+      "sha256": "8e78d596cf2b24eadcfea8e7a67dbf7b2a0f70953942849b8872664f9d69d836",
+      "fetched_at": "2026-09-03T10:56:27Z"
+    },
+    {
+      "slug": "openai-build-skills",
+      "title": "OpenAI — Build skills (ChatGPT / Codex)",
+      "url": "https://learn.chatgpt.com/docs/build-skills",
+      "fetch_url": "https://learn.chatgpt.com/docs/build-skills.md",
+      "format": "markdown",
+      "relevance": "secondary",
+      "notes": "Cross-vendor view of the same skill format; useful for portability (agents/openai.yaml, discovery locations).",
+      "sha256": "ffd4f91500ce922282187c133f5bdd4506a99e396407790fabe5d01603eff8d5",
+      "fetched_at": "2026-09-03T10:56:27Z"
+    },
+    {
+      "slug": "openai-codex-best-practices",
+      "title": "OpenAI — Codex best practices",
+      "url": "https://learn.chatgpt.com/guides/best-practices",
+      "fetch_url": "https://learn.chatgpt.com/guides/best-practices",
+      "format": "html",
+      "relevance": "secondary",
+      "notes": "General Codex usage guide; only the 'skills' and 'AGENTS.md' sections are relevant. No markdown endpoint (.md returns 404).",
+      "sha256": "c60193fdd41b798725a1f2fa81897898554de482f3e3a3b3e7e3550f4f001e63",
+      "fetched_at": "2026-09-03T10:57:43Z"
+    }
+  ]
+}
