@@ -45,23 +45,27 @@ export PYENV_ROOT="${PYENV_ROOT:-$HOME/.pyenv}"
 [[ -d "$PYENV_ROOT/bin" ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 [[ -d "$PYENV_ROOT/shims" ]] && export PATH="$PYENV_ROOT/shims:$PATH"
 
+# Deferred tool paths. Single quotes are required: zsh-defer -c evals the
+# string when the task runs, so $PATH and the *_HOME variables are read live
+# instead of being frozen at startup (which made each line overwrite the last).
+
+# Go path (binaries from `go install`, e.g. golines, golangci-lint, gotestsum)
+zsh-defer -c 'export GOPATH="$HOME/go"; export PATH="$GOPATH/bin:$PATH"'
+
 # Ruby-related Paths (RVM and additional Ruby binaries)
-zsh-defer export PATH="$HOME/.rvm/bin:/usr/local/opt/ruby/bin:$PATH"
+zsh-defer -c 'export PATH="$HOME/.rvm/bin:/usr/local/opt/ruby/bin:$PATH"'
 
 # MongoDB path
-zsh-defer export PATH="$PATH:/usr/local/mongodb/bin"
+zsh-defer -c 'export PATH="$PATH:/usr/local/mongodb/bin"'
 
 # Android SDK path
-zsh-defer export ANDROID_HOME=$HOME/Library/Android/sdk
-zsh-defer export PATH="$PATH:$ANDROID_HOME/emulator"
-zsh-defer export PATH="$PATH:$ANDROID_HOME/platform-tools"
+zsh-defer -c 'export ANDROID_HOME="$HOME/Library/Android/sdk"; export PATH="$PATH:$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools"'
 
 # Java OpenJDK path
-zsh-defer export PATH="/opt/homebrew/bin/java:$PATH"
-zsh-defer export JAVA_HOME="/opt/homebrew/opt/openjdk@21"
+zsh-defer -c 'export JAVA_HOME="/opt/homebrew/opt/openjdk@21"; export PATH="/opt/homebrew/bin/java:$PATH"'
 
 # Antigravity path
-zsh-defer export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
+zsh-defer -c 'export PATH="$HOME/.antigravity/antigravity/bin:$PATH"'
 
 #====================
 # OS-Specific Config
