@@ -1,0 +1,101 @@
+{
+  "meta": {
+    "author": "Guillermo Rodas",
+    "source": "~/dotfiles/skills",
+    "generated": "2026-09-03",
+    "count": 13
+  },
+  "entries": [
+    {
+      "name": "branch-test-plan",
+      "category": "git-workflow",
+      "description": "Turns a branch diff into a manual QA plan with regression checks",
+      "trigger": "before opening a PR",
+      "invocation": "/branch-test-plan"
+    },
+    {
+      "name": "reviewable-commits",
+      "category": "git-workflow",
+      "description": "Rebuilds a messy branch into a few logical, reviewable commits",
+      "trigger": "before asking for review",
+      "invocation": "/reviewable-commits"
+    },
+    {
+      "name": "stacked-pr-splitter",
+      "category": "git-workflow",
+      "description": "Redesigns an oversized PR as a set of small stacked pull requests",
+      "trigger": "when a PR is too big",
+      "invocation": "/stacked-pr-splitter"
+    },
+    {
+      "name": "branch-comment-cleanup",
+      "category": "code-quality",
+      "description": "Strips filler comments and makes the code explain itself instead",
+      "trigger": "tidying a diff before review",
+      "invocation": "/branch-comment-cleanup"
+    },
+    {
+      "name": "minimal-code-changes",
+      "category": "code-quality",
+      "description": "Keeps every edit surgical — no drive-by refactors or cleanups",
+      "trigger": "any edit to existing code",
+      "invocation": "/minimal-code-changes"
+    },
+    {
+      "name": "a11y-page-audit",
+      "category": "web-audit",
+      "description": "Audits a page for keyboard and screen-reader gaps, then fixes them",
+      "trigger": "before shipping a page",
+      "invocation": "/a11y-page-audit"
+    },
+    {
+      "name": "prod-page-audit",
+      "category": "web-audit",
+      "description": "Checks SEO, favicon, OG previews and mobile before you go live",
+      "trigger": "on the way to production",
+      "invocation": "/prod-page-audit"
+    },
+    {
+      "name": "context7-mcp",
+      "category": "tooling",
+      "description": "Pulls real library docs from Context7 instead of guessing from memory",
+      "trigger": "any library or framework question",
+      "invocation": "/context7-mcp"
+    },
+    {
+      "name": "env-example-sync",
+      "category": "tooling",
+      "description": "Aligns your .env with .env.example and flags the leftovers",
+      "trigger": "when you run it after pulling",
+      "invocation": "/env-example-sync"
+    },
+    {
+      "name": "shell-aliases-social",
+      "category": "meta",
+      "description": "Exports your best shell aliases as a shareable JSON catalog",
+      "trigger": "when sharing your dotfiles",
+      "invocation": "/shell-aliases-social"
+    },
+    {
+      "name": "skill-best-practices-sync",
+      "category": "meta",
+      "description": "Refreshes the upstream skill-authoring guides and the local digest",
+      "trigger": "before auditing your skills",
+      "invocation": "/skill-best-practices-sync"
+    },
+    {
+      "name": "skills-audit",
+      "category": "meta",
+      "description": "Reviews every skill against the best practices, then standardizes them",
+      "trigger": "after adding or editing a skill",
+      "invocation": "/skills-audit"
+    },
+    {
+      "name": "skills-social",
+      "category": "meta",
+      "description": "Exports your skills as a shareable JSON catalog for a social card",
+      "trigger": "when sharing your skills setup",
+      "invocation": "/skills-social"
+    }
+  ]
+}
