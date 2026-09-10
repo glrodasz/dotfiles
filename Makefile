@@ -3,9 +3,10 @@
 DOTFILES      := $(HOME)/dotfiles
 CURSOR_SKILLS := $(HOME)/.cursor/skills-cursor
 CLAUDE_SKILLS := $(HOME)/.claude/skills
+AGENTS_SKILLS := $(HOME)/.agents/skills
 SKILLS        := $(notdir $(patsubst %/,%,$(dir $(wildcard $(DOTFILES)/skills/*/SKILL.md))))
 
-.PHONY: help slink slink-skills slink-skills-cursor slink-skills-claude slink-zsh slink-vim \
+.PHONY: help slink slink-skills slink-skills-cursor slink-skills-claude slink-skills-agents slink-zsh slink-vim \
         install install-brew install-npm \
         backup backup-brew backup-apps backup-npm
 
@@ -18,7 +19,7 @@ help: ## List available targets
 
 slink: slink-skills slink-zsh slink-vim ## Symlink all dotfiles configs
 
-slink-skills: slink-skills-cursor slink-skills-claude ## Symlink skills into Cursor and Claude
+slink-skills: slink-skills-cursor slink-skills-claude slink-skills-agents ## Symlink skills into Cursor, Claude, and Agents
 
 slink-skills-cursor: ## Symlink skills into ~/.cursor/skills-cursor
 	@mkdir -p $(CURSOR_SKILLS)
@@ -35,6 +36,15 @@ slink-skills-claude: ## Symlink skills into ~/.claude/skills
 	@for s in $(SKILLS); do \
 		rm -rf "$(CLAUDE_SKILLS)/$$s"; \
 		ln -s "$(DOTFILES)/skills/$$s" "$(CLAUDE_SKILLS)/$$s"; \
+		echo "  linked $$s"; \
+	done
+
+slink-skills-agents: ## Symlink skills into ~/.agents/skills
+	@mkdir -p $(AGENTS_SKILLS)
+	@echo "Agents"
+	@for s in $(SKILLS); do \
+		rm -rf "$(AGENTS_SKILLS)/$$s"; \
+		ln -s "$(DOTFILES)/skills/$$s" "$(AGENTS_SKILLS)/$$s"; \
 		echo "  linked $$s"; \
 	done
 
