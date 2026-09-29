@@ -12,6 +12,17 @@ This links every skill in this folder into both `~/.cursor/skills-cursor` and `~
 
 Individual targets: `make slink-skills-cursor`, `make slink-skills-claude`.
 
+## Local skills
+
+Private or machine-specific skills go in `~/.skills.local/<name>/SKILL.md`. It works like
+`~/.zshrc.local`: the folder lives outside this repo, so it is never committed, and every
+step treats it as optional.
+
+- `make slink-skills` links them next to the repo skills (shown as `linked <name> (local)`).
+- `skills-audit` and `lint_skills.py` lint, read and fix them along with the rest.
+- `skills-social` leaves them out.
+- A local skill must not reuse a repo skill's name (lint error `XS003`).
+
 ## Keeping skills consistent
 
 - `skill-best-practices-sync` — refreshes the local copies of the upstream skill-authoring

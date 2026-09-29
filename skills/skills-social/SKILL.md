@@ -120,5 +120,7 @@ Compare against the previous version of the file and print:
 - **Stale symlinks**: `~/.claude/skills` can hold dangling links to renamed skills — never
   enumerate from there.
 - **Self-inclusion**: `skills-social` appears in its own output.
+- **Local skills**: `~/.skills.local` is private and machine-specific. Leave it out on
+  purpose, even though `make slink-skills` links it into `~/.claude/skills`.
 - **Image generation**: out of scope. The JSON is the deliverable, mirroring
   `zsh/shell-aliases-social.json` and the image rendered from it.

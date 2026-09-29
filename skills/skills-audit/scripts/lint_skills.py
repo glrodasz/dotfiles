@@ -2,10 +2,11 @@
 """Mechanical checks for every <skill>/SKILL.md under a skills root.
 
 Usage:
-  lint_skills.py [--root DIR] [--skill NAME ...] [--json]
+  lint_skills.py [--root DIR ...] [--skill NAME ...] [--json]
 
-Default root: the directory that contains this skill (i.e. ~/dotfiles/skills when run
-from the symlinked copy, because the path is resolved first).
+Default roots: the directory that contains this skill (i.e. ~/dotfiles/skills when run
+from the symlinked copy, because the path is resolved first), plus ~/.skills.local when
+it exists — private skills that are never tracked in git, like ~/.zshrc.local.
 
 Rules are tagged by severity:
   error  — the skill is invalid per the Anthropic / agentskills.io spec
@@ -310,7 +311,7 @@ def lint_collection(skill_dirs: list[Path]) -> list[Finding]:
         style = fields.get("__style__", {})
         n = fields.get("name")
         if isinstance(n, str):
-            names.setdefault(n, []).append(d.name)
+            names.setdefault(n, []).append(f"{d.parent.name}/{d.name}")
             if n.startswith(VERB_FIRST_NAMES):
                 verb_first.append(n)
         if "description" in style:
@@ -326,10 +327,11 @@ def lint_collection(skill_dirs: list[Path]) -> list[Finding]:
 
 
 # --- output ---------------------------------------------------------------------------------
+LOCAL_SKILLS_ROOT = Path.home() / ".skills.local"
 SEVERITY_ORDER = {"error": 0, "warn": 1, "style": 2, "info": 3}
 
 
-def render_markdown(findings: list[Finding], skill_dirs: list[Path]) -> str:
+def render_markdown(findings: list[Finding], skill_dirs: list[Path], local_dirs: set[Path]) -> str:
     out = [f"# Skills lint — {len(skill_dirs)} skills, {len(findings)} findings", ""]
     counts = {s: sum(1 for f in findings if f.severity == s) for s in SEVERITY_ORDER}
     out.append(" · ".join(f"{k}: {v}" for k, v in counts.items()))
@@ -339,7 +341,7 @@ def render_markdown(findings: list[Finding], skill_dirs: list[Path]) -> str:
         by_skill.setdefault(f.skill, []).append(f)
     for d in skill_dirs:
         items = sorted(by_skill.get(d.name, []), key=lambda f: (SEVERITY_ORDER[f.severity], f.rule, f.line or 0))
-        out.append(f"## {d.name}" + ("" if items else " — clean"))
+        out.append(f"## {d.name}" + (" (local)" if d in local_dirs else "") + ("" if items else " — clean"))
         for f in items:
             loc = f"{f.file}:{f.line}" if f.line else f.file
             out.append(f"- **{f.severity}** `{f.rule}` {f.message} _({loc})_")
@@ -354,21 +356,27 @@ def render_markdown(findings: list[Finding], skill_dirs: list[Path]) -> str:
 
 def main(argv: list[str]) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--root", type=Path, default=Path(__file__).resolve().parents[2], help="skills root (default: parent of this skill)")
+    ap.add_argument("--root", type=Path, action="append", help="skills root, repeatable (default: parent of this skill + ~/.skills.local if present)")
     ap.add_argument("--skill", action="append", default=[], help="only lint this skill (repeatable)")
     ap.add_argument("--json", action="store_true", help="emit JSON instead of markdown")
     args = ap.parse_args(argv[1:])
 
-    root = args.root.resolve()
-    skill_dirs = sorted(p.parent for p in root.glob("*/SKILL.md"))
+    repo_root = Path(__file__).resolve().parents[2]
+    if args.root:
+        roots = [r.resolve() for r in args.root]
+    else:
+        roots = [repo_root] + [p for p in [LOCAL_SKILLS_ROOT.resolve()] if p.is_dir()]
+    skill_dirs = sorted((p.parent for r in roots for p in r.glob("*/SKILL.md")), key=lambda d: (d.name, str(d)))
+    local_dirs = {d for d in skill_dirs if not d.is_relative_to(repo_root)}
+    where = ", ".join(str(r) for r in roots)
     if args.skill:
         missing = set(args.skill) - {d.name for d in skill_dirs}
         if missing:
-            print(f"no such skill(s) under {root}: {', '.join(sorted(missing))}", file=sys.stderr)
+            print(f"no such skill(s) under {where}: {', '.join(sorted(missing))}", file=sys.stderr)
             return 2
         skill_dirs = [d for d in skill_dirs if d.name in args.skill]
     if not skill_dirs:
-        print(f"no */SKILL.md found under {root}", file=sys.stderr)
+        print(f"no */SKILL.md found under {where}", file=sys.stderr)
         return 2
 
     findings: list[Finding] = []
@@ -380,7 +388,7 @@ def main(argv: list[str]) -> int:
     if args.json:
         print(json.dumps([asdict(f) for f in findings], indent=2))
     else:
-        print(render_markdown(findings, skill_dirs))
+        print(render_markdown(findings, skill_dirs, local_dirs))
     return 1 if any(f.severity == "error" for f in findings) else 0
 
 
