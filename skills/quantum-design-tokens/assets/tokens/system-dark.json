@@ -1,0 +1,261 @@
+{
+  "Colors": {
+    "Backgrounds": {
+      "principal": {
+        "$type": "color",
+        "$value": "{global.Colors.Support.Shark.950}"
+      },
+      "secondary": {
+        "$type": "color",
+        "$value": "{global.Colors.Support.Shark.900}"
+      },
+      "tertiary": {
+        "$type": "color",
+        "$value": "{global.Colors.Support.Shark.900}"
+      },
+      "subtle": {
+        "$type": "color",
+        "$value": "{global.Colors.Support.Shark.700}"
+      },
+      "neutral": {
+        "$type": "color",
+        "$value": "{global.Colors.Support.Shark.800}"
+      },
+      "contrast": {
+        "$type": "color",
+        "$value": "{global.Colors.Support.Shark.0}"
+      },
+      "atmosphere": {
+        "$type": "color",
+        "$value": "{global.Colors.Support.Shark.500}",
+        "$description": "Soft backdrop behind decorative illustrations: warm beige on light surfaces, smoky gray on dark ones."
+      }
+    },
+    "Foregrounds": {
+      "principal": {
+        "$type": "color",
+        "$value": "{global.Colors.Support.Shark.0}"
+      },
+      "secondary": {
+        "$type": "color",
+        "$value": "{global.Colors.Support.Shark.200}"
+      },
+      "tertiary": {
+        "$type": "color",
+        "$value": "{global.Colors.Support.Shark.300}"
+      },
+      "neutral": {
+        "$type": "color",
+        "$value": "{global.Colors.Support.Shark.200}"
+      },
+      "contrast": {
+        "$type": "color",
+        "$value": "{global.Colors.Support.Shark.900}"
+      },
+      "disabled": {
+        "$type": "color",
+        "$value": "{global.Colors.Support.Shark.500}"
+      }
+    },
+    "Typography": {
+      "Heading": {
+        "$type": "color",
+        "$value": "{global.Colors.Support.Shark.0}"
+      },
+      "Paragraph": {
+        "$type": "color",
+        "$value": "{global.Colors.Support.Shark.200}"
+      },
+      "Highlight": {
+        "$type": "color",
+        "$value": "{global.Colors.Schemas.Metal chartreuse.Chartreuse.400}"
+      },
+      "Alternative": {
+        "$type": "color",
+        "$value": "{global.Colors.Schemas.Metal chartreuse.Chartreuse.400}"
+      },
+      "Contrast": {
+        "$type": "color",
+        "$value": "{global.Colors.Support.Shark.900}"
+      },
+      "Link": {
+        "$type": "color",
+        "$value": "{global.Colors.Schemas.Metal chartreuse.Chartreuse.400}"
+      },
+      "disabled": {
+        "$type": "color",
+        "$value": "{global.Colors.Custom.Principal palette.500}"
+      }
+    },
+    "Borders": {
+      "strong": {
+        "$type": "color",
+        "$value": "{global.Colors.Support.Shark.600}"
+      },
+      "neutral": {
+        "$type": "color",
+        "$value": "{global.Colors.Support.Shark.700}"
+      },
+      "disabled": {
+        "$type": "color",
+        "$value": "{global.Colors.Support.Shark.800}"
+      },
+      "alternative": {
+        "$type": "color",
+        "$value": "{global.Colors.Schemas.Metal chartreuse.Chartreuse.400}"
+      },
+      "focus": {
+        "$type": "color",
+        "$value": "{global.Colors.Schemas.Metal chartreuse.Chartreuse.400}"
+      }
+    },
+    "Neutral": {
+      "high": {
+        "$type": "color",
+        "$value": "{global.Colors.Support.Shark.600}"
+      },
+      "principal": {
+        "$type": "color",
+        "$value": "{global.Colors.Support.Shark.500}"
+      },
+      "subtle": {
+        "$type": "color",
+        "$value": "{global.Colors.Support.Shark.400}"
+      },
+      "off": {
+        "$type": "color",
+        "$value": "{global.Colors.Support.Shark.600}"
+      }
+    },
+    "Complementary": {
+      "principal": {
+        "$type": "color",
+        "$value": "{global.Colors.Schemas.Metal chartreuse.Chartreuse.400}"
+      },
+      "subtle": {
+        "$type": "color",
+        "$value": "{global.Colors.Schemas.Metal chartreuse.Chartreuse.500}"
+      },
+      "off": {
+        "$type": "color",
+        "$value": "{global.Colors.Schemas.Metal chartreuse.Chartreuse.600}"
+      },
+      "high": {
+        "$type": "color",
+        "$value": "{global.Colors.Schemas.Metal chartreuse.Chartreuse.600}"
+      },
+      "deep": {
+        "$type": "color",
+        "$value": "{global.Colors.Schemas.Metal chartreuse.Chartreuse.400}",
+        "$description": "Gold for fine detail (thin lines, small marks) that must stay visible on light surfaces."
+      }
+    },
+    "Primary": {
+      "principal": {
+        "$type": "color",
+        "$value": "{global.Colors.Support.Shark.0}"
+      },
+      "subtle": {
+        "$type": "color",
+        "$value": "{global.Colors.Support.Shark.200}"
+      },
+      "off": {
+        "$type": "color",
+        "$value": "{global.Colors.Support.Shark.800}"
+      },
+      "high": {
+        "$type": "color",
+        "$value": "{global.Colors.Support.Shark.0}"
+      }
+    },
+    "Info": {
+      "high": {
+        "$type": "color",
+        "$value": "{global.Colors.Schemas.Metal chartreuse.Gunmetal.100}"
+      },
+      "low": {
+        "$type": "color",
+        "$value": "{global.Colors.Schemas.Metal chartreuse.Gunmetal.600}"
+      }
+    },
+    "Success": {
+      "high": {
+        "$type": "color",
+        "$value": "{global.Colors.Support.Shamrock.300}"
+      },
+      "low": {
+        "$type": "color",
+        "$value": "{global.Colors.Support.Shamrock.600}"
+      }
+    },
+    "Warning": {
+      "high": {
+        "$type": "color",
+        "$value": "{global.Colors.Support.Supernova.300}"
+      },
+      "low": {
+        "$type": "color",
+        "$value": "{global.Colors.Support.Supernova.600}"
+      }
+    },
+    "Danger": {
+      "high": {
+        "$type": "color",
+        "$value": "{global.Colors.Support.Geraldine.300}"
+      },
+      "low": {
+        "$type": "color",
+        "$value": "{global.Colors.Support.Geraldine.600}"
+      }
+    },
+    "Transparency": {
+      "primary": {
+        "$type": "color",
+        "$value": "{global.Colors.Support.Shark.opacity-light}"
+      },
+      "complementary": {
+        "$type": "color",
+        "$value": "{global.Colors.Schemas.Metal chartreuse.Chartreuse.opacity}"
+      },
+      "light": {
+        "$type": "color",
+        "$value": "{global.Colors.Support.Shark.opacity-light}"
+      },
+      "dark": {
+        "$type": "color",
+        "$value": "{global.Colors.Support.Shark.opacity-dark}"
+      }
+    },
+    "Fixed": {
+      "on-accent": {
+        "$type": "color",
+        "$value": "{global.Colors.Support.Shark.950}"
+      },
+      "on-dark": {
+        "$type": "color",
+        "$value": "{global.Colors.Support.Shark.0}",
+        "$description": "Theme-invariant light text for surfaces that stay dark in both themes."
+      },
+      "paper": {
+        "$type": "color",
+        "$value": "{global.Colors.Schemas.Flax sepia.Sepia.100}",
+        "$description": "Theme-invariant: physical-object material that must look the same in light and dark themes."
+      },
+      "paper-line": {
+        "$type": "color",
+        "$value": "{global.Colors.Schemas.Flax sepia.Sepia.200}",
+        "$description": "Theme-invariant: physical-object material that must look the same in light and dark themes."
+      },
+      "sheen": {
+        "$type": "color",
+        "$value": "{global.Colors.Support.Shark.opacity-light}",
+        "$description": "Theme-invariant translucent white for glossy highlights on physical objects."
+      },
+      "shade": {
+        "$type": "color",
+        "$value": "{global.Colors.Support.Shark.opacity-dark}",
+        "$description": "Theme-invariant translucent black for creases and shading on physical objects."
+      }
+    }
+  }
+}

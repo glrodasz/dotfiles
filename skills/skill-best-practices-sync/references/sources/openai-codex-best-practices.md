@@ -10,7 +10,7 @@ A useful way to think about this: start with the right context for the task, use
 ## Strong first use: Context and prompts
 
 
-Codex is already strong enough to be useful even when your prompt isn't perfect. You can often hand it a hard problem with minimal setup and still get a strong result. Clear prompting isn't required to get value, but it does make results more reliable, especially in larger codebases or higher-stakes tasks.
+Codex is already strong enough to be useful even when your prompt isn’t perfect. You can often hand it a hard problem with minimal setup and still get a strong result. Clear prompting isn’t required to get value, but it does make results more reliable, especially in larger codebases or higher-stakes tasks.
 
 
 If you work in a large or complex repository, the biggest unlock is giving Codex the right context for the task and a clear structure for what you want done.
@@ -28,10 +28,10 @@ A good default is to include four things in your prompt:
 - Done when: What should be true before the task is complete, such as tests passing, behavior changing, or a bug no longer reproducing?
 
 
-This helps Codex stay scoped, make fewer assumptions, and produce work that's easier to review.
+This helps Codex stay scoped, make fewer assumptions, and produce work that’s easier to review.
 
 
-Choose a reasoning level based on how hard the task is and test what works best for your workflow. Different users and tasks work best with different settings.
+Use GPT-6.1 Sol when available to your account and client, starting with the reasoning effort available by default in your client. Start with High for GPT-6 Luna or Light for GPT-6 Astra (`low` in configuration). Adjust based on the task and the result. See Models for available reasoning levels.
 
 
 - Low for faster, well-scoped tasks
@@ -56,7 +56,7 @@ A few approaches work well:
 Use Plan mode: For most users, this is the easiest and most effective option. Plan mode lets Codex gather context, ask clarifying questions, and build a stronger plan before implementation. Toggle with `/plan` or Shift+Tab.
 
 
-Ask Codex to interview you: If you have a rough idea of what you want but aren't sure how to describe it well, ask Codex to question you first. Tell it to challenge your assumptions and turn the fuzzy idea into something concrete before writing code.
+Ask Codex to interview you: If you have a rough idea of what you want but aren’t sure how to describe it well, ask Codex to question you first. Tell it to challenge your assumptions and turn the fuzzy idea into something concrete before writing code.
 
 
 Use a PLANS.md template: For more advanced workflows, you can configure Codex to follow a `PLANS.md` or execution-plan template for longer-running or multi-step work. For more detail, see the execution plans guide.
@@ -65,7 +65,7 @@ Use a PLANS.md template: For more advanced workflows, you can configure Codex to
 ## Make guidance reusable with `AGENTS.md`
 
 
-Once a prompting pattern works, the next step is to stop repeating it manually. That's where AGENTS.md comes in.
+Once a prompting pattern works, the next step is to stop repeating it manually. That’s where AGENTS.md comes in.
 
 
 Think of `AGENTS.md` as an open-format README for agents. It loads into context automatically and is the best place to encode how you and your team want Codex to work in a repository.
@@ -87,7 +87,7 @@ A good `AGENTS.md` covers:
 - What done means and how to verify work
 
 
-The `/init` slash command in the CLI is the quick-start command to scaffold a starter `AGENTS.md` in the current directory. It's a great starting point, but you should edit the result to match how your team actually builds, tests, reviews, and ships code.
+The `/init` slash command in the CLI is the quick-start command to scaffold a starter `AGENTS.md` in the current directory. It’s a great starting point, but you should edit the result to match how your team actually builds, tests, reviews, and ships code.
 
 
 You can create `AGENTS.md` files at different levels: a global `AGENTS.md` for personal defaults that sits in `~/.codex`, a repo-level file for shared standards, and more specific files in subdirectories for local rules. If there’s a more specific file closer to your current directory, that guidance wins.
@@ -124,7 +124,7 @@ A good starting pattern is:
 Codex ships with operating level sandboxing and has two key knobs that you can control. Approval mode determines when Codex asks for your permission to run a command and sandbox mode determines if Codex can read or write in the directory and what files the agent can access.
 
 
-If you're new to coding agents, start with the default permissions. Keep approval and sandboxing tight by default, then loosen permissions only for trusted repos or specific workflows once the need is clear.
+If you’re new to coding agents, start with the default permissions. Keep approval and sandboxing tight by default, then loosen permissions only for trusted repos or specific workflows once the need is clear.
 
 
 Note that the CLI, IDE extension, and ChatGPT desktop app all share the same configuration layers. Learn more on the sample configuration page.
@@ -136,7 +136,7 @@ Configure Codex for your real environment early. Many quality issues are really 
 ## Improve reliability with testing and review
 
 
-Don't stop at asking Codex to make a change. Ask it to create tests when needed, run the relevant checks, confirm the result, and review the work before you accept it.
+Don’t stop at asking Codex to make a change. Ask it to create tests when needed, run the relevant checks, confirm the result, and review the work before you accept it.
 
 
 Codex can do this loop for you, but only if it knows what “good” looks like. That guidance can come from either the prompt or `AGENTS.md`.
@@ -174,7 +174,7 @@ A useful option here is the slash command `/review`, which gives you a few ways 
 If you and your team have a `code_review.md` file and reference it from `AGENTS.md`, Codex can follow that guidance during review as well. This is a strong pattern for teams that want review behavior to stay consistent across repositories and contributors.
 
 
-Codex shouldn't just generate code. With the right instructions, it can also help test it, check it, and review it.
+Codex shouldn’t just generate code. With the right instructions, it can also help test it, check it, and review it.
 
 
 If you use GitHub Cloud, you can set up Codex to run code reviews for your PRs. At OpenAI, Codex reviews 100% of PRs. You can enable automatic reviews or have Codex reactively review when you @Codex.
@@ -183,7 +183,7 @@ If you use GitHub Cloud, you can set up Codex to run code reviews for your PRs. 
 ## Use MCPs for external context
 
 
-Use MCPs when the context Codex needs lives outside the repo. It lets Codex connect to the tools and systems you already use, so you don't have to keep copying and pasting live information into prompts.
+Use MCPs when the context Codex needs lives outside the repo. It lets Codex connect to the tools and systems you already use, so you don’t have to keep copying and pasting live information into prompts.
 
 
 Model Context Protocol, or MCP, is an open standard for connecting Codex to external tools and systems.
@@ -219,7 +219,7 @@ Once a workflow becomes repeatable, stop relying on long prompts or repeated bac
 Keep each skill scoped to one job. Start with 2 to 3 concrete use cases, define clear inputs and outputs, and write the description so it says what the skill does and when to use it. Include the kinds of trigger phrases a user would actually say.
 
 
-Don't try to cover every edge case up front. Start with one representative task, get it working well, then turn that workflow into a skill and improve from there. Include scripts or extra assets only when they improve reliability.
+Don’t try to cover every edge case up front. Start with one representative task, get it working well, then turn that workflow into a skill and improve from there. Include scripts or extra assets only when they improve reliability.
 
 
 A good rule of thumb: if you keep reusing the same prompt or correcting the same workflow, it should probably become a skill.
@@ -241,7 +241,7 @@ Skills are especially useful for recurring jobs like:
 - Standard debugging flows
 
 
-The `$skill-creator` skill is the best place to start to scaffold the first version of a skill. Keep the first version local while you iterate. When it's ready to share broadly, package it as a plugin. One of the most important parts of a skill is the description. It should say what the skill does and when to use it.
+The `$skill-creator` skill is the best place to start to scaffold the first version of a skill. Keep the first version local while you iterate. When it’s ready to share broadly, package it as a plugin. One of the most important parts of a skill is the description. It should say what the skill does and when to use it.
 
 
 Personal skills are stored in `$HOME/.agents/skills`, and shared team skills can be checked into `.agents/skills` inside a repository. This is especially helpful for onboarding new teammates.
@@ -272,7 +272,7 @@ Good candidates include:
 - Running repeatable analysis workflows on a schedule
 
 
-A useful rule is that skills define the method and scheduled tasks define the schedule. If a workflow still needs a lot of steering, turn it into a skill first. Once it's predictable, scheduling it can save time.
+A useful rule is that skills define the method and scheduled tasks define the schedule. If a workflow still needs a lot of steering, turn it into a skill first. Once it’s predictable, scheduling it can save time.
 
 
 Use scheduled tasks for reflection and maintenance, not just execution. Review recent chats, summarize repeated friction, and improve prompts, instructions, or workflow setup over time.
@@ -326,7 +326,7 @@ A few common mistakes to avoid when first using Codex:
 
 - Running live tasks on the same files without using Git worktrees
 
-- Scheduling a recurring task before it's reliable manually
+- Scheduling a recurring task before it’s reliable manually
 
 - Treating Codex like something you have to watch step by step instead of using it in parallel with your own work
 

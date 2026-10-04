@@ -41,8 +41,8 @@
       "format": "html",
       "relevance": "secondary",
       "notes": "General Codex usage guide; only the 'skills' and 'AGENTS.md' sections are relevant. No markdown endpoint (.md returns 404).",
-      "sha256": "c60193fdd41b798725a1f2fa81897898554de482f3e3a3b3e7e3550f4f001e63",
-      "fetched_at": "2026-09-03T10:57:43Z"
+      "sha256": "4f105e66325723266896deeb19c3ded496342570f21b12f96be76c047fb232d2",
+      "fetched_at": "2026-10-04T17:02:02Z"
     }
   ]
 }
