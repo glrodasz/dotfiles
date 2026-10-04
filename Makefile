@@ -5,6 +5,9 @@ CURSOR_SKILLS := $(HOME)/.cursor/skills-cursor
 CLAUDE_SKILLS := $(HOME)/.claude/skills
 AGENTS_SKILLS := $(HOME)/.agents/skills
 SKILLS        := $(notdir $(patsubst %/,%,$(dir $(wildcard $(DOTFILES)/skills/*/SKILL.md))))
+# ~/.skills.local holds private, machine-specific skills that are never tracked in git.
+LOCAL_SKILLS_DIR := $(HOME)/.skills.local
+LOCAL_SKILLS     := $(notdir $(patsubst %/,%,$(dir $(wildcard $(LOCAL_SKILLS_DIR)/*/SKILL.md))))
 
 .PHONY: help slink slink-skills slink-skills-cursor slink-skills-claude slink-skills-agents slink-zsh slink-vim \
         install install-brew install-npm \
@@ -29,6 +32,11 @@ slink-skills-cursor: ## Symlink skills into ~/.cursor/skills-cursor
 		ln -s "$(DOTFILES)/skills/$$s" "$(CURSOR_SKILLS)/$$s"; \
 		echo "  linked $$s"; \
 	done
+	@for s in $(LOCAL_SKILLS); do \
+		rm -rf "$(CURSOR_SKILLS)/$$s"; \
+		ln -s "$(LOCAL_SKILLS_DIR)/$$s" "$(CURSOR_SKILLS)/$$s"; \
+		echo "  linked $$s (local)"; \
+	done
 
 slink-skills-claude: ## Symlink skills into ~/.claude/skills
 	@mkdir -p $(CLAUDE_SKILLS)
@@ -38,6 +46,11 @@ slink-skills-claude: ## Symlink skills into ~/.claude/skills
 		ln -s "$(DOTFILES)/skills/$$s" "$(CLAUDE_SKILLS)/$$s"; \
 		echo "  linked $$s"; \
 	done
+	@for s in $(LOCAL_SKILLS); do \
+		rm -rf "$(CLAUDE_SKILLS)/$$s"; \
+		ln -s "$(LOCAL_SKILLS_DIR)/$$s" "$(CLAUDE_SKILLS)/$$s"; \
+		echo "  linked $$s (local)"; \
+	done
 
 slink-skills-agents: ## Symlink skills into ~/.agents/skills
 	@mkdir -p $(AGENTS_SKILLS)
@@ -46,6 +59,11 @@ slink-skills-agents: ## Symlink skills into ~/.agents/skills
 		rm -rf "$(AGENTS_SKILLS)/$$s"; \
 		ln -s "$(DOTFILES)/skills/$$s" "$(AGENTS_SKILLS)/$$s"; \
 		echo "  linked $$s"; \
+	done
+	@for s in $(LOCAL_SKILLS); do \
+		rm -rf "$(AGENTS_SKILLS)/$$s"; \
+		ln -s "$(LOCAL_SKILLS_DIR)/$$s" "$(AGENTS_SKILLS)/$$s"; \
+		echo "  linked $$s (local)"; \
 	done
 
 slink-zsh: ## Symlink ~/.zshrc

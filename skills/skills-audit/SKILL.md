@@ -1,8 +1,8 @@
 ---
 name: skills-audit
 description: >
-  Review every skill in ~/dotfiles/skills against the skill-authoring best practices and
-  the house style, report findings per skill, then standardize frontmatter, structure and
+  Review every skill in ~/dotfiles/skills and the private ~/.skills.local against the
+  skill-authoring best practices and the house style, report findings per skill, then standardize frontmatter, structure and
   wording — audit, fix, and verify, not just a report. Use when the user wants to review,
   audit, lint, standardize, or clean up their skills, asks whether a SKILL.md follows best
   practices, or after adding or editing a skill.
@@ -13,6 +13,10 @@ description: >
 Bring every `<skill>/SKILL.md` in the collection up to the same standard: valid per the
 spec, aligned with the distilled best practices, and written in the house style. Findings
 are reported first; files are only edited after an explicit yes.
+
+The collection is `~/dotfiles/skills` (tracked in git) plus `~/.skills.local` when it
+exists (private skills that are never committed, like `~/.zshrc.local`). The linter picks
+up both, and the lint output tags local skills with `(local)`.
 
 Two references drive the review — read both fully before judging anything:
 
@@ -52,7 +56,8 @@ The linter does not judge prose. Phase 2 does.
 
 ## Phase 2 — Read and judge
 
-Read each `SKILL.md` in full (plus any `references/` and `scripts/` it bundles) and answer,
+Read each `SKILL.md` in full, from both folders (plus any `references/` and `scripts/`
+it bundles), and answer,
 per skill, citing line numbers:
 
 - **Conciseness**: which sentences explain something the model already knows? Which
@@ -99,7 +104,9 @@ End with: "Apply the **Fix** items? (all / pick skills / none)".
 
 ## Phase 4 — Apply
 
-Only after a yes. For each approved skill:
+Only after a yes. Local skills have no git history, so if any approved skill is local,
+first run `rm -rf "$TMPDIR/skills.local.bak" && cp -R ~/.skills.local "$TMPDIR/skills.local.bak"`.
+Then, for each approved skill:
 
 1. Edit `SKILL.md` in place. Keep every trigger phrase; keep every hard rule; keep the
    content order unless the fix *is* the order.
@@ -118,7 +125,9 @@ Only after a yes. For each approved skill:
    was approved is gone; no new findings introduced.
 2. Re-read each edited description once more as a discovery signal: would the skill still
    trigger on every phrase it triggered on before?
-3. `git -C ~/dotfiles diff --stat skills/` — only the approved skills changed.
+3. `git -C ~/dotfiles diff --stat skills/` — only the approved repo skills changed. For
+   local skills: `diff -ru "$TMPDIR/skills.local.bak" ~/.skills.local` — only the approved
+   local skills changed.
 
 Report what was applied, what was skipped and why, and what remains in "Needs your call".
 
@@ -131,7 +140,11 @@ Report what was applied, what was skipped and why, and what remains in "Needs yo
   rest; do not exempt them.
 - **Cross-skill path**: `../skill-best-practices-sync/…` resolves because both skills live
   in `~/dotfiles/skills` and are symlinked side by side into `~/.claude/skills`. If the
-  path fails, run from `~/dotfiles/skills/skills-audit`.
+  path fails, run from `~/dotfiles/skills/skills-audit`. Always run from here, not from a
+  local skill's folder.
+- **Local skills** (`~/.skills.local`): untracked and never committed. The same rules and
+  fixes apply as for repo skills. A local skill that reuses a repo skill's name is an
+  `XS003` error: report it and suggest renaming the local skill.
 - **`disable-model-invocation: true`** is deliberate on skills the user wants to trigger
   manually — never remove it as a "cleanup".
 - **Descriptions shorter than the house shape** (e.g. `context7-mcp`): reshaping into

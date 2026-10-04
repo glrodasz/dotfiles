@@ -1,4 +1,4 @@
-# House style for skills in `~/dotfiles/skills`
+# House style for skills in `~/dotfiles/skills` and `~/.skills.local`
 
 Local conventions layered on top of the upstream best practices. Derived from the most
 recent, most consistent skills (`branch-test-plan`, `branch-comment-cleanup`,
