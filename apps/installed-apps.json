@@ -10,11 +10,6 @@
     "url": "https://apps.apple.com/us/app/1password-for-safari/id1569813296"
   },
   {
-    "name": "Alfred 5",
-    "source": "web",
-    "url": "https://www.alfredapp.com"
-  },
-  {
     "name": "Amazon Kindle",
     "source": "appstore",
     "url": "https://apps.apple.com/se/app/amazon-kindle-reading-app/id302584613"
@@ -107,7 +102,7 @@
   {
     "name": "Elgato Camera Hub",
     "source": "web",
-    "url": "https://www.elgato.com/en/gaming/downloads"
+    "url": "https://www.elgato.com/us/en/s/downloads"
   },
   {
     "name": "Elgato Control Center",
@@ -140,11 +135,6 @@
     "url": "https://www.firefox.com/en-US/channel/desktop/developer"
   },
   {
-    "name": "FlagTimes",
-    "source": "web",
-    "url": "https://www.flagtimes.com"
-  },
-  {
     "name": "Focusrite Control",
     "source": "web",
     "url": "https://downloads.focusrite.com/focusrite/scarlett-1st-gen/scarlett-solo-1st-gen"
@@ -157,7 +147,7 @@
   {
     "name": "Game Capture HD",
     "source": "web",
-    "url": "https://www.elgato.com/en/gaming/downloads"
+    "url": "https://www.elgato.com/us/en/s/downloads"
   },
   {
     "name": "Ghostty",
@@ -177,7 +167,7 @@
   {
     "name": "Google Drive",
     "source": "web",
-    "url": "https://support.google.com/a/users/answer/13022292"
+    "url": "https://workspace.google.com/products/drive/#download"
   },
   {
     "name": "iA Presenter",
@@ -186,13 +176,13 @@
   },
   {
     "name": "iHosts",
-    "source": "",
-    "url": ""
+    "source": "appstore",
+    "url": "https://apps.apple.com/us/app/ihosts-etc-hosts-editor/id1102004240"
   },
   {
     "name": "iTerm",
-    "source": "",
-    "url": ""
+    "source": "web",
+    "url": "https://iterm2.com/downloads.html"
   },
   {
     "name": "Keka",
@@ -201,33 +191,33 @@
   },
   {
     "name": "Keystroke Pro",
-    "source": "",
-    "url": ""
+    "source": "appstore",
+    "url": "https://apps.apple.com/us/app/keystroke-pro/id1572206224"
   },
   {
     "name": "Kiro CLI",
     "source": "web",
-    "url": ""
+    "url": "https://kiro.dev/cli/"
   },
   {
     "name": "lghub",
     "source": "web",
-    "url": ""
+    "url": "https://www.logitechg.com/en-us/software/ghub"
   },
   {
     "name": "logioptionsplus",
     "source": "web",
-    "url": ""
+    "url": "https://www.logitech.com/en-us/software/logi-options-plus"
   },
   {
     "name": "Loom",
     "source": "web",
-    "url": ""
+    "url": "https://www.loom.com/download"
   },
   {
     "name": "Loopback",
-    "source": "",
-    "url": ""
+    "source": "web",
+    "url": "https://rogueamoeba.com/loopback/"
   },
   {
     "name": "Lungo",
@@ -235,89 +225,69 @@
     "url": "https://apps.apple.com/us/app/lungo/id1263070803?mt=12&uo=4"
   },
   {
-    "name": "Maccy",
-    "source": "appstore",
-    "url": "https://apps.apple.com/us/app/maccy/id1527619437"
-  },
-  {
-    "name": "Magnet",
-    "source": "appstore",
-    "url": "https://apps.apple.com/us/app/magnet/id441258766"
-  },
-  {
-    "name": "Mate Translate",
-    "source": "web",
-    "url": ""
-  },
-  {
     "name": "Microsoft Edge",
-    "source": "",
-    "url": ""
-  },
-  {
-    "name": "Moom",
     "source": "web",
-    "url": "https://manytricks.com/moom"
+    "url": "https://www.microsoft.com/en-us/edge/download"
   },
   {
     "name": "MuteMe-Client",
     "source": "web",
-    "url": ""
+    "url": "https://muteme.com/pages/downloads"
   },
   {
     "name": "NordVPN",
     "source": "web",
-    "url": ""
+    "url": "https://nordvpn.com/download/mac/"
   },
   {
     "name": "Notion",
-    "source": "appstore",
+    "source": "web",
     "url": "https://www.notion.com/desktop"
   },
   {
     "name": "Notion Calendar",
     "source": "web",
-    "url": ""
+    "url": "https://www.notion.com/product/calendar/download"
   },
   {
     "name": "Numbers",
-    "source": "",
-    "url": ""
+    "source": "appstore",
+    "url": "https://apps.apple.com/us/app/numbers/id361304891"
   },
   {
     "name": "Numi",
-    "source": "",
-    "url": ""
+    "source": "web",
+    "url": "https://numi.app"
   },
   {
     "name": "OBS",
-    "source": "",
-    "url": ""
+    "source": "web",
+    "url": "https://obsproject.com/download"
   },
   {
     "name": "Ollama",
     "source": "web",
-    "url": ""
+    "url": "https://ollama.com/download/mac"
   },
   {
     "name": "Pika",
-    "source": "appstore",
+    "source": "web",
     "url": "https://superhighfives.com/pika"
   },
   {
     "name": "Pitch",
-    "source": "",
-    "url": ""
+    "source": "web",
+    "url": "https://pitch.com/download"
   },
   {
     "name": "Postico 2",
     "source": "web",
-    "url": ""
+    "url": "https://eggerapps.at/postico2/"
   },
   {
     "name": "Postman",
     "source": "web",
-    "url": ""
+    "url": "https://www.postman.com/downloads/"
   },
   {
     "name": "Pure Paste",
@@ -326,38 +296,38 @@
   },
   {
     "name": "Riverside Studio",
-    "source": "",
-    "url": ""
+    "source": "web",
+    "url": "https://riverside.com/mac-app"
   },
   {
     "name": "Robo 3T",
-    "source": "",
-    "url": ""
+    "source": "web",
+    "url": "https://github.com/Studio3T/robomongo/releases"
   },
   {
     "name": "RunJS",
-    "source": "",
-    "url": ""
+    "source": "web",
+    "url": "https://runjs.app"
   },
   {
     "name": "Safari",
     "source": "web",
-    "url": ""
+    "url": "https://www.apple.com/safari/"
   },
   {
     "name": "Safari Technology Preview",
-    "source": "",
-    "url": ""
+    "source": "web",
+    "url": "https://developer.apple.com/safari/resources/"
   },
   {
     "name": "Shottr",
     "source": "web",
-    "url": ""
+    "url": "https://shottr.cc"
   },
   {
     "name": "Signal",
     "source": "web",
-    "url": ""
+    "url": "https://signal.org/download/macos/"
   },
   {
     "name": "Slack",
@@ -366,8 +336,8 @@
   },
   {
     "name": "SoundSource",
-    "source": "",
-    "url": ""
+    "source": "web",
+    "url": "https://rogueamoeba.com/soundsource/"
   },
   {
     "name": "Spark Desktop",
@@ -376,23 +346,23 @@
   },
   {
     "name": "Spotify",
-    "source": "appstore",
+    "source": "web",
     "url": "https://www.spotify.com/us/download/other"
   },
   {
     "name": "Synergy",
     "source": "web",
-    "url": ""
+    "url": "https://symless.com/synergy/download"
   },
   {
     "name": "TestFlight",
-    "source": "",
-    "url": ""
+    "source": "appstore",
+    "url": "https://apps.apple.com/us/app/testflight/id899247664"
   },
   {
     "name": "The Unarchiver",
-    "source": "",
-    "url": ""
+    "source": "appstore",
+    "url": "https://apps.apple.com/us/app/the-unarchiver/id425424353"
   },
   {
     "name": "Time Zone Converter and Clock",
@@ -402,7 +372,7 @@
   {
     "name": "Timepass",
     "source": "web",
-    "url": ""
+    "url": "https://github.com/glrodasz/timepass"
   },
   {
     "name": "Unsplash Wallpapers",
@@ -411,28 +381,28 @@
   },
   {
     "name": "VirtualBox",
-    "source": "",
-    "url": ""
+    "source": "web",
+    "url": "https://www.virtualbox.org/wiki/Downloads"
   },
   {
     "name": "Visual Studio Code",
     "source": "web",
-    "url": ""
+    "url": "https://code.visualstudio.com/download"
   },
   {
     "name": "Voicenotes",
     "source": "web",
-    "url": ""
+    "url": "https://help.voicenotes.com/en/articles/15337357-get-started-on-voicenotes-mac-app"
   },
   {
     "name": "Whimsical",
-    "source": "",
-    "url": ""
+    "source": "web",
+    "url": "https://whimsical.com/download"
   },
   {
     "name": "Wondershare Filmora Mac",
-    "source": "",
-    "url": ""
+    "source": "web",
+    "url": "https://filmora.wondershare.com/download/"
   },
   {
     "name": "Xcode",
@@ -441,12 +411,12 @@
   },
   {
     "name": "YubiKey Manager",
-    "source": "",
-    "url": ""
+    "source": "web",
+    "url": "https://www.yubico.com/support/download/yubikey-manager/"
   },
   {
     "name": "zoom.us",
     "source": "web",
-    "url": ""
+    "url": "https://zoom.us/download"
   }
 ]

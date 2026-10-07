@@ -15,6 +15,7 @@ fzf
 gh
 git-filter-repo
 git-lfs
+go
 gum
 httpie
 jq
