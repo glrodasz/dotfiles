@@ -311,10 +311,10 @@ zsh-defer . "$HOME/.deno/env"
 
 # Google Cloud SDK
 if [ -f "$HOME/google-cloud-sdk/path.zsh.inc" ]; then 
-    zsh-defer _evalcache source "$HOME/google-cloud-sdk/path.zsh.inc"
+    zsh-defer source "$HOME/google-cloud-sdk/path.zsh.inc"
 fi
 if [ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]; then
-    zsh-defer _evalcache source "$HOME/google-cloud-sdk/completion.zsh.inc"
+    zsh-defer source "$HOME/google-cloud-sdk/completion.zsh.inc"
 fi
 
 # Docker CLI completions
