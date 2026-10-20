@@ -3,13 +3,12 @@ name: reviewable-commits
 description: >
   Reorganize the final diff of the current Git branch or pull request into a small sequence
   of logical, reviewable commits without preserving the accidental chronology of
-  development. Use when asked to split, rebuild, clean up, or improve commits for code
-  review; turn a large or WIP branch into coherent commits; squash fixups into their
-  intended change; or "separar una rama/PR en commits lógicos". Operate on local Git
-  repositories and optionally use GitHub CLI only to identify PR metadata. Preserve the
-  exact final code state, avoid unrelated refactors, create a safety snapshot before
-  rewriting history, verify the result, and never push rewritten history unless explicitly
-  requested.
+  development — local Git only (GitHub CLI just for PR metadata), exact final code state
+  preserved, no unrelated refactors, safety snapshot first, verified, never pushed unless
+  explicitly requested.
+  Use when the user asks to split, rebuild, clean up, or improve commits for code review;
+  turn a large or WIP branch into coherent commits; squash fixups into their intended
+  change; or "separar una rama/PR en commits lógicos".
 ---
 
 # Reviewable Commits
@@ -139,10 +138,11 @@ repository state.
 
 ## Phase 4 — Snapshot and flatten the branch
 
-Run the bundled helper from the skill directory:
+Run from the target repository root (the helper resolves the repo from the current
+directory, so never run it from the skill directory):
 
 ```bash
-python3 scripts/reviewable_commits.py prepare --base <base-ref> --apply
+python3 <skill-directory>/scripts/reviewable_commits.py prepare --base <base-ref> --apply
 ```
 
 Record the emitted state-file path and backup branch. The helper (standard library only,
@@ -204,10 +204,10 @@ Avoid subjects such as:
 
 ## Phase 7 — Verify the rebuilt history
 
-After all commits are created, run:
+After all commits are created, run from the target repository root:
 
 ```bash
-python3 scripts/reviewable_commits.py verify --state <state-file>
+python3 <skill-directory>/scripts/reviewable_commits.py verify --state <state-file>
 ```
 
 Then run the broadest practical project validation and inspect the resulting history:

@@ -36,7 +36,6 @@ safe merge order. Do not optimize for equal line counts.
     use them to hide a large human-authored change.
 11. Read and respect repository-local instructions such as `AGENTS.md`, `CLAUDE.md`,
     `CONTRIBUTING.md`, and relevant README files.
-12. Match the response language to the user's language.
 
 The budget exists because reviewer attention drops sharply past a few hundred lines: about
 1,000 reviewable lines is the most one reviewer can assess carefully in one sitting, and
@@ -67,7 +66,7 @@ requested.
 - Treat the original base as the stack trunk.
 - Never discard, reset, clean, or auto-stash uncommitted work. If the tree is dirty,
   continue in plan-only mode and state that local application is blocked.
-- Run the bundled analyzer when a Git repository is available:
+- When a Git repository is available, run (from the repository root):
 
 ```bash
 python3 <skill-directory>/scripts/analyze_pr.py --repo . --head HEAD --format json
@@ -218,9 +217,10 @@ Perform these steps only in Publish mode:
   `--force-with-lease` only when a requested stack operation requires it and the remote
   state has been checked.
 
-## Completion standard
+## Report
 
-Finish only when the result is one of these:
+Use the structure in `references/output-template.md`. Finish only when the result is one
+of these:
 
 - A compliant, fully specified split plan.
 - A locally created and equivalence-verified branch graph.

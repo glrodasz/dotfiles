@@ -12,6 +12,8 @@ description: >
 
 Read the user's shell config and history, curate the most interesting and
 universally-useful aliases and functions, and write them to a shareable JSON file.
+Nothing private (internal hosts, project IDs, credentials) reaches the file — it is
+committed to a public repo.
 
 ## Inputs
 
@@ -61,12 +63,14 @@ Include an alias/function if it meets at least one criterion:
 
 ## Phase 3 — Verify
 
-Confirm the output is valid JSON and no sensitive information leaked into the file — the
-output is typically committed to a public repo.
+1. Valid JSON: `python3 -m json.tool <output> >/dev/null`.
+2. No sensitive information leaked into the file — the output is typically committed to a
+   public repo. Remove any leaked entry and re-check until both pass.
 
 ## Report
 
-Compare against the previous version of the file and print:
+Compare against the committed version (`git -C <dotfiles repo> diff -- <output>`) and
+print:
 
 ```
 ## Shell aliases social — <date>

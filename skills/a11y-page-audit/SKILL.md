@@ -155,8 +155,9 @@ focusable children — the parent clips an outline that extends beyond its bound
 **Forms**: tab into every input (indicator visible), Enter submits, error states expose
 `aria-invalid` + linked messages.
 
-**Automated smoke test**: run axe DevTools or Lighthouse a11y. Treat the score as a
-regression catch, not a substitute for the manual walkthrough.
+**Automated smoke test**: run Lighthouse a11y (axe DevTools when Lighthouse is
+unavailable). Treat the score as a regression catch, not a substitute for the manual
+walkthrough.
 
 ## Report
 

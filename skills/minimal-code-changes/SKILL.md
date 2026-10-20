@@ -73,6 +73,7 @@ introducing a new abstraction.
 - Add comments or documentation only when required to explain new non-obvious behavior.
 - Preserve pre-existing user changes in the working tree.
 - Avoid destructive Git operations and never revert unrelated work.
+- Do not alter lockfiles unless dependency resolution actually changed.
 
 ## Phase 5 — Validate narrowly
 
@@ -137,28 +138,6 @@ A serious unrelated issue may be reported as a separate follow-up, but must not 
 into the patch without authorization unless leaving it untouched would make the requested
 implementation immediately unsafe.
 
-## Tool discipline
-
-- Prefer targeted edits over bulk replacements.
-- Scope formatter, lint, build, and test commands to the affected file or package when
-  possible.
-- Inspect `git diff` or the equivalent before completion.
-- Distinguish pre-existing changes from changes made for the current request.
-- Do not alter lockfiles unless dependency resolution actually changed.
-- Do not regenerate artifacts merely because tooling makes it convenient.
-
-## Report
-
-Keep the final report focused:
-
-```
-## <requested change> — <file or area>
-
-1. State what behavior changed and where.
-2. State which focused checks were run and their result.
-3. Mention an intentionally untouched adjacent issue only when it is important for the user to know.
-```
-
 ## Examples
 
 ### Add a timeout to one request
@@ -189,3 +168,15 @@ focused validation.
 
 **Do not:** extend the refactor into adjacent modules simply because they use similar
 code.
+
+## Report
+
+Keep the final report focused:
+
+```
+## <requested change> — <file or area>
+
+1. State what behavior changed and where.
+2. State which focused checks were run and their result.
+3. Mention an intentionally untouched adjacent issue only when it is important for the user to know.
+```

@@ -38,7 +38,7 @@ To preview without writing: `python3 scripts/sync_sources.py diff [slug]`.
 
 ## Phase 2 — Fold changes into the digest
 
-`references/best-practices.md` is a distilled rubric with a source tag on every rule
+`references/best-practices.md` is the distilled digest, with a source tag on every rule
 (`[A]` Anthropic, `[S]` agentskills.io, `[O1]` OpenAI build-skills, `[O2]` OpenAI Codex
 guide). For each diff hunk decide:
 

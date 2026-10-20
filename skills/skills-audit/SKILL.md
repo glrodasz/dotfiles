@@ -20,7 +20,7 @@ up both, and the lint output tags local skills with `(local)`.
 
 Two references drive the review — read both fully before judging anything:
 
-- `../skill-best-practices-sync/references/best-practices.md` — the upstream rubric
+- `../skill-best-practices-sync/references/best-practices.md` — the upstream digest
   (MUST/SHOULD, source-tagged). Owned by the `skill-best-practices-sync` skill.
 - `references/house-style.md` — the local conventions (layout, frontmatter shape,
   section order, tone).
@@ -39,7 +39,7 @@ Two references drive the review — read both fully before judging anything:
 Run: `python3 ../skill-best-practices-sync/scripts/sync_sources.py check`
 
 - All `UNCHANGED` → continue.
-- Any `CHANGED` / `NEW` → tell the user the rubric may be stale and offer to run the
+- Any `CHANGED` / `NEW` → tell the user the digest may be stale and offer to run the
   `skill-best-practices-sync` skill first. Continue with the current digest if they decline.
 - `FETCH-ERR` (offline) → note it in the report and continue.
 
@@ -129,7 +129,20 @@ Then, for each approved skill:
    local skills: `diff -ru "$TMPDIR/skills.local.bak" ~/.skills.local` — only the approved
    local skills changed.
 
-Report what was applied, what was skipped and why, and what remains in "Needs your call".
+Report what was applied, what was skipped and why, and what remains in "Needs your call":
+
+```
+## Skills audit — applied
+
+### Applied
+- <skill>: <fix, one line each>
+
+### Skipped
+- <skill>: <fix — why>
+
+### Needs your call
+- <skill>: <open item>
+```
 
 ## Notes & edge cases
 

@@ -45,11 +45,9 @@ touches its area:
 A feature that spans the stack (new entity end to end) needs all three; read
 [references/end-to-end-feature.md](references/end-to-end-feature.md) too and build in that order.
 
-## Workflow
+Follow Phases 1–6 every time you create, move, or name a file.
 
-Follow these steps every time you create, move, or name a file.
-
-### 1. Read the project first
+## Phase 1 — Read the project first
 
 Before writing anything, inspect the existing structure and record its conventions:
 
@@ -70,24 +68,29 @@ Before writing anything, inspect the existing structure and record its conventio
 The existing convention wins over this skill's defaults. A consistent project with
 slightly different labels is better than one with two competing styles.
 
-### 2. Identify the owner
+## Phase 2 — Identify the owner
 
 Ask what the code *knows about*, not what kind of file it is. See [Placement
 decision](#placement-decision).
 
-### 3. Place it
+## Phase 3 — Place it
 
 Put the file in the owning feature, or in the correct shared location if it has no domain
 owner.
 
-### 4. Name it
+## Phase 4 — Name it
 
 Match the project's established style. See [Naming](#naming).
 
-### 5. Check the dependency direction
+## Phase 5 — Check the dependency direction
 
 Confirm the new imports point the allowed way. See [Dependency
 direction](#dependency-direction).
+
+## Phase 6 — Verify
+
+Run the project's linter and type checker. Fix any import that breaks the direction
+rules or the build, then re-run until both pass.
 
 ## Where code lives
 
@@ -269,7 +272,7 @@ backend: router → service → repository/model → src/lib/
 everything may import → utils/, config/
 ```
 
-Hard rules:
+Import rules:
 
 - `utils/` never imports from `features/`, infrastructure, or the framework's routing.
 - Infrastructure (`api/`, `datasources/`, `lib/`) never imports from `features/`.
@@ -341,8 +344,6 @@ why (for example: "Kept `reorderTasks` in `features/tasks/helpers.js` because it
 `Task`").
 
 ## Notes & edge cases
-
-- **Feature-based project**: follow the workflow above.
 
 - **Layered project** (no features directory; everything under `components/`, `hooks/`,
   `utils/` or `routes/`, `services/`, `repositories/`): follow the layout that exists. Do

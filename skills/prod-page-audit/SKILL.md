@@ -2,10 +2,10 @@
 name: prod-page-audit
 description: >
   Run a production readiness audit on a web page or site and fix the gaps it finds —
-  covering SEO, favicon, Open Graph / social previews, and mobile optimization.
-  Use whenever the user asks for a production check, launch checklist, SEO or OG audit,
-  mobile readiness check, mentions going live, or asks about favicon, meta tags,
-  social previews, or viewport issues.
+  covering SEO, favicon, Open Graph / social previews, and mobile optimization. Use
+  whenever the user asks for a production check, launch checklist, SEO or OG audit, mobile
+  readiness check, mentions going live, or asks about favicon, meta tags, social previews,
+  or viewport issues.
 ---
 
 # Production Page Audit

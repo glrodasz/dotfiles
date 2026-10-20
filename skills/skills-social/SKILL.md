@@ -66,7 +66,7 @@ the model — never copy it verbatim.
     "author": "<from git config user.name>",
     "source": "~/dotfiles/skills",
     "generated": "YYYY-MM-DD",
-    "count": 13
+    "count": <N>
   },
   "entries": [
     {
@@ -85,7 +85,7 @@ produces a stable diff. Two-space indent, trailing newline.
 
 ## Phase 5 — Verify
 
-1. Valid JSON: `python3 -c "import json;json.load(open('skills-social.json'))"`.
+1. Valid JSON: `python3 -m json.tool <root>/skills-social.json >/dev/null`.
 2. `meta.count` equals the number of `entries` equals the number of `*/SKILL.md`
    directories under the root.
 3. Every `category` is in the fixed vocabulary, and no `description` exceeds 80
@@ -95,7 +95,8 @@ produces a stable diff. Two-space indent, trailing newline.
 
 ## Report
 
-Compare against the previous version of the file and print:
+Compare against the committed version (`git -C <root> diff -- skills-social.json`) and
+print:
 
 ```
 ## Skills social — <date>

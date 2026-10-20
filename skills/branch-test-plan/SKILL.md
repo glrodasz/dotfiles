@@ -101,8 +101,8 @@ Scenario table shape:
 
 ## Phase 5 — Verify
 
-Before writing, confirm every cited path still exists — a stale `file:line` makes the
-whole plan untrustworthy.
+Before printing the plan, confirm every cited path still exists — a stale `file:line`
+makes the whole plan untrustworthy.
 
 ## Report
 

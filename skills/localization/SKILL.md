@@ -101,7 +101,7 @@ request /about?utm=x
 
 The default locale is never prefixed (`/en/about` is a 404, not an alias). Pick one
 trailing-slash form per app (e.g. `/es` on an SPA, `/es/` on static directory output) and
-use it consistently in canonical, hreflang and the toggle. If your host serves `/es/`,
+use it consistently in canonical, hreflang and the toggle. If the host serves `/es/`,
 change the root case in `localizePath`.
 
 ## Core module
@@ -253,9 +253,10 @@ alternate falls back to the locale home.
 - **Links:** universal/deep links keep the web's `/es/...` shape, so shared links open in
   the right language everywhere.
 
-## Verify
+## Phase 1 — Verify
 
-Before reporting done, copy and tick:
+Before reporting done, copy and tick. Fix any unticked item and re-run the checklist
+before reporting.
 
 ```
 - [ ] The core passes the truth table, and there are no hand-written `'/es` strings outside `locale.ts`.

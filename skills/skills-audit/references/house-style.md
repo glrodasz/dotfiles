@@ -45,6 +45,9 @@ recent, most consistent skills (`branch-test-plan`, `branch-comment-cleanup`,
 - Prose wraps at ~90 columns. Code, tables, and URLs are exempt.
 - Commands are inline code with the exact invocation. Scripts are introduced with
   `Run:` (execute) or `See` (read as reference).
+- Bundled scripts that act on a target repo are run from that repo's root as
+  `python3 <skill-directory>/scripts/<script>` — never from the skill directory, where the
+  current directory would resolve to the dotfiles repo.
 - Checklists use `- [ ]` inside a fenced block when the model should copy and tick them.
 - Output goes to the chat response unless the skill's purpose is to write a file; any
   file write or external post is preceded by an explicit yes from the user.

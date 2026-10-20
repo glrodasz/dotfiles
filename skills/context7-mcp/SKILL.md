@@ -11,8 +11,8 @@ description: >
 
 # Context7 Documentation Lookup
 
-When the user asks about libraries, frameworks, or needs code examples, use Context7 to
-fetch current documentation instead of relying on training data.
+Answer from fetched docs. If Context7 returns nothing useful, say so rather than silently
+falling back to memory.
 
 ## Phase 1 — Resolve the library ID
 
@@ -28,6 +28,7 @@ From the resolution results, choose based on:
 - Exact or closest name match to what the user asked for
 - Higher benchmark scores indicate better documentation quality
 - If the user mentioned a version (e.g. "React 19"), prefer version-specific IDs
+- Prefer official/primary packages over community forks
 
 ## Phase 3 — Fetch the documentation
 
@@ -46,8 +47,3 @@ Before sending, confirm the answer rests on the fetched docs, not on memory: eve
 name or option mentioned appears in the `query-docs` result, and the version cited is the
 one that was resolved. If resolution or the query returned nothing useful, say so
 explicitly rather than answering from training data as if it were current.
-
-## Notes & edge cases
-
-- **Prefer official sources**: when multiple matches exist, prefer official/primary
-  packages over community forks.
