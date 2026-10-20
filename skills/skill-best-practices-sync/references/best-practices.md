@@ -50,7 +50,8 @@ else is a **SHOULD** — a judgment call that the audit reports but may leave al
 - SHOULD include the concrete trigger phrases a user would actually say, plus key domain
   terms, so the skill is picked out of a list of 100+. [A][O2]
 - SHOULD front-load the key use case and trigger words: Codex truncates descriptions when
-  the skills list exceeds 2% of the context window (8,000 chars if unknown). [O1]
+  the skills list exceeds its budget — by default 2% of the context window (8,000 chars
+  if unknown), configurable up to 10,000 tokens. [O1]
 - SHOULD state scope and boundaries — when it should and should *not* trigger. [O1]
 - Vague descriptions (`Helps with documents`, `Processes data`) are the canonical bad
   example. [A]

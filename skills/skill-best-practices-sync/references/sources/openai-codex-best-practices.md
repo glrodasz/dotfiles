@@ -295,7 +295,7 @@ The ChatGPT desktop app lets you pin chats and create worktrees. If you use the 
 
 - `/compact` when the chat is getting long and you want a summarized version of earlier context. Codex also compacts chats automatically
 
-- `/agent` when you are running parallel agents and want to switch between the active agent thread
+- `/subagents` to switch between the current chat’s subagent threads
 
 - `/theme` to choose a syntax highlighting theme
 

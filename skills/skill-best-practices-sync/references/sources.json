@@ -8,8 +8,8 @@
       "format": "markdown",
       "relevance": "primary",
       "notes": "Canonical guide for Claude skills: frontmatter rules, progressive disclosure, workflows, checklist.",
-      "sha256": "542eee1e150ff7e2853099dd9e24b94626817d5a50ba50af4a4c35101a355f13",
-      "fetched_at": "2026-09-03T10:56:27Z"
+      "sha256": "727f3fa1168eb1c33ce6a3cbfc94a02ef1dfd647388f6ca9daf7cb6294762f42",
+      "fetched_at": "2026-10-14T10:12:04Z"
     },
     {
       "slug": "agentskills-best-practices",
@@ -20,7 +20,7 @@
       "relevance": "primary",
       "notes": "Open Agent Skills spec. Adds gotchas sections, scoping, 500-line / 5k-token budget, procedures over declarations.",
       "sha256": "8e78d596cf2b24eadcfea8e7a67dbf7b2a0f70953942849b8872664f9d69d836",
-      "fetched_at": "2026-09-03T10:56:27Z"
+      "fetched_at": "2026-10-14T10:12:04Z"
     },
     {
       "slug": "openai-build-skills",
@@ -30,8 +30,8 @@
       "format": "markdown",
       "relevance": "secondary",
       "notes": "Cross-vendor view of the same skill format; useful for portability (agents/openai.yaml, discovery locations).",
-      "sha256": "ffd4f91500ce922282187c133f5bdd4506a99e396407790fabe5d01603eff8d5",
-      "fetched_at": "2026-09-03T10:56:27Z"
+      "sha256": "c084ba487f1b19f1dfc6708ea8767b8b7eed98dfb20385a80c9cfb13d7df0058",
+      "fetched_at": "2026-10-14T10:12:04Z"
     },
     {
       "slug": "openai-codex-best-practices",
@@ -41,8 +41,8 @@
       "format": "html",
       "relevance": "secondary",
       "notes": "General Codex usage guide; only the 'skills' and 'AGENTS.md' sections are relevant. No markdown endpoint (.md returns 404).",
-      "sha256": "4f105e66325723266896deeb19c3ded496342570f21b12f96be76c047fb232d2",
-      "fetched_at": "2026-10-04T17:02:02Z"
+      "sha256": "ad4d1918857f01394e3fdaf6565759c38ffa6313d1586f79b6267c768bc64637",
+      "fetched_at": "2026-10-14T10:12:04Z"
     }
   ]
 }
