@@ -15,10 +15,10 @@ import {
 } from './lib.mjs';
 
 const DAY = 86400e3;
-const STALE_DAYS = 182;
-const RECENT_DAYS = 90;
-const TOP_N = 15;
-const EXAMPLES_PER_RULE = 3;
+const STALE_DAYS = 182; // six months unseen, per the harvest spec
+const RECENT_DAYS = 90; // matches the default seed window; recent evidence ranks higher
+const TOP_N = 15; // what team-reviewer injects up front; the rest is read from index.md
+const EXAMPLES_PER_RULE = 3; // newest few show the pattern without bloating examples/
 
 const flags = parseFlags(process.argv.slice(2), { boolean: ['commit', 'force'] });
 ensureStore();

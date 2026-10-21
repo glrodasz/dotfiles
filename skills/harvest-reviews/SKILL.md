@@ -21,6 +21,7 @@ leave this computer. Nothing is posted to GitHub, and nothing outside the store 
 ## Inputs
 
 - **Arguments**: `$ARGUMENTS`
+- **Requires**: `gh` (authenticated) and Node 18+; no npm packages
 - **Store**: `${CLAUDE_SKILL_DIR}/../team-reviewer/.review-harvest/` — gitignored in the
   dotfiles repo, per computer. Override with `REVIEW_HARVEST_DIR`. Layout:
   - `state.json` — watermark per filter set, seen item ids, run log, pending fetch
@@ -66,7 +67,8 @@ genuinely ambiguous:
    `Next batch` line until done.
 2. Read `rules.json` (it may not exist yet) so you map items to existing rule ids
    before inventing new ones.
-3. For every item write one line to `classified/<today>.jsonl` (append if it exists):
+3. For every item write one line to `classified/<today>.jsonl` in the store (append if
+   it exists):
    ```json
    {"id":"PRRT_…","category":"tests","outcome":"changed","scope":"rule","ruleId":"tests-cover-error-path","stance":"supports"}
    ```
@@ -81,8 +83,8 @@ genuinely ambiguous:
      explicitly accepted the opposite); `false-positive` (a reviewer said *not* to flag
      something — `ruleId` points to a `kind: "false-positive"` entry); `none` for
      one-offs and noise, with `ruleId: null`
-4. Write every item, including noise, so the run can be committed. Judge `outcome` from
-   the follow-up patch and the replies, not from `isResolved` alone.
+4. Write every item, including noise, so the run can be marked processed. Judge
+   `outcome` from the follow-up patch and the replies, not from `isResolved` alone.
 
 ## Phase 3 — Merge into rules.json
 
@@ -113,8 +115,9 @@ genuinely ambiguous:
 
 1. Run: `node ${CLAUDE_SKILL_DIR}/scripts/render.mjs --commit`. It recomputes evidence
    count, last seen, contradicted and stale status, regenerates the markdown and the
-   top-15 list that `team-reviewer` injects, advances the watermark, and prints added /
-   changed / removed rules plus the `rules.md` diff.
+   top-15 list that `team-reviewer` injects, marks the run processed (`--commit` advances
+   the watermark in `state.json`; it is not a git commit), and prints added / changed /
+   removed rules plus the `rules.md` diff.
 2. If it says `NOT committed`, classify the missing ids and rerun. Use `--force` only
    when the user agrees to drop them.
 3. Fix every warning it prints (unknown category, dangling `ruleId`) and rerun.

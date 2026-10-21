@@ -14,17 +14,20 @@ Review a change the way this team's human reviewers would, applying the rules di
 from their comments by `/harvest-reviews`. Report only — never edit the code, never post
 to GitHub. The rules live in a per-computer, gitignored store next to this file.
 
-## Learned rules (top 15)
+## Inputs
+
+### Learned rules (top 15)
 
 !`sh ${CLAUDE_SKILL_DIR}/scripts/context.sh rules`
 
-Every rule, one line each with evidence counts: `${CLAUDE_SKILL_DIR}/.review-harvest/index.md`.
-Details per rule (why, before→after hunk): `${CLAUDE_SKILL_DIR}/.review-harvest/rules.md`.
-Things not to flag:
-`${CLAUDE_SKILL_DIR}/.review-harvest/false-positives.md`. Real examples per category
-(reviewer, project, code, comment, fix): `${CLAUDE_SKILL_DIR}/.review-harvest/examples/`.
+The rest of the store, in `${CLAUDE_SKILL_DIR}/.review-harvest/`:
 
-## Current branch diff
+- `index.md` — every rule, one line each, with evidence counts
+- `rules.md` — details per rule: why, evidence, before→after hunk
+- `false-positives.md` — things reviewers said not to flag
+- `examples/<category>.md` — real cases: reviewer, project, code, comment, fix
+
+### Current branch diff
 
 !`sh ${CLAUDE_SKILL_DIR}/scripts/context.sh diff`
 
@@ -67,6 +70,15 @@ Things not to flag:
 6. Every finding needs a concrete `file:line` in the new code and a one-line fix. No
    findings without a location, no restating the diff.
 
+## Phase 3 — Verify
+
+1. Re-open each cited `file:line` and confirm the finding still holds in the new code,
+   not in a removed line or context the diff left untouched.
+2. Drop any finding that matches `false-positives.md` or that the stated intent from
+   Phase 0 already explains.
+3. Check every `Rule:` id exists in `index.md`; a finding without a matching rule moves
+   to **Novel**.
+
 ## Report
 
 ```markdown
@@ -101,4 +113,5 @@ Omit empty sections. If nothing is found, say so plainly — don't invent nits.
 - **Seeding**: the store is per computer. On a new machine run `/harvest-reviews 90d`
   in the team repo first.
 - **Rule disagreement**: if the user says a rule is wrong, suggest the next
-  `/harvest-reviews` run, or edit `rules.json` in the store and rerun its render script.
+  `/harvest-reviews` run, or edit `rules.json` in the store and rerun
+  `node ${CLAUDE_SKILL_DIR}/../harvest-reviews/scripts/render.mjs`.

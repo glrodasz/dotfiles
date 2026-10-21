@@ -23,19 +23,20 @@ const KNOWN_BOTS = new Set([
 ]);
 const TRIVIAL_RE =
   /^\s*(lgtm|looks good( to me)?|approved?|ship ?it|:shipit:|nice( work| one)?|thanks?( you)?|ty|great( work| job)?|done|fixed|\+1|👍|🚀|✅|🎉|💯|🔥)[\s!.:)]*$/i;
-const MAX_PATCH_LINES = 80;
-const MAX_ATTEMPTS = 5;
+const MAX_PATCH_LINES = 80; // enough to show the fix; keeps raw JSONL small enough to digest
+const MAX_ATTEMPTS = 5; // exponential backoff 2s→16s rides out a reset or a secondary rate limit
 const PR_CACHE_TTL = 86400e3; // a crashed run resumes from cache for a day
 const COMMIT_CACHE_TTL = 7 * 86400e3; // commits are immutable; just bound the size
 const TRANSIENT_RE =
   /connection reset|ECONNRESET|ETIMEDOUT|timeout|EOF|TLS|HTTP 5\d\d|\b50[234]\b|secondary rate limit|rate limit|abuse|submitted too quickly|RATE_LIMITED|something went wrong/i;
-const MAX_COMMITS_PER_THREAD = 3;
-const CONCURRENCY = 4;
+const MAX_COMMITS_PER_THREAD = 3; // the fix is almost always in the first follow-up commits
+const CONCURRENCY = 4; // stays under GitHub's secondary rate limit on concurrent requests
 
 const flags = parseFlags(process.argv.slice(2), {
   repeatable: ['repo', 'path', 'reviewer', 'exclude-user'],
   boolean: ['rescan'],
 });
+// ~300 PRs yields a few hundred items: about what one classification pass handles well.
 const limit = Number(flags.limit ?? 300);
 const excludeUsers = new Set(flags['exclude-user'].map((u) => u.toLowerCase()));
 const reviewers = new Set(flags.reviewer.map((u) => u.toLowerCase()));
