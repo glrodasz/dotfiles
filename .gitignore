@@ -2,3 +2,6 @@
 .idea
 **/.claude/settings.local.json
 **/.claude/scheduled_tasks.lock
+
+# Per-computer review-harvest store (team-reviewer / harvest-reviews skills)
+.review-harvest/
