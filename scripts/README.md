@@ -69,4 +69,4 @@ Without `--private`, private repos are skipped.
 ./scripts/harden-repos.sh --private=strict my-team-repo  # specific repos only
 ```
 
-> The classic rule is deleted only after the ruleset applies successfully. Wildcard classic rules are reported, never deleted. Rulesets on private repos need GitHub Pro (personal) or Team (org); on Free that step fails and the rest still applies.
+> The classic rule is deleted only after the ruleset applies successfully. Wildcard classic rules are reported, never deleted. Rulesets (and classic protection) on private repos need GitHub Pro (personal) or Team (org); on Free that step is skipped, the rest still applies, and the unprotected repos are listed at the end.

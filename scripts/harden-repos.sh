@@ -27,8 +27,9 @@
 # for a rule whose pattern is exactly the default branch name. Wildcard rules
 # (e.g. "*", "ma*") are reported, not deleted. Skip removal with --keep-classic.
 #
-# Rulesets on private repos need GitHub Pro (personal) or Team (org). On Free, the
-# ruleset step fails with an upgrade message and the rest still applies.
+# Rulesets (and classic protection) on private repos need GitHub Pro (personal) or
+# Team (org). On Free, the ruleset step is skipped, the rest still applies, and the
+# unprotected repos are listed at the end.
 #
 # Requirements: gh (logged in as the repo owner), jq
 # Usage:
@@ -135,6 +136,8 @@ cat > "$TMP/security.json" <<'JSON'
 JSON
 
 FAILURES=0
+PRIVATE_RULESETS_UNSUPPORTED=false
+UNPROTECTED=()
 
 fail_msg() { head -c 200 "$TMP/err" | tr '\n' ' '; }
 
@@ -250,24 +253,44 @@ for repo in "${REPOS[@]}"; do
   else
     ruleset_file="$TMP/ruleset-full.json";  ruleset_desc="full"
   fi
-  # gh prints the error body to stdout on failure, so only trust output on success
-  existing_id=""
-  if rulesets_json="$(gh api "$R/rulesets" 2>/dev/null)"; then
-    existing_id="$(echo "$rulesets_json" | jq -r --arg n "$RULESET_NAME" \
-      '.[] | select(.name == $n) | .id' | head -n1)"
-  fi
-  if [ -n "$existing_id" ]; then
-    step "Update ruleset '$RULESET_NAME' ($ruleset_desc)" -X PUT "$R/rulesets/$existing_id" --input "$ruleset_file"
+  ruleset_ok=1
+  ruleset_unsupported=false
+  if [ "$profile" != public ] && $PRIVATE_RULESETS_UNSUPPORTED; then
+    ruleset_unsupported=true
   else
-    step "Create ruleset '$RULESET_NAME' ($ruleset_desc)" -X POST "$R/rulesets" --input "$ruleset_file"
-  fi
-  ruleset_ok=$?
-  if [ "$ruleset_ok" -ne 0 ] && grep -qi "upgrade" "$TMP/err" 2>/dev/null; then
-    echo "    ↳ Rulesets on private repos need GitHub Pro"
+    # gh prints the error body to stdout on failure, so only trust output on success
+    existing_id=""
+    if rulesets_json="$(gh api "$R/rulesets" 2>/dev/null)"; then
+      existing_id="$(echo "$rulesets_json" | jq -r --arg n "$RULESET_NAME" \
+        '.[] | select(.name == $n) | .id' | head -n1)"
+    fi
+    if [ -n "$existing_id" ]; then
+      label="Update ruleset '$RULESET_NAME' ($ruleset_desc)"; ruleset_args=(-X PUT "$R/rulesets/$existing_id")
+    else
+      label="Create ruleset '$RULESET_NAME' ($ruleset_desc)"; ruleset_args=(-X POST "$R/rulesets")
+    fi
+    if $DRY_RUN; then
+      echo "  [dry-run] $label"
+      ruleset_ok=0
+    elif gh api "${ruleset_args[@]}" --input "$ruleset_file" >/dev/null 2>"$TMP/err"; then
+      echo "  ✓ $label"
+      ruleset_ok=0
+    elif [ "$profile" != public ] && grep -qi "upgrade" "$TMP/err"; then
+      # Free plan: remember it so the remaining private repos don't retry
+      PRIVATE_RULESETS_UNSUPPORTED=true
+      ruleset_unsupported=true
+    else
+      echo "  ✗ $label — $(fail_msg)"
+      FAILURES=$((FAILURES + 1))
+    fi
   fi
 
   # Classic protection: only remove once the ruleset is in place
-  if $KEEP_CLASSIC; then
+  if $ruleset_unsupported; then
+    # Free has no branch protection of any kind (ruleset or classic) on private repos
+    echo "  - Ruleset skipped — branch protection on private repos needs GitHub Pro"
+    UNPROTECTED+=("$repo")
+  elif $KEEP_CLASSIC; then
     echo "  - Keeping classic branch protection (--keep-classic)"
   elif [ "$profile" = private-light ]; then
     echo "  - Light profile: classic protection kept (it may be stricter)"
@@ -279,6 +302,10 @@ for repo in "${REPOS[@]}"; do
 done
 
 echo ""
+if [ ${#UNPROTECTED[@]} -gt 0 ]; then
+  echo "! ${#UNPROTECTED[@]} private repo(s) have an unprotected default branch (needs GitHub Pro):"
+  echo "  ${UNPROTECTED[*]}"
+fi
 if [ "$FAILURES" -gt 0 ]; then
   echo "Done with $FAILURES failed step(s). Review the ✗ lines above."
   exit 1
