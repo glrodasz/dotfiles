@@ -5,3 +5,6 @@
 
 # Per-computer review-harvest store (team-reviewer / harvest-reviews skills)
 .review-harvest/
+
+# github-audit.sh output (includes private repo metadata)
+scripts/github-audit/
