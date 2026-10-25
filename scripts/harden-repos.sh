@@ -9,6 +9,7 @@
 #
 # What each profile sets:
 #                                              public  strict  light
+#   Rename default branch master -> main         ✓       ✓       ✓
 #   Ruleset: PR + 1 approval, stale dismissal,   ✓       ✓       -
 #     code owners, last-push approval,
 #     conversation resolution, squash only,
@@ -21,11 +22,18 @@
 #   Private vulnerability reporting              ✓       -       -   (public repos only)
 #   Secret scanning + push protection            ✓       -       -   (not included on personal private repos)
 #   Fork PR workflows need approval              ✓       -       -   (public repos only)
-#   Delete classic rule on default branch        ✓       ✓       -   (light is weaker, so classic is kept)
+#   Move classic branch protection to rulesets   ✓       ✓       ✓
 #
-# Classic rule removal only happens after the ruleset applies successfully, and only
-# for a rule whose pattern is exactly the default branch name. Wildcard rules
-# (e.g. "*", "ma*") are reported, not deleted. Skip removal with --keep-classic.
+# The rename only runs when the default branch is "master" and no "main" exists yet.
+# GitHub retargets open PRs, updates classic rules naming the branch and redirects old
+# URLs. Workflow files aren't rewritten, so any that still mention "master" are
+# listed, and the commands to update local clones are printed at the end.
+#
+# Each classic rule (any pattern, wildcards included) becomes a ruleset named
+# "classic-<pattern>" with the same rules and admin enforcement, and the classic rule
+# is deleted only after that ruleset applies. Rules using settings rulesets can't
+# express for a personal repo (push/dismissal restrictions, per-actor bypass
+# allowances) are reported and left in place. Skip the migration with --keep-classic.
 #
 # Rulesets (and classic protection) on private repos need GitHub Pro (personal) or
 # Team (org). On Free, the ruleset step is skipped, the rest still applies, and the
@@ -38,7 +46,7 @@
 #   ./harden-repos.sh --private                        # public + private (light)
 #   ./harden-repos.sh --private=strict                 # public + private (strict)
 #   ./harden-repos.sh --private=strict my-team-repo    # specific repos only
-#   ./harden-repos.sh --keep-classic                   # don't touch classic protection
+#   ./harden-repos.sh --keep-classic                   # don't migrate classic protection
 
 set -uo pipefail
 
@@ -138,6 +146,7 @@ JSON
 FAILURES=0
 PRIVATE_RULESETS_UNSUPPORTED=false
 UNPROTECTED=()
+RENAMED=()
 
 fail_msg() { head -c 200 "$TMP/err" | tr '\n' ' '; }
 
@@ -158,44 +167,149 @@ step() {
   fi
 }
 
-# Remove the classic protection rule for the default branch (exact-pattern match only)
-remove_classic_protection() {
-  local repo="$1" data default
+# Classic rule (GraphQL node) -> equivalent ruleset. Admins bypass unless the rule
+# was enforced for them too.
+cat > "$TMP/classic-to-ruleset.jq" <<'JQ'
+def rules: [
+  if .allowsDeletions | not then {type: "deletion"} else empty end,
+  if .allowsForcePushes | not then {type: "non_fast_forward"} else empty end,
+  if .requiresLinearHistory then {type: "required_linear_history"} else empty end,
+  if .requiresCommitSignatures then {type: "required_signatures"} else empty end,
+  if .lockBranch then {type: "update",
+    parameters: {update_allows_fetch_and_merge: .lockAllowsFetchAndMerge}} else empty end,
+  if .requiresApprovingReviews then {type: "pull_request", parameters: {
+    required_approving_review_count: (.requiredApprovingReviewCount // 0),
+    dismiss_stale_reviews_on_push: .dismissesStaleReviews,
+    require_code_owner_review: .requiresCodeOwnerReviews,
+    require_last_push_approval: .requireLastPushApproval,
+    required_review_thread_resolution: .requiresConversationResolution}} else empty end,
+  if .requiresStatusChecks and (.requiredStatusChecks | length > 0) then
+    {type: "required_status_checks", parameters: {
+      strict_required_status_checks_policy: .requiresStrictStatusChecks,
+      required_status_checks: [.requiredStatusChecks[]
+        | {context} + (if .app then {integration_id: .app.databaseId} else {} end)]}}
+  else empty end,
+  if .requiresDeployments and (.requiredDeploymentEnvironments | length > 0) then
+    {type: "required_deployments",
+     parameters: {required_deployment_environments: .requiredDeploymentEnvironments}}
+  else empty end
+];
+{
+  name: ("classic-" + .pattern),
+  target: "branch",
+  enforcement: "active",
+  conditions: {ref_name: {include: ["refs/heads/" + .pattern], exclude: []}},
+  bypass_actors: (if .isAdminEnforced then []
+    else [{actor_id: 5, actor_type: "RepositoryRole", bypass_mode: "always"}] end),
+  rules: rules
+}
+JQ
+
+# Settings with no ruleset equivalent on a personal repo; a rule using any of them is left alone
+cat > "$TMP/classic-unsupported.jq" <<'JQ'
+[
+  if .restrictsPushes then "push restrictions" else empty end,
+  if .restrictsReviewDismissals then "review dismissal restrictions" else empty end,
+  if .bypassPullRequestAllowances.totalCount > 0 then "PR bypass allowances" else empty end,
+  if .bypassForcePushAllowances.totalCount > 0 then "force push allowances" else empty end,
+  if .requiresConversationResolution and (.requiresApprovingReviews | not)
+    then "conversation resolution without required PRs" else empty end
+] | join(", ")
+JQ
+
+# ruleset_id <repo-path> <name>   Prints the id of the ruleset with that name, if any.
+# gh prints the error body to stdout on failure, so only trust output on success.
+ruleset_id() {
+  local json
+  json="$(gh api "$1/rulesets" 2>/dev/null)" || return 0
+  echo "$json" | jq -r --arg n "$2" '.[] | select(.name == $n) | .id' | head -n1
+}
+
+# rename_default_branch <repo>   master -> main, then flag workflows still naming master
+rename_default_branch() {
+  local repo="$1" R="repos/$OWNER/$1" files f
+  if gh api "$R/branches/main" >/dev/null 2>&1; then
+    echo "  ! Both 'master' and 'main' exist — default branch not renamed, review manually"
+    return
+  fi
+  step "Rename default branch 'master' → 'main'" -X POST "$R/branches/master/rename" \
+    -f new_name=main || return
+  RENAMED+=("$repo")
+
+  # gh prints the error body to stdout on failure (404 = no workflows), so only trust success
+  files="$(gh api "$R/contents/.github/workflows" -q '.[] | select(.type == "file") | .path' \
+    2>/dev/null)" || return
+  while IFS= read -r f; do
+    [ -z "$f" ] && continue
+    if gh api -H "Accept: application/vnd.github.raw+json" "$R/contents/$f" 2>/dev/null \
+        | grep -qw master; then
+      echo "  ! $f still mentions 'master' — update it to 'main'"
+    fi
+  done <<< "$files"
+}
+
+# Move every classic protection rule of the repo into an equivalent ruleset
+migrate_classic_protection() {
+  local repo="$1" R="repos/$OWNER/$1" data
   if ! data="$(gh api graphql \
       -f query='query($o:String!,$r:String!){repository(owner:$o,name:$r){
-        defaultBranchRef{name} branchProtectionRules(first:100){nodes{id pattern}}}}' \
+        branchProtectionRules(first:100){nodes{
+          id pattern isAdminEnforced allowsForcePushes allowsDeletions
+          requiresLinearHistory requiresCommitSignatures lockBranch lockAllowsFetchAndMerge
+          requiresApprovingReviews requiredApprovingReviewCount dismissesStaleReviews
+          requiresCodeOwnerReviews requireLastPushApproval requiresConversationResolution
+          requiresStatusChecks requiresStrictStatusChecks requiredStatusChecks{context app{databaseId}}
+          requiresDeployments requiredDeploymentEnvironments
+          restrictsPushes restrictsReviewDismissals
+          bypassPullRequestAllowances(first:1){totalCount}
+          bypassForcePushAllowances(first:1){totalCount}}}}}' \
       -f o="$OWNER" -f r="$repo" 2>"$TMP/err")"; then
     echo "  ✗ Read classic branch protection — $(fail_msg)"
     FAILURES=$((FAILURES + 1))
     return
   fi
 
-  default="$(echo "$data" | jq -r '.data.repository.defaultBranchRef.name // empty')"
-  [ -z "$default" ] && { echo "  - No default branch (empty repo), skipping classic check"; return; }
+  local found=false node id pattern unsupported name rule_types bypass existing_id label args
+  while IFS= read -r node; do
+    [ -z "$node" ] && continue
+    found=true
+    id="$(echo "$node" | jq -r .id)"
+    pattern="$(echo "$node" | jq -r .pattern)"
 
-  local found=false id pattern
-  while IFS=$'\t' read -r id pattern; do
-    [ -z "$id" ] && continue
-    if [ "$pattern" = "$default" ]; then
-      found=true
-      if $DRY_RUN; then
-        echo "  [dry-run] Delete classic protection rule '$pattern'"
-      elif gh api graphql \
-          -f query='mutation($id:ID!){deleteBranchProtectionRule(input:{branchProtectionRuleId:$id}){clientMutationId}}' \
-          -f id="$id" >/dev/null 2>"$TMP/err"; then
-        echo "  ✓ Deleted classic protection rule '$pattern'"
-      else
-        echo "  ✗ Delete classic protection rule '$pattern' — $(fail_msg)"
-        FAILURES=$((FAILURES + 1))
-      fi
-    # shellcheck disable=SC2053  # intentional glob match against the rule pattern
-    elif [[ "$default" == $pattern ]]; then
-      found=true
-      echo "  ! Wildcard classic rule '$pattern' also covers '$default' — left in place, review manually"
+    unsupported="$(echo "$node" | jq -r -f "$TMP/classic-unsupported.jq")"
+    if [ -n "$unsupported" ]; then
+      echo "  ! Classic rule '$pattern' uses $unsupported — not migrated, review manually"
+      continue
     fi
-  done < <(echo "$data" | jq -r '.data.repository.branchProtectionRules.nodes[] | [.id, .pattern] | @tsv')
 
-  $found || echo "  - No classic protection on '$default'"
+    echo "$node" | jq -f "$TMP/classic-to-ruleset.jq" > "$TMP/classic-ruleset.json"
+    name="$(jq -r .name "$TMP/classic-ruleset.json")"
+    rule_types="$(jq -r '[.rules[].type] | join(", ")' "$TMP/classic-ruleset.json")"
+    bypass="$(jq -r 'if .bypass_actors == [] then "applies to admins" else "admins can bypass" end' \
+      "$TMP/classic-ruleset.json")"
+
+    # A classic rule that allows everything protects nothing, so there's nothing to move
+    if [ -n "$rule_types" ]; then
+      existing_id="$(ruleset_id "$R" "$name")"
+      if [ -n "$existing_id" ]; then
+        label="Update ruleset '$name' from classic rule ($rule_types; $bypass)"
+        args=(-X PUT "$R/rulesets/$existing_id")
+      else
+        label="Create ruleset '$name' from classic rule ($rule_types; $bypass)"
+        args=(-X POST "$R/rulesets")
+      fi
+      step "$label" "${args[@]}" --input "$TMP/classic-ruleset.json" || {
+        echo "  ! Classic rule '$pattern' left in place so its branches stay protected"
+        continue
+      }
+    fi
+
+    step "Delete classic protection rule '$pattern'" graphql \
+      -f query='mutation($id:ID!){deleteBranchProtectionRule(input:{branchProtectionRuleId:$id}){clientMutationId}}' \
+      -f id="$id"
+  done < <(echo "$data" | jq -c '.data.repository.branchProtectionRules.nodes[]')
+
+  $found || echo "  - No classic branch protection"
 }
 
 echo "Owner: $OWNER | Repos: ${#REPOS[@]} | Private mode: $PRIVATE_MODE | Dry run: $DRY_RUN"
@@ -221,6 +335,12 @@ for repo in "${REPOS[@]}"; do
     profile="public"
   fi
   echo "▶ $OWNER/$repo [$profile]"
+
+  # Default branch name (before the rulesets, so migrated classic rules already say "main")
+  if [ "$(echo "$info" | jq -r '.default_branch')" = master ] \
+      && gh api "$R/branches/master" >/dev/null 2>&1; then
+    rename_default_branch "$repo"
+  fi
 
   # Merge settings
   if [ "$profile" != private-light ]; then
@@ -253,17 +373,11 @@ for repo in "${REPOS[@]}"; do
   else
     ruleset_file="$TMP/ruleset-full.json";  ruleset_desc="full"
   fi
-  ruleset_ok=1
   ruleset_unsupported=false
   if [ "$profile" != public ] && $PRIVATE_RULESETS_UNSUPPORTED; then
     ruleset_unsupported=true
   else
-    # gh prints the error body to stdout on failure, so only trust output on success
-    existing_id=""
-    if rulesets_json="$(gh api "$R/rulesets" 2>/dev/null)"; then
-      existing_id="$(echo "$rulesets_json" | jq -r --arg n "$RULESET_NAME" \
-        '.[] | select(.name == $n) | .id' | head -n1)"
-    fi
+    existing_id="$(ruleset_id "$R" "$RULESET_NAME")"
     if [ -n "$existing_id" ]; then
       label="Update ruleset '$RULESET_NAME' ($ruleset_desc)"; ruleset_args=(-X PUT "$R/rulesets/$existing_id")
     else
@@ -271,10 +385,8 @@ for repo in "${REPOS[@]}"; do
     fi
     if $DRY_RUN; then
       echo "  [dry-run] $label"
-      ruleset_ok=0
     elif gh api "${ruleset_args[@]}" --input "$ruleset_file" >/dev/null 2>"$TMP/err"; then
       echo "  ✓ $label"
-      ruleset_ok=0
     elif [ "$profile" != public ] && grep -qi "upgrade" "$TMP/err"; then
       # Free plan: remember it so the remaining private repos don't retry
       PRIVATE_RULESETS_UNSUPPORTED=true
@@ -285,23 +397,25 @@ for repo in "${REPOS[@]}"; do
     fi
   fi
 
-  # Classic protection: only remove once the ruleset is in place
+  # Classic protection: each rule is deleted only once its replacement ruleset is in place
   if $ruleset_unsupported; then
     # Free has no branch protection of any kind (ruleset or classic) on private repos
     echo "  - Ruleset skipped — branch protection on private repos needs GitHub Pro"
     UNPROTECTED+=("$repo")
   elif $KEEP_CLASSIC; then
     echo "  - Keeping classic branch protection (--keep-classic)"
-  elif [ "$profile" = private-light ]; then
-    echo "  - Light profile: classic protection kept (it may be stricter)"
-  elif [ "$ruleset_ok" -ne 0 ]; then
-    echo "  ! Ruleset failed — classic protection left in place so the branch stays protected"
   else
-    remove_classic_protection "$repo"
+    migrate_classic_protection "$repo"
   fi
 done
 
 echo ""
+if [ ${#RENAMED[@]} -gt 0 ]; then
+  renamed="renamed"; $DRY_RUN && renamed="would be renamed"
+  echo "! ${#RENAMED[@]} repo(s) $renamed 'master' → 'main': ${RENAMED[*]}"
+  echo "  In each local clone, run:"
+  echo "    git branch -m master main && git fetch origin && git branch -u origin/main main && git remote set-head origin -a"
+fi
 if [ ${#UNPROTECTED[@]} -gt 0 ]; then
   echo "! ${#UNPROTECTED[@]} private repo(s) have an unprotected default branch (needs GitHub Pro):"
   echo "  ${UNPROTECTED[*]}"

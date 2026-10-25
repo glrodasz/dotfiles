@@ -44,7 +44,7 @@ gh auth login  # As the repo owner
 - `--dry-run` — preview the changes without applying them
 - `--private` / `--private=light` — also include private repos, with the light profile (for solo repos)
 - `--private=strict` — also include private repos, with the full profile (for repos with collaborators)
-- `--keep-classic` — don't delete the classic branch protection rule on the default branch
+- `--keep-classic` — don't migrate classic branch protection rules to rulesets
 - `-h`, `--help` — show the full usage
 - `repo...` — only these repos (defaults to every non-fork, non-archived repo of the owner)
 - `OWNER` env var — GitHub user or org (defaults to `glrodasz`)
@@ -53,6 +53,7 @@ Without `--private`, private repos are skipped.
 
 | Setting | public | strict | light |
 |---|:-:|:-:|:-:|
+| Rename default branch `master` → `main` | ✓ | ✓ | ✓ |
 | Ruleset: PR + 1 approval, code owners, conversation resolution, linear history (admins can bypass) | ✓ | ✓ | - |
 | Ruleset: block force push + deletion | ✓ | ✓ | ✓ (no bypass) |
 | Squash-only merging, auto-delete branches | ✓ | ✓ | - |
@@ -61,7 +62,7 @@ Without `--private`, private repos are skipped.
 | Private vulnerability reporting | ✓ | - | - |
 | Secret scanning + push protection | ✓ | - | - |
 | Fork PR workflows need approval | ✓ | - | - |
-| Delete classic rule on default branch | ✓ | ✓ | - |
+| Move classic branch protection to rulesets | ✓ | ✓ | ✓ |
 
 ```bash
 ./scripts/harden-repos.sh --dry-run                      # preview, public repos
@@ -69,4 +70,6 @@ Without `--private`, private repos are skipped.
 ./scripts/harden-repos.sh --private=strict my-team-repo  # specific repos only
 ```
 
-> The classic rule is deleted only after the ruleset applies successfully. Wildcard classic rules are reported, never deleted. Rulesets (and classic protection) on private repos need GitHub Pro (personal) or Team (org); on Free that step is skipped, the rest still applies, and the unprotected repos are listed at the end.
+> The rename only runs when the default branch is `master` and no `main` exists. GitHub retargets open PRs, updates classic rules and redirects old URLs. Workflow files aren't rewritten, so the script lists any that still mention `master`, and it prints the commands to update local clones at the end.
+
+> Each classic rule (any pattern, wildcards included) becomes a `classic-<pattern>` ruleset with the same rules and admin enforcement, and is deleted only after that ruleset applies. Rules using settings rulesets can't express on a personal repo (push/dismissal restrictions, per-actor bypass allowances) are reported and left in place. Rulesets (and classic protection) on private repos need GitHub Pro (personal) or Team (org); on Free that step is skipped, the rest still applies, and the unprotected repos are listed at the end.
