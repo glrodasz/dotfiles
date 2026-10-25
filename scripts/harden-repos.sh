@@ -39,6 +39,9 @@
 # Team (org). On Free, the ruleset step is skipped, the rest still applies, and the
 # unprotected repos are listed at the end.
 #
+# --dry-run reads each setting first and marks the step "= already set", "~ would change"
+# or "? current state unknown", then sums up the changes at the end.
+#
 # Requirements: gh (logged in as the repo owner), jq
 # Usage:
 #   ./harden-repos.sh --dry-run                        # preview, public repos
@@ -143,18 +146,80 @@ cat > "$TMP/security.json" <<'JSON'
 }
 JSON
 
+# Current ruleset (input) already enforces the wanted one ($want[0]). Rule parameters the
+# API fills in with defaults are ignored.
+cat > "$TMP/ruleset-matches.jq" <<'JQ'
+def by_type: map({key: .type, value: (.parameters // {})}) | from_entries;
+$want[0] as $w
+| (.rules | by_type) as $have
+| ($w.rules | by_type) as $need
+| .enforcement == $w.enforcement
+  and .conditions.ref_name == $w.conditions.ref_name
+  and ([(.bypass_actors // [])[] | {actor_id, actor_type, bypass_mode}] == $w.bypass_actors)
+  and ($have | keys) == ($need | keys)
+  and all($need | to_entries[]; .key as $t | all(.value | to_entries[]; $have[$t][.key] == .value))
+JQ
+
 FAILURES=0
+DRY_CHANGES=0
+DRY_ALREADY_SET=0
+DRY_UNKNOWN=0
 PRIVATE_RULESETS_UNSUPPORTED=false
 UNPROTECTED=()
 RENAMED=()
 
 fail_msg() { head -c 200 "$TMP/err" | tr '\n' ' '; }
 
-# step "<label>" gh-api-args...   Returns non-zero on failure.
+# dry_run_line "<label>" <set|change|"">
+dry_run_line() {
+  case "$2" in
+    set)    echo "  = $1 (already set)"; DRY_ALREADY_SET=$((DRY_ALREADY_SET + 1)) ;;
+    change) echo "  ~ $1"; DRY_CHANGES=$((DRY_CHANGES + 1)) ;;
+    *)      echo "  ? $1 (current state unknown)"; DRY_UNKNOWN=$((DRY_UNKNOWN + 1)) ;;
+  esac
+}
+
+# Dry run only, prints the state of a setting: "set" when the jq filter holds for its
+# current value, "change" when it doesn't, nothing when that can't be read.
+#   state_from <json> <jq-filter>
+#   state <jq-filter> gh-api-args...
+state_from() {
+  if echo "$1" | jq -e "$2" >/dev/null 2>&1; then echo set; else echo change; fi
+}
+state() {
+  $DRY_RUN || return 0
+  local filter="$1" json; shift
+  json="$(gh api "$@" 2>/dev/null)" || return 0
+  state_from "$json" "$filter"
+}
+
+# ruleset_state <ruleset-path> <wanted-ruleset-file>
+ruleset_state() {
+  $DRY_RUN || return 0
+  local json
+  json="$(gh api "$1" 2>/dev/null)" || return 0
+  if echo "$json" | jq -e --slurpfile want "$2" -f "$TMP/ruleset-matches.jq" >/dev/null 2>&1; then
+    echo set
+  else
+    echo change
+  fi
+}
+
+# Dependabot alerts answer 204 when enabled and 404 when disabled
+dependabot_alerts_state() {
+  $DRY_RUN || return 0
+  if gh api "$1/vulnerability-alerts" >/dev/null 2>"$TMP/err"; then
+    echo set
+  elif grep -q "HTTP 404" "$TMP/err"; then
+    echo change
+  fi
+}
+
+# [STATE=<set|change>] step "<label>" gh-api-args...   Returns non-zero on failure.
 step() {
   local label="$1"; shift
   if $DRY_RUN; then
-    echo "  [dry-run] $label"
+    dry_run_line "$label" "${STATE:-}"
     return 0
   fi
   if gh api "$@" >/dev/null 2>"$TMP/err"; then
@@ -225,6 +290,13 @@ ruleset_id() {
   echo "$json" | jq -r --arg n "$2" '.[] | select(.name == $n) | .id' | head -n1
 }
 
+# rulesets_need_upgrade <repo-path>   True when the plan has no rulesets for this repo
+# (GitHub Free, private repo), so dry runs see what the real run will hit.
+rulesets_need_upgrade() {
+  gh api "$1/rulesets" >/dev/null 2>"$TMP/err" && return 1
+  grep -qi "upgrade" "$TMP/err"
+}
+
 # rename_default_branch <repo>   master -> main, then flag workflows still naming master
 rename_default_branch() {
   local repo="$1" R="repos/$OWNER/$1" files f
@@ -232,7 +304,7 @@ rename_default_branch() {
     echo "  ! Both 'master' and 'main' exist — default branch not renamed, review manually"
     return
   fi
-  step "Rename default branch 'master' → 'main'" -X POST "$R/branches/master/rename" \
+  STATE=change step "Rename default branch 'master' → 'main'" -X POST "$R/branches/master/rename" \
     -f new_name=main || return
   RENAMED+=("$repo")
 
@@ -269,7 +341,7 @@ migrate_classic_protection() {
     return
   fi
 
-  local found=false node id pattern unsupported name rule_types bypass existing_id label args
+  local found=false node id pattern unsupported name rule_types bypass existing_id label args current
   while IFS= read -r node; do
     [ -z "$node" ] && continue
     found=true
@@ -294,17 +366,19 @@ migrate_classic_protection() {
       if [ -n "$existing_id" ]; then
         label="Update ruleset '$name' from classic rule ($rule_types; $bypass)"
         args=(-X PUT "$R/rulesets/$existing_id")
+        current="$(ruleset_state "$R/rulesets/$existing_id" "$TMP/classic-ruleset.json")"
       else
         label="Create ruleset '$name' from classic rule ($rule_types; $bypass)"
         args=(-X POST "$R/rulesets")
+        current=change
       fi
-      step "$label" "${args[@]}" --input "$TMP/classic-ruleset.json" || {
+      STATE="$current" step "$label" "${args[@]}" --input "$TMP/classic-ruleset.json" || {
         echo "  ! Classic rule '$pattern' left in place so its branches stay protected"
         continue
       }
     fi
 
-    step "Delete classic protection rule '$pattern'" graphql \
+    STATE=change step "Delete classic protection rule '$pattern'" graphql \
       -f query='mutation($id:ID!){deleteBranchProtectionRule(input:{branchProtectionRuleId:$id}){clientMutationId}}' \
       -f id="$id"
   done < <(echo "$data" | jq -c '.data.repository.branchProtectionRules.nodes[]')
@@ -344,24 +418,35 @@ for repo in "${REPOS[@]}"; do
 
   # Merge settings
   if [ "$profile" != private-light ]; then
+    STATE="$(state '.allow_squash_merge and (.allow_merge_commit | not)
+        and (.allow_rebase_merge | not) and .delete_branch_on_merge' "$R")" \
     step "Squash-only merging, auto-delete branches" -X PATCH "$R" \
       -F allow_squash_merge=true -F allow_merge_commit=false \
       -F allow_rebase_merge=false -F delete_branch_on_merge=true
   fi
 
   # Security
-  step "Dependabot alerts"           -X PUT "$R/vulnerability-alerts"
-  step "Dependabot security updates" -X PUT "$R/automated-security-fixes"
+  STATE="$(dependabot_alerts_state "$R")" \
+    step "Dependabot alerts" -X PUT "$R/vulnerability-alerts"
+  STATE="$(state '.enabled' "$R/automated-security-fixes")" \
+    step "Dependabot security updates" -X PUT "$R/automated-security-fixes"
   if [ "$profile" = public ]; then
-    step "Private vulnerability reporting"   -X PUT "$R/private-vulnerability-reporting"
-    step "Secret scanning + push protection" -X PATCH "$R" --input "$TMP/security.json"
+    STATE="$(state '.enabled' "$R/private-vulnerability-reporting")" \
+      step "Private vulnerability reporting" -X PUT "$R/private-vulnerability-reporting"
+    STATE="$($DRY_RUN && state_from "$info" '.security_and_analysis
+        | .secret_scanning.status == "enabled" and .secret_scanning_push_protection.status == "enabled"')" \
+      step "Secret scanning + push protection" -X PATCH "$R" --input "$TMP/security.json"
   fi
 
   # Actions
+  STATE="$(state '.default_workflow_permissions == "read" and (.can_approve_pull_request_reviews | not)' \
+      "$R/actions/permissions/workflow")" \
   step "Read-only GITHUB_TOKEN, no PR approvals by Actions" \
     -X PUT "$R/actions/permissions/workflow" \
     -f default_workflow_permissions=read -F can_approve_pull_request_reviews=false
   if [ "$profile" = public ]; then
+    STATE="$(state '.approval_policy == "all_external_contributors"' \
+        "$R/actions/permissions/fork-pr-contributor-approval")" \
     step "Fork PR workflows need approval (all external contributors)" \
       -X PUT "$R/actions/permissions/fork-pr-contributor-approval" \
       -f approval_policy=all_external_contributors
@@ -374,17 +459,21 @@ for repo in "${REPOS[@]}"; do
     ruleset_file="$TMP/ruleset-full.json";  ruleset_desc="full"
   fi
   ruleset_unsupported=false
-  if [ "$profile" != public ] && $PRIVATE_RULESETS_UNSUPPORTED; then
+  if [ "$profile" != public ] \
+      && { $PRIVATE_RULESETS_UNSUPPORTED || rulesets_need_upgrade "$R"; }; then
+    PRIVATE_RULESETS_UNSUPPORTED=true
     ruleset_unsupported=true
   else
     existing_id="$(ruleset_id "$R" "$RULESET_NAME")"
     if [ -n "$existing_id" ]; then
       label="Update ruleset '$RULESET_NAME' ($ruleset_desc)"; ruleset_args=(-X PUT "$R/rulesets/$existing_id")
+      current="$(ruleset_state "$R/rulesets/$existing_id" "$ruleset_file")"
     else
       label="Create ruleset '$RULESET_NAME' ($ruleset_desc)"; ruleset_args=(-X POST "$R/rulesets")
+      current=change
     fi
     if $DRY_RUN; then
-      echo "  [dry-run] $label"
+      dry_run_line "$label" "$current"
     elif gh api "${ruleset_args[@]}" --input "$ruleset_file" >/dev/null 2>"$TMP/err"; then
       echo "  ✓ $label"
     elif [ "$profile" != public ] && grep -qi "upgrade" "$TMP/err"; then
@@ -419,6 +508,9 @@ fi
 if [ ${#UNPROTECTED[@]} -gt 0 ]; then
   echo "! ${#UNPROTECTED[@]} private repo(s) have an unprotected default branch (needs GitHub Pro):"
   echo "  ${UNPROTECTED[*]}"
+fi
+if $DRY_RUN; then
+  echo "Dry run: $DRY_CHANGES change(s), $DRY_ALREADY_SET already set, $DRY_UNKNOWN unknown."
 fi
 if [ "$FAILURES" -gt 0 ]; then
   echo "Done with $FAILURES failed step(s). Review the ✗ lines above."
