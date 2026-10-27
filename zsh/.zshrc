@@ -75,22 +75,22 @@ export PYENV_ROOT="${PYENV_ROOT:-$HOME/.pyenv}"
 # instead of being frozen at startup (which made each line overwrite the last).
 
 # Go path (binaries from `go install`, e.g. golines, golangci-lint, gotestsum)
-zsh-defer -c 'export GOPATH="$HOME/go"; export PATH="$GOPATH/bin:$PATH"'
+zsh-defer -mp -c 'export GOPATH="$HOME/go"; export PATH="$GOPATH/bin:$PATH"'
 
 # Ruby-related Paths (RVM and additional Ruby binaries)
-zsh-defer -c 'export PATH="$HOME/.rvm/bin:/usr/local/opt/ruby/bin:$PATH"'
+zsh-defer -mp -c 'export PATH="$HOME/.rvm/bin:/usr/local/opt/ruby/bin:$PATH"'
 
 # MongoDB path
-zsh-defer -c 'export PATH="$PATH:/usr/local/mongodb/bin"'
+zsh-defer -mp -c 'export PATH="$PATH:/usr/local/mongodb/bin"'
 
 # Android SDK path
-zsh-defer -c 'export ANDROID_HOME="$HOME/Library/Android/sdk"; export PATH="$PATH:$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools"'
+zsh-defer -mp -c 'export ANDROID_HOME="$HOME/Library/Android/sdk"; export PATH="$PATH:$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools"'
 
 # Java OpenJDK path
-zsh-defer -c 'export JAVA_HOME="/opt/homebrew/opt/openjdk@21"; export PATH="/opt/homebrew/bin/java:$PATH"'
+zsh-defer -mp -c 'export JAVA_HOME="/opt/homebrew/opt/openjdk@21"; export PATH="/opt/homebrew/bin/java:$PATH"'
 
 # Antigravity path
-zsh-defer -c 'export PATH="$HOME/.antigravity/antigravity/bin:$PATH"'
+zsh-defer -mp -c 'export PATH="$HOME/.antigravity/antigravity/bin:$PATH"'
 
 #====================
 # OS-Specific Config
@@ -107,15 +107,15 @@ fi
     export APPLE_SSH_ADD_BEHAVIOR=macos
 
     # Open SSL and Kafka hotfix
-    zsh-defer export LDFLAGS="-L/opt/homebrew/opt/openssl/lib"
-    zsh-defer export CPPFLAGS="-I/opt/homebrew/opt/openssl/include"
+    zsh-defer -mp export LDFLAGS="-L/opt/homebrew/opt/openssl/lib"
+    zsh-defer -mp export CPPFLAGS="-I/opt/homebrew/opt/openssl/include"
 
     # C paths for python libs to access (confluent_kafka)
-    zsh-defer export C_INCLUDE_PATH=$C_INCLUDE_PATH:$HOMEBREW_PREFIX/include
-    zsh-defer export LIBRARY_PATH=$LIBRARY_PATH:$HOMEBREW_PREFIX/lib
+    zsh-defer -mp export C_INCLUDE_PATH=$C_INCLUDE_PATH:$HOMEBREW_PREFIX/include
+    zsh-defer -mp export LIBRARY_PATH=$LIBRARY_PATH:$HOMEBREW_PREFIX/lib
 
     # Z plugin
-    zsh-defer . $HOMEBREW_PREFIX/etc/profile.d/z.sh
+    zsh-defer -mp . $HOMEBREW_PREFIX/etc/profile.d/z.sh
     
     # SSH Agent alias (Including loading resident keys from FIDO authenticator)
     [[ -f ~/.ssh/id_rsa ]] && ID_RSA_OPT="-K ~/.ssh/id_rsa"
@@ -137,7 +137,7 @@ fi
 load_omz_plugins_with_defer() {
     local plugin
     for plugin in "$@"; do
-        zsh-defer source "$ZSH_CUSTOM/plugins/$plugin/$plugin.plugin.zsh"
+        zsh-defer -mp source "$ZSH_CUSTOM/plugins/$plugin/$plugin.plugin.zsh"
     done
 }
 
@@ -187,7 +187,7 @@ unset lib_file config_file
 
 # Defer additional plugins
 load_omz_plugins_with_defer z poetry
-zsh-defer source $HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+zsh-defer -mp source $HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 #====================
 # Aliases
@@ -368,15 +368,15 @@ busy() {
 # Deferred Initializations
 #====================
 # Development Tools
-zsh-defer . "$NVM_DIR/nvm.sh" --no-use
-zsh-defer . "$HOME/.deno/env"
+zsh-defer -mp . "$NVM_DIR/nvm.sh" --no-use
+zsh-defer -mp . "$HOME/.deno/env"
 
 # Google Cloud SDK
 if [ -f "$HOME/google-cloud-sdk/path.zsh.inc" ]; then 
-    zsh-defer source "$HOME/google-cloud-sdk/path.zsh.inc"
+    zsh-defer -mp source "$HOME/google-cloud-sdk/path.zsh.inc"
 fi
 if [ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]; then
-    zsh-defer source "$HOME/google-cloud-sdk/completion.zsh.inc"
+    zsh-defer -mp source "$HOME/google-cloud-sdk/completion.zsh.inc"
 fi
 
 #====================
@@ -384,7 +384,7 @@ fi
 #====================
 # .zshrc.local for secrets and machine-specific configurations
 # This file should NOT be tracked in git.
-[[ -f ~/.zshrc.local ]] && zsh-defer source ~/.zshrc.local
+[[ -f ~/.zshrc.local ]] && zsh-defer -mp source ~/.zshrc.local
 
 # Kiro CLI post block. Keep at the bottom of this file.
 [[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh"
