@@ -25,9 +25,6 @@ export GRPC_PYTHON_BUILD_SYSTEM_OPENSSL=1
 export GRPC_PYTHON_BUILD_SYSTEM_ZLIB=1
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 
-# Dynamic Python Version for Google Cloud SDK
-CLOUDSDK_PYTHON=$(pyenv which python3 2>/dev/null)
-
 # Prompt initialization (needs to be immediate)
 eval "$(starship init zsh)"
 
@@ -44,6 +41,14 @@ export PATH="$PNPM_HOME:$PATH"
 export PYENV_ROOT="${PYENV_ROOT:-$HOME/.pyenv}"
 [[ -d "$PYENV_ROOT/bin" ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 [[ -d "$PYENV_ROOT/shims" ]] && export PATH="$PYENV_ROOT/shims:$PATH"
+
+# Dynamic Python Version for Google Cloud SDK
+() {
+    local version=system
+    [[ -r "$PYENV_ROOT/version" ]] && read -r version < "$PYENV_ROOT/version"
+    local -a pythons=($PYENV_ROOT/versions/${version}*/bin/python3(N-.nOn))
+    CLOUDSDK_PYTHON=$pythons[1]
+}
 
 # Deferred tool paths. Single quotes are required: zsh-defer -c evals the
 # string when the task runs, so $PATH and the *_HOME variables are read live
@@ -71,14 +76,14 @@ zsh-defer -c 'export PATH="$HOME/.antigravity/antigravity/bin:$PATH"'
 # OS-Specific Config
 #====================
 # Optimized HOMEBREW_PREFIX Setting | checks for ARM vs Intel
-if [[ "$(uname -m)" == "arm64" ]]; then
+if [[ "$CPUTYPE" == "arm64" ]]; then
     export HOMEBREW_PREFIX="/opt/homebrew"
 else
     export HOMEBREW_PREFIX="/usr/local"
 fi
 
 # macOS
-[[ "$(uname -s)" == "Darwin" ]] && {
+[[ "$OSTYPE" == darwin* ]] && {
     export APPLE_SSH_ADD_BEHAVIOR=macos
 
     # Open SSL and Kafka hotfix
@@ -99,7 +104,7 @@ fi
 }
 
 # Linux/WSL
-[[ "$(uname -s)" == "Linux" ]] && {
+[[ "$OSTYPE" == linux* ]] && {
     PURE_PROMPT_SYMBOL=">"
     
     # SSH Agent alias
@@ -119,6 +124,9 @@ load_omz_plugins_with_defer() {
 #====================
 # Plugins & Shell
 #====================
+# Docker CLI completions (added before Oh My Zsh so its single compinit picks them up)
+[[ -d "$HOME/.docker/completions" ]] && fpath=("$HOME/.docker/completions" $fpath)
+
 # Essential plugins and evalcache for immediate eval commands
 plugins=(git evalcache)
 source $ZSH/oh-my-zsh.sh
@@ -169,7 +177,7 @@ alias rmorig="rm -rf **/*.orig"
 alias rm="trash"
 alias cl="clear"
 alias cafe="cat /dev/urandom | hexdump | grep \"ca fe\""
-alias sagent="eval `ssh-agent`"
+alias sagent='eval "$(ssh-agent)"'
 alias mostused='history | awk '\''{print $2}'\'' | sort | uniq -c | sort -nr | head -n 10'
 alias secret="openssl rand -hex 32"
 
@@ -315,11 +323,6 @@ if [ -f "$HOME/google-cloud-sdk/path.zsh.inc" ]; then
 fi
 if [ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]; then
     zsh-defer source "$HOME/google-cloud-sdk/completion.zsh.inc"
-fi
-
-# Docker CLI completions
-if [ -d "$HOME/.docker/completions" ]; then
-    zsh-defer eval 'fpath=($HOME/.docker/completions $fpath); autoload -Uz compinit; compinit'
 fi
 
 #====================
