@@ -66,9 +66,10 @@ slink-skills-agents: ## Symlink skills into ~/.agents/skills
 		echo "  linked $$s (local)"; \
 	done
 
-slink-zsh: ## Symlink ~/.zshrc
+slink-zsh: ## Symlink ~/.zshrc and ~/.zprofile
 	@ln -sfn $(DOTFILES)/zsh/.zshrc ~/.zshrc
-	@echo "linked ~/.zshrc"
+	@ln -sfn $(DOTFILES)/zsh/.zprofile ~/.zprofile
+	@echo "linked ~/.zshrc and ~/.zprofile"
 
 slink-vim: ## Symlink ~/.vimrc and solarized colors
 	@ln -sfn $(DOTFILES)/vim/.vimrc ~/.vimrc

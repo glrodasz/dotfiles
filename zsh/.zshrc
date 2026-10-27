@@ -25,8 +25,28 @@ export GRPC_PYTHON_BUILD_SYSTEM_OPENSSL=1
 export GRPC_PYTHON_BUILD_SYSTEM_ZLIB=1
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 
-# Prompt initialization (needs to be immediate)
-eval "$(starship init zsh)"
+# Prompt initialization (needs to be immediate). `starship init` is cached and
+# regenerated only when the starship binary (e.g. `brew upgrade`) or its config
+# changes. PROMPT2 is resolved at cache time too, since the stock init script
+# spawns `starship prompt --continuation` on every startup.
+STARSHIP_INIT_CACHE="${XDG_CACHE_HOME:-$HOME/.cache}/starship/init.zsh"
+() {
+    local bin=${commands[starship]:A} config=${STARSHIP_CONFIG:-$HOME/.config/starship.toml}
+    [[ -n "$bin" ]] || return 1
+    local -a mtimes init
+    zmodload -F zsh/stat b:zstat
+    zstat -A mtimes +mtime -- $bin $config(N)
+    local key="# $bin ${mtimes[*]}" cached_key
+    [[ -r "$STARSHIP_INIT_CACHE" ]] && read -r cached_key < "$STARSHIP_INIT_CACHE"
+    [[ "$cached_key" == "$key" ]] && return
+    init=("${(@f)$(starship init zsh --print-full-init)}")
+    mkdir -p "${STARSHIP_INIT_CACHE:h}"
+    {
+        print -r -- "$key"
+        print -rl -- "${(@)init:#PROMPT2=*}"
+        print -r -- "PROMPT2=${(q)$(starship prompt --continuation)}"
+    } >| "$STARSHIP_INIT_CACHE"
+} && source "$STARSHIP_INIT_CACHE"
 
 #====================
 # Critical Path Configuration
@@ -124,12 +144,46 @@ load_omz_plugins_with_defer() {
 #====================
 # Plugins & Shell
 #====================
-# Docker CLI completions (added before Oh My Zsh so its single compinit picks them up)
-[[ -d "$HOME/.docker/completions" ]] && fpath=("$HOME/.docker/completions" $fpath)
+# Docker CLI and Homebrew completions (added before compinit so it picks them up).
+# Homebrew's is also added by .zprofile; repeating it here covers non-login shells.
+fpath=("$HOME/.docker/completions"(N/) "$HOMEBREW_PREFIX/share/zsh/site-functions"(N/) $fpath)
 
-# Essential plugins and evalcache for immediate eval commands
-plugins=(git evalcache)
-source $ZSH/oh-my-zsh.sh
+# Oh My Zsh, loaded directly instead of through oh-my-zsh.sh: its startup checks
+# spawn ~10 processes, ~25ms each here because endpoint security inspects every
+# exec. Same libs, git plugin and custom configs, so `omz` commands keep working.
+plugins=(git)
+ZSH_CACHE_DIR="$ZSH/cache"
+ZSH_COMPDUMP="$ZSH_CACHE_DIR/.zcompdump"
+fpath=("$ZSH/plugins/git" "$ZSH_CACHE_DIR/completions" $ZSH/{functions,completions} $ZSH_CUSTOM/{functions,completions} $fpath)
+# Nested shells inherit the exported FPATH, so drop duplicates to keep fpath
+# identical across shells (and the completion dump from being rebuilt)
+typeset -U fpath
+
+# Rebuild the completion dump only when fpath changed or one of its directories
+# gained or lost a file since the last build; otherwise load it without a rescan.
+autoload -Uz compinit
+() {
+    local fpath_line="#fpath: $fpath"
+    local -a changed=(${^fpath}(N/e:'[[ $REPLY -nt $ZSH_COMPDUMP ]]':))
+    if [[ -s "$ZSH_COMPDUMP" ]] && (( ! $#changed )) &&
+        [[ ${${(f)"$(<$ZSH_COMPDUMP)"}[-1]} == "$fpath_line" ]]; then
+        compinit -C -d "$ZSH_COMPDUMP"
+    else
+        zmodload -F zsh/files b:zf_rm
+        zf_rm -f "$ZSH_COMPDUMP"
+        compinit -u -d "$ZSH_COMPDUMP"
+        print -r -- "$fpath_line" >> "$ZSH_COMPDUMP"
+        zcompile "$ZSH_COMPDUMP"
+    fi
+}
+
+for lib_file ("$ZSH"/lib/*.zsh) source "$lib_file"
+source "$ZSH/plugins/git/git.plugin.zsh"
+for config_file ("$ZSH_CUSTOM"/*.zsh(N)) source "$config_file"
+unset lib_file config_file
+
+# Set completion colors to be the same as `ls`
+[[ -z "$LS_COLORS" ]] || zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 
 # Defer additional plugins
 load_omz_plugins_with_defer z poetry
