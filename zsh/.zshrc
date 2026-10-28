@@ -5,9 +5,6 @@
 # How to profile zsh
 # for i in $(seq 1 10); do /usr/bin/time zsh -i -c exit; done
 
-# Kiro CLI pre block. Keep at the top of this file.
-[[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.pre.zsh"
-
 source ~/.zsh-defer/zsh-defer.plugin.zsh
 
 #====================
@@ -385,6 +382,3 @@ fi
 # .zshrc.local for secrets and machine-specific configurations
 # This file should NOT be tracked in git.
 [[ -f ~/.zshrc.local ]] && zsh-defer -mp source ~/.zshrc.local
-
-# Kiro CLI post block. Keep at the bottom of this file.
-[[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh"

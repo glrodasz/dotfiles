@@ -1,6 +1,3 @@
-# Kiro CLI pre block. Keep at the top of this file.
-[[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zprofile.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zprofile.pre.zsh"
-
 # Homebrew environment. Static equivalent of `eval "$(brew shellenv zsh)"`, which
 # spawns brew on every login shell just to print these same lines.
 if [[ "$CPUTYPE" == "arm64" ]]; then
@@ -16,6 +13,3 @@ if [[ -x "$HOMEBREW_PREFIX/bin/brew" ]]; then
     [ -z "${MANPATH-}" ] || { export MANPATH="${MANPATH%"${MANPATH##*[!:]}"}"; export MANPATH=":${MANPATH#"${MANPATH%%[!:]*}"}"; }
     export INFOPATH="$HOMEBREW_PREFIX/share/info:${INFOPATH:-}"
 fi
-
-# Kiro CLI post block. Keep at the bottom of this file.
-[[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zprofile.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zprofile.post.zsh"
