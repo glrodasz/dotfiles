@@ -1,5 +1,3 @@
-# Tabulador pre block. Keep at the top of this file.
-[[ -f "${HOME}/Library/Application Support/tab/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/tab/shell/zshrc.pre.zsh"
 #====================
 # Initialization
 #====================
@@ -387,6 +385,3 @@ fi
 # .zshrc.local for secrets and machine-specific configurations
 # This file should NOT be tracked in git.
 [[ -f ~/.zshrc.local ]] && zsh-defer -mp source ~/.zshrc.local
-
-# Tabulador post block. Keep at the bottom of this file.
-[[ -f "${HOME}/Library/Application Support/tab/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/tab/shell/zshrc.post.zsh"
