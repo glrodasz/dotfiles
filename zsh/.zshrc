@@ -89,6 +89,9 @@ zsh-defer -mp -c 'export JAVA_HOME="/opt/homebrew/opt/openjdk@21"; export PATH="
 # Antigravity path
 zsh-defer -mp -c 'export PATH="$HOME/.antigravity/antigravity/bin:$PATH"'
 
+# Rust cargo path
+[[ -d "$HOME/.cargo/bin" ]] && zsh-defer -mp -c 'export PATH="$HOME/.cargo/bin:$PATH"'
+
 #====================
 # OS-Specific Config
 #====================
