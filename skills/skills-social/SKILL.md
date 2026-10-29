@@ -3,9 +3,11 @@ name: skills-social
 description: >
   Regenerate a shareable JSON catalog of the user's skills — one entry per skill in
   ~/dotfiles/skills with a category, a short tagline, a trigger phrase and its slash
-  invocation, ready to render as a social-media card. Use when the user wants to refresh,
-  update, regenerate, share, or export their skills list, asks for the skills social media
-  JSON or skills catalog JSON, or wants a shareable overview of the skills they have built.
+  invocation, ready to render as a social-media card. Use when the user runs
+  /skills-social — to refresh, update, regenerate, share, or export their skills list as
+  the skills social media JSON (skills catalog JSON), a shareable overview of the skills
+  they have built.
+disable-model-invocation: true
 ---
 
 # Skills Social JSON

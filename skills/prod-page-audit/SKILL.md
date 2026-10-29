@@ -112,8 +112,15 @@ suggested fixes.
    ✅ or explicitly listed under "Still needs human attention".
 2. The `<head>` still parses: no duplicate `<title>`/`og:*` tags, every injected `<link>`
    points at a file that exists.
-3. When a URL or dev server is available, run Lighthouse (SEO + mobile categories) and an
-   OG preview check; treat the scores as a regression catch, not the verdict.
+3. When a URL or dev server is available, run Lighthouse (it emulates a mobile device by
+   default) and an OG preview check; treat the scores as a regression catch, not the
+   verdict. Lighthouse needs Chrome; without it, list the check under "Still needs human
+   attention".
+
+   ```bash
+   npx lighthouse <url> --only-categories=seo,best-practices --output=json --quiet \
+     --chrome-flags="--headless"
+   ```
 
 ## Report
 

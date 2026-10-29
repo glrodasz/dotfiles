@@ -2,10 +2,12 @@
 name: shell-aliases-social
 description: >
   Regenerate a shareable shell-aliases JSON from the user's shell config — curated,
-  universally-useful aliases and functions with usage frequency from shell history.
-  Use when the user wants to refresh, update, regenerate, share, or export their shell
-  aliases, asks for the shell aliases social media JSON or aliases JSON, or wants a
-  shareable list of their zsh aliases and functions.
+  universally-useful aliases and functions with usage frequency from shell history. Use
+  when the user runs /shell-aliases-social, optionally with paths that override the
+  defaults — to refresh, update, regenerate, share, or export their shell aliases as the
+  shell aliases social media JSON (aliases JSON), a shareable list of their zsh aliases
+  and functions.
+disable-model-invocation: true
 ---
 
 # Shell Aliases Social JSON
@@ -21,7 +23,13 @@ Defaults; each is overridable by invocation args.
 
 - **Shell config**: `~/.zshrc` (or the actual config, e.g. `~/dotfiles/zsh/.zshrc` if
   symlinked), plus `~/.zshrc.local` if present
-- **History**: `~/.zsh_history` — sample the top 100 most-used commands for frequency
+- **History**: `~/.zsh_history` — rank the top 100 most-used commands for frequency.
+  This strips zsh's extended-history prefix (`: <time>:<duration>;`):
+
+  ```bash
+  LC_ALL=C sed -E 's/^: [0-9]+:[0-9]+;//' ~/.zsh_history | awk '{print $1}' \
+    | sort | uniq -c | sort -rn | head -100
+  ```
 - **Output**: `<dotfiles repo>/zsh/shell-aliases-social.json`; if no dotfiles repo, ask
   where to write
 - **Author**: `git config user.name` (or GitHub handle) — never hardcode
@@ -60,6 +68,11 @@ Include an alias/function if it meets at least one criterion:
   ]
 }
 ```
+
+- `usage_frequency` comes from the history ranking: `high` = top 10, `medium` = ranks
+  11–50, `low` = ranks 51–100 or not ranked but kept for being useful or fun.
+- Sort `entries` by category in the order above (git, dev, cleanup, utility, fun), then
+  by `name`, so regenerating gives a stable diff.
 
 ## Phase 3 — Verify
 

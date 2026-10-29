@@ -1,13 +1,14 @@
 ---
 name: reviewable-commits
 description: >
-  Reorganize the final diff of the current Git branch or pull request into a small sequence
-  of logical, reviewable commits without preserving the accidental chronology of
+  Reorganize the final diff of the current Git branch or pull request into a small
+  sequence of logical, reviewable commits without preserving the accidental chronology of
   development — local Git only, exact final code state preserved, never pushed unless
-  explicitly requested.
-  Use when the user asks to split, rebuild, clean up, or improve commits for code review;
-  turn a large or WIP branch into coherent commits; squash fixups into their intended
-  change; or "separar una rama/PR en commits lógicos".
+  explicitly requested. Use when the user runs /reviewable-commits — to split, rebuild,
+  clean up, or improve commits for code review; turn a large or WIP branch into coherent
+  commits; squash fixups into their intended change; or "separar una rama/PR en commits
+  lógicos".
+disable-model-invocation: true
 ---
 
 # Reviewable Commits

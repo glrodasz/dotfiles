@@ -7,7 +7,8 @@ recent, most consistent skills (`branch-test-plan`, `branch-comment-cleanup`,
 ## Layout
 
 - One directory per skill: `<skill-name>/SKILL.md`. Optional `scripts/` (executed),
-  `references/` (read on demand). No other top-level files.
+  `references/` (read on demand), `assets/` (data or templates the skill copies into a
+  project, e.g. seed token files). No other top-level files.
 - `name` equals the directory name.
 - Skills are symlinked into `~/.claude/skills` and `~/.cursor/skills-cursor` by
   `make slink-skills`, so everything must be self-contained and path-relative.
@@ -15,9 +16,14 @@ recent, most consistent skills (`branch-test-plan`, `branch-comment-cleanup`,
 ## Frontmatter
 
 - Fields: `name`, `description`, and only when the skill must never auto-trigger,
-  `disable-model-invocation: true`. Nothing else.
+  `disable-model-invocation: true`. A slash-only skill (`disable-model-invocation: true`)
+  may also pre-approve its commands with `allowed-tools` and hint its arguments with
+  `argument-hint`. A skill that pre-approves tools must be slash-only, so it never runs
+  them without the user typing its command. Nothing else.
 - Names are kebab-case noun phrases naming the deliverable or target
   (`branch-test-plan`, `prod-page-audit`, `env-example-sync`). No verb-first names.
+  Exception: `harvest-reviews` keeps its name because renaming it would change the
+  `/harvest-reviews` command.
 - `description` uses the YAML folded block (`description: >`) when it exceeds one line,
   wrapped at ~90 columns, indented two spaces.
 - Description shape, in order:
@@ -37,6 +43,9 @@ recent, most consistent skills (`branch-test-plan`, `branch-comment-cleanup`,
     them; only for skills that take arguments or default paths.
   - `## Phase 0 — <Scope / Understand the target>` … `## Phase N — Verify` — em-dash
     (`—`) separator, "Phase" not "Step", sentence-case titles.
+    A Verify phase is a loop, not a list: it says to fix any failing check and rerun the
+    checks before the report, and what to do when a check can't pass (restore, stop, or
+    list it under "Still needs human attention").
   - `## Report` — followed by a fenced template the model fills in. Report templates
     typically contain `### Changes made`, `### Still needs human attention`.
   - `## Notes & edge cases` — bolded lead-in per bullet (`- **Big diffs**: …`). Always last.

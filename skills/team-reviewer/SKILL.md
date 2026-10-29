@@ -2,10 +2,13 @@
 name: team-reviewer
 description: >
   Review code from the perspective of this team's human reviewers, using the rules
-  learned from their past PR comments. Use when asked to review a diff, branch or PR,
-  before opening a PR, or when the user asks "what would the team flag here", "review
-  this like my team would", or "is this ready for review".
-allowed-tools: Bash(sh ${CLAUDE_SKILL_DIR}/scripts/*) Bash(git diff *) Bash(git log *) Bash(gh pr diff *) Bash(gh pr view *)
+  learned from their past PR comments — team conventions and review habits, not bug
+  hunting (use /code-review for that). Use when the user runs /team-reviewer, optionally
+  with a PR number or branch — to review a diff before opening a PR, or to ask "what
+  would the team flag here", "review this like my team would", or "is this ready for
+  review".
+disable-model-invocation: true
+allowed-tools: Bash(sh ${CLAUDE_SKILL_DIR}/scripts/*) Bash(git diff *) Bash(git log *) Bash(gh pr diff *) Bash(gh pr view *) Bash(gh repo view *)
 ---
 
 # Team Reviewer

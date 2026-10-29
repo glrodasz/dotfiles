@@ -6,9 +6,12 @@ description: >
   statistics, tests, generated files, and CODEOWNERS; propose a dependency graph, branch
   and base plan, reviewer routing, tests, and exact coverage of the original change —
   applied locally or published only when explicitly requested, final behavior preserved,
-  no unrelated refactors. Use when a PR is difficult to review, spans multiple features,
+  no unrelated refactors. Use when the user runs /stacked-pr-splitter, optionally with a
+  PR number or branch — for a PR that is difficult to review, spans multiple features,
   modules, or teams, exceeds roughly 1,000 changed human-authored lines, has tangled
-  dependencies, or needs CODEOWNERS-aware review boundaries.
+  dependencies, or needs CODEOWNERS-aware review boundaries ("split this PR", "break up
+  this PR", "stack my PRs").
+disable-model-invocation: true
 ---
 
 # Stacked PR Splitter

@@ -2,17 +2,17 @@
 name: feature-based-architecture
 description: >
   Organize, scaffold, and refactor full-stack JavaScript/TypeScript codebases around
-  features/domains instead of technical layers, with atomic design and design tokens on
-  the UI side and feature modules on the Node backend. Use whenever creating a feature,
-  page, component, container, hook, handler, helper, util, query, API route, endpoint,
-  router, service, or repository; deciding where a file belongs; choosing between
-  helpers, utils, common, lib, or infrastructure folders; styling a component or adding
-  a color/spacing value (design tokens); deciding whether a component belongs in the app
-  or in the design system; wiring server-side rendering (getServerSideProps, React Query
-  initial data); naming files or directories; extracting or sharing code between
-  features; or restructuring a project's folder layout. Trigger even when the user never
-  says "architecture" and only asks "where should this go?", "add X to the project",
-  "add an endpoint", "style this", or "clean up this utils folder".
+  features/domains instead of technical layers, with atomic design on the UI side and
+  feature modules on the Node backend. Use whenever creating a feature, page, component,
+  container, hook, handler, helper, util, query, API route, endpoint, router, service,
+  or repository; deciding where a file belongs; choosing between helpers, utils, common,
+  lib, or infrastructure folders; styling a component or adding a color/spacing value;
+  deciding whether a component belongs in the app or in the design system; wiring
+  server-side rendering (getServerSideProps, React Query initial data); naming files or
+  directories; extracting or sharing code between features; or restructuring a
+  project's folder layout. Trigger even when the user never says "architecture" and only
+  asks "where should this go?", "add X to the project", "add an endpoint", "style this",
+  or "clean up this utils folder".
 ---
 
 # Feature-Based Architecture

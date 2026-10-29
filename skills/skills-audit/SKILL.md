@@ -7,6 +7,7 @@ description: >
   report. Use when the user wants to review, audit, lint, standardize, or clean up their
   skills, asks whether a SKILL.md follows best practices, or after adding or editing a
   skill.
+disable-model-invocation: true
 ---
 
 # Skills Audit

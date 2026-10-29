@@ -6,7 +6,9 @@ description: >
   or needs code examples — setup questions ("How do I configure Next.js middleware?"),
   code generation involving libraries ("Write a Prisma query for…"), API references
   ("What are the Supabase auth methods?"), or mentions of specific frameworks like React,
-  Vue, Next.js, Svelte, Express, Tailwind, Prisma, Supabase.
+  Vue, Next.js, Svelte, Express, Tailwind, Prisma, Supabase. Not for refactoring, writing
+  scripts from scratch, debugging business logic, code review, or general programming
+  concepts.
 ---
 
 # Context7 Documentation Lookup

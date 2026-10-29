@@ -5,10 +5,11 @@ description: >
   changing tests, updating configuration, or otherwise editing an existing codebase — no
   opportunistic renaming, reformatting, abstraction, dependency upgrades, architecture
   changes, or unrelated fixes; an explicitly requested refactor is allowed but kept
-  strictly within the named scope. Use whenever code must be changed and the requested
-  behavior can be delivered without broad cleanup, especially for requests mentioning
-  minimal diffs, surgical changes, preserving existing structure, avoiding refactors, or
-  not touching unrelated code.
+  strictly within the named scope. Use when the user explicitly asks for a minimal
+  change — "minimal diff", "minimal code changes", "smallest possible change", "surgical
+  change", "only change what's needed", "don't touch anything else", "don't touch
+  unrelated code", "keep the existing structure", "no refactors", or "cambios mínimos".
+  Not for ordinary edits that don't ask for a minimal scope.
 ---
 
 # Minimal Code Changes

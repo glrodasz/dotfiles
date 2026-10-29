@@ -208,9 +208,13 @@ def lint_skill(skill_dir: Path) -> list[Finding]:
     for key in fields:
         if key not in KNOWN_FRONTMATTER_KEYS:
             add("warn", "FM012", f"unknown frontmatter key `{key}`")
-    extra = sorted(set(fields) - {"name", "description", "disable-model-invocation"})
+    allowed_keys = {"name", "description", "disable-model-invocation"}
+    # Slash-only skills may pre-approve their commands and hint their arguments.
+    if str(fields.get("disable-model-invocation")).lower() == "true":
+        allowed_keys |= {"allowed-tools", "argument-hint"}
+    extra = sorted(set(fields) - allowed_keys - {"__style__"})
     if extra:
-        add("style", "HS006", f"house style keeps frontmatter to name/description(/disable-model-invocation); found {', '.join(extra)}")
+        add("style", "HS006", f"house style keeps frontmatter to name/description(/disable-model-invocation; allowed-tools and argument-hint only when slash-only); found {', '.join(extra)}")
 
     # body size
     body_lines = body.split("\n")

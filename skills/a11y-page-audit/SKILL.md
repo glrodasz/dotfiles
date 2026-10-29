@@ -144,7 +144,13 @@ focusable children — the parent clips an outline that extends beyond its bound
 
 ## Phase 2 — Verify
 
-**Keyboard walkthrough** (repeat on every major route):
+**Keyboard walkthrough** (repeat on every major route). Drive it with the Playwright MCP
+server: `playwright:browser_navigate` to the page, `playwright:browser_press_key` with
+`Tab` for each stop, `playwright:browser_evaluate` with
+`() => document.activeElement?.outerHTML.slice(0, 200)` to read what has focus, and
+`playwright:browser_take_screenshot` to check the ring. If the server isn't connected,
+don't install it yourself: list the walkthrough under "Still needs human attention"
+instead of claiming it, and fill the report's "Better audit" note (see Report).
 1. Load the page, press Tab — first stop must be the skip link.
 2. Continue: skip-link → logo → nav → main CTAs → cards → footer links. Nothing silently
    skipped; no focus trap (except modals with proper escape handling).
@@ -155,9 +161,15 @@ focusable children — the parent clips an outline that extends beyond its bound
 **Forms**: tab into every input (indicator visible), Enter submits, error states expose
 `aria-invalid` + linked messages.
 
-**Automated smoke test**: run Lighthouse a11y (axe DevTools when Lighthouse is
-unavailable). Treat the score as a regression catch, not a substitute for the manual
-walkthrough.
+**Automated smoke test**: run Lighthouse (axe DevTools when Lighthouse is unavailable):
+
+```bash
+npx lighthouse <url> --only-categories=accessibility --output=json --quiet \
+  --chrome-flags="--headless"
+```
+
+It needs Chrome; without it, list the check under "Still needs human attention". Treat
+the score as a regression catch, not a substitute for the manual walkthrough.
 
 Fix any failure found, then repeat the walkthrough and checks until they pass before
 reporting.
@@ -179,6 +191,11 @@ SPA Focus Reset  [PASS / FIXED / N/A]
 
 ### Still needs human attention
 - [manual testing, content decisions, visual review]
+
+### Better audit (only when Playwright MCP wasn't connected)
+The keyboard walkthrough was not run in a browser. Install the Playwright MCP server so
+the next audit can drive it end to end, then start a new Claude Code session:
+`claude mcp add --scope user playwright npx @playwright/mcp@latest`
 
 ### Conventions to document
 - [rules for AGENTS.md / CLAUDE.md so future contributors maintain these patterns]
