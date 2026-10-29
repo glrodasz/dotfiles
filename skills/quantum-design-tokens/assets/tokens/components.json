@@ -1908,7 +1908,7 @@
     "shadow-color": {
       "elevation": {
         "$type": "color",
-        "$value": "{system.Colors.Transparency.dark}"
+        "$value": "{system.Colors.Transparency.shadow}"
       }
     }
   },
@@ -1972,7 +1972,7 @@
     "shadow-color": {
       "elevation": {
         "$type": "color",
-        "$value": "{system.Colors.Transparency.dark}"
+        "$value": "{system.Colors.Transparency.shadow}"
       }
     }
   },

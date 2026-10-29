@@ -13,6 +13,7 @@ here.
 5. Component vocabulary
 6. Theming and re-theming
 7. Audit checks
+8. Layout grids
 
 ---
 
@@ -32,7 +33,7 @@ metadata.
 
 | `$type` | Value form | Examples |
 |---|---|---|
-| `color` | `#RRGGBB`, or `#RRGGBBAA` when alpha < 1 | `"#F7DF1D"`, `"#0A60FF26"` (`26` = 15% alpha, the system's standard translucency) |
+| `color` | `#RRGGBB`, or `#RRGGBBAA` when alpha < 1 | `"#D6FF33"`, `"#0A60FF26"` (`26` = 15% alpha, the system's standard translucency) |
 | `number` | Unitless number. The build adds units per platform. | `24`, `700`, `1.22` |
 | `string` | Emitted verbatim | `"'Inter', system-ui, sans-serif"`, `"clamp(3rem, 20vw, 5rem)"`, `"58%"`, `"0.08em"` |
 
@@ -87,22 +88,27 @@ on a scale.
 
 | Group | Palettes | Steps |
 |---|---|---|
-| `Colors.Custom.Principal palette` | The brand-owned palette | `100`–`600`, `opacity` |
-| `Colors.Schemas.<Schema>.<Palette>` | Nine two-palette schemas (below) | `100` (lightest) – `600` (darkest), `opacity` (15% alpha) |
+| `Colors.Custom.Principal palette`, `Colors.Custom.Complementary palette` | Brand-owned slots, grey placeholders until a project fills them | `100`–`600`, `opacity` |
+| `Colors.Schemas.<Schema>.<Palette>` | Ten two-palette schemas (below) | `100` (lightest) – `600` (darkest), `opacity` (15% alpha) |
 | `Colors.Support.Shark` | Neutral | `0` (white), `100`–`600`, `700`–`950` (dark-theme surface ramp: 700 lightest → 950 darkest), `opacity-light` (white 15%), `opacity-dark` (black 15%) |
 | `Colors.Support.Shamrock` / `Supernova` / `Geraldine` | Success (green), warning (yellow/gold), danger (red) | `100`–`600` |
 
 | Schema | Palette A | Palette B |
 |---|---|---|
-| Frozen ribbon | Blue Ribbon | Aquamarine frozen |
+| Frozen ribbon | Blue Ribbon | Frozen |
 | Mint blue | Prussian blue | Mint |
 | Flash cerulean | Cerulean | Flash white |
 | Metal chartreuse | Gunmetal | Chartreuse |
 | Mauve neon | Neon blue | Mauve |
 | Violet chiffon | Violet | Lemon chiffon |
 | Violet bittersweet | Bittersweet | Dark violet |
+| Sweet chiffon | Bittersweet | Lemon chiffon |
 | Antique amaranth | Amaranth purple | Antique white |
 | Flax sepia | Sepia | Flax |
+
+Sweet chiffon reuses palettes from Violet bittersweet and Violet chiffon with identical
+values. Each schema still holds its own copy, so a reference names the schema it themes
+from.
 
 **Dimensions** (keyed by value)
 
@@ -113,7 +119,9 @@ on a scale.
 
 - `Typography.Font-family`: complete stacks keyed by family — Inter, Montserrat, DM-Sans,
   JetBrains Mono, Work Sans, Manrope, Poppins, Space Grotesk, Syne, Libre Baskerville,
-  Space Mono, Roboto, Lato, Oswald, Raleway, Futura.
+  Space Mono, Roboto, Lato, Oswald, Raleway, Futura. Name a new family exactly as Google
+  Fonts does, so the Figma kit and the web font resolve to the same face. The kit
+  recommends at most two families, one for headings and one for body, and ideally one.
 - `Typography.Font-weight`, keyed by value: 100 (Light), 300 (Regular), 400 (Medium),
   600 (Semibold), 700 (Bold), 900 (Black).
 - `Typography.Base`: type-scale seeds, 8–21.
@@ -122,7 +130,14 @@ on a scale.
   line heights: `13 16 17 19 20 22 24 27 29 30 34 35 36 38 44 46 48 54 56 59 66 68 80 82 98`
 
 Scale formula: `size(n) = round(Base × Scale^n)`. Headings: Base 20 × 1.22 → 20, 24, 30,
-36, 44, 54, 66, 80. Body: Base 13 × 1.22 → 13, 16, 19, 24, 29, 35.
+36, 44, 54, 66, 80. Body: Base 13 × 1.22 → 13, 16, 19, 24, 29, 35. Pick the scale by
+surface: High contrast for large screens, Medium for content-heavy interfaces, Low for
+dashboards and mobile apps.
+
+Line-height formula: the smallest size gets +4, and each step up adds 2 more (+4, +6,
++8, …). Headings 20/24, 24/30, 30/38 … 80/98 and Body 13/17 … 24/34 follow it. Body `xl`
+(29/48) and `xxl` (35/59) in the seed don't follow it (the rule gives 29/41 and 35/49).
+No `Typography.Styles` entry uses them.
 
 ## 4. System vocabulary and default mapping
 
@@ -139,7 +154,7 @@ Scale formula: `size(n) = round(Base × Scale^n)`. Headings: Base 20 × 1.22 →
 | `Foregrounds` | principal, secondary, tertiary, neutral, contrast, disabled | Text and icons; `neutral` = muted; `contrast` = on an inverted surface |
 | `Typography` | Heading, Paragraph, Highlight, Alternative, Contrast, Link, disabled | Text roles |
 | `Borders` | strong, neutral, disabled, alternative, focus | Strokes and focus rings |
-| `Transparency` | primary, complementary, light, dark | Translucent washes and scrims |
+| `Transparency` | primary, complementary, light, dark, shadow | Translucent washes and scrims; `shadow` = the tint every elevation uses |
 | `Fixed` | on-accent, on-dark (+ project-specific) | **Theme-invariant** colors, defined identically in both theme files |
 
 The four-step ramp: `principal` default role color · `subtle` softer variant, used for
@@ -154,6 +169,33 @@ hover · `off` near-background tint · `high` maximum emphasis, used for pressed
 | `Border radius` | flat 2, xs 4, sm 8, md 12, lm 16, lg 24, xl 32, xxl 48, full 100 |
 
 `ml` is the step after `md`, and `lm` is the step after `ml`. Both are deliberate.
+
+**Elevations** — `Elevations.<level>` with `offset-x`, `offset-y`, `blur-radius`,
+`spread-radius` (px), named by intensity:
+
+| Level | offset-x / offset-y / blur / spread (px) |
+|---|---|
+| soft | 0 / 8 / 12 / −8 |
+| medium | 0 / 8 / 24 / −4 |
+| high | 0 / 12 / 32 / 0 |
+| extreme | 0 / 12 / 48 / 0 |
+
+All levels share `Colors.Transparency.shadow` (Gunmetal at 15% in light, black at 15% in
+dark). The kit shows the shadows but doesn't publish their values. These values were fitted
+to the kit's rendering and land on the Sizing scale. To give a component a shadow, add
+one component token per part pointing at a level (e.g. `card-image.shadow.elevation.*` →
+`{system.Elevations.medium.*}`), then compose them:
+
+```css
+box-shadow: var(--components-tokens--card-image--shadow--elevation--offset-x)
+            var(--components-tokens--card-image--shadow--elevation--offset-y)
+            var(--components-tokens--card-image--shadow--elevation--blur-radius)
+            var(--components-tokens--card-image--shadow--elevation--spread-radius)
+            var(--components-tokens--card-image--shadow-color--elevation);
+```
+
+Keep the `-radius` suffixes. The build adds `px` only to paths containing a length word,
+and a bare `blur` would come out unitless.
 
 **Typography**
 
@@ -173,29 +215,37 @@ copy it exactly.
 
 | System token | → Global reference |
 |---|---|
-| Primary principal / subtle / off / high | Custom.Principal palette 600 / 500 / 100 / 600 |
-| Complementary principal / subtle / off / high / deep | Support.Supernova.300 / Metal chartreuse.Chartreuse 600 / 100 / 600 / Support.Supernova.400 |
+| Primary principal / subtle / off / high | Metal chartreuse.Gunmetal 600 / 500 / 100 / 600 |
+| Complementary principal / subtle / off / high / deep | Metal chartreuse.Chartreuse 400 / 500 / 100 / 600 / 500 |
 | Neutral principal / subtle / off / high | Support.Shark 500 / 400 / 100 / 600 |
 | Info high / low | Metal chartreuse.Gunmetal 600 / 100 |
 | Success, Warning, Danger high / low | Shamrock, Supernova, Geraldine 400 / 100 |
-| Backgrounds principal / secondary / tertiary / subtle / neutral / contrast / atmosphere | Shark.0 / Gunmetal.100 / Shark.100 / Shark.200 / Shark.100 / Principal palette.600 / Flax sepia.Sepia.200 |
+| Backgrounds principal / secondary / tertiary / subtle / neutral / contrast / atmosphere | Shark.0 / Gunmetal.100 / Shark.100 / Shark.200 / Shark.100 / Gunmetal.600 / Flax sepia.Sepia.200 |
 | Foregrounds principal / secondary / tertiary / neutral / contrast / disabled | Gunmetal.600 / Gunmetal.500 / Shark.600 / Shark.400 / Gunmetal.100 / Shark.200 |
 | Typography Heading / Paragraph / Highlight / Alternative / Contrast / Link / disabled | Gunmetal.600 / Shark.500 / Gunmetal.500 / Chartreuse.400 / Gunmetal.100 / Gunmetal.500 / Shark.200 |
-| Borders strong / neutral / disabled / alternative / focus | Principal palette.500 / Shark.200 / Shark.100 / Chartreuse.400 / Frozen ribbon.Blue Ribbon.500 |
-| Transparency primary / complementary / light / dark | Gunmetal.opacity / Chartreuse.opacity / Shark.opacity-light / Shark.opacity-dark |
+| Borders strong / neutral / disabled / alternative / focus | Gunmetal.500 / Shark.200 / Shark.100 / Chartreuse.400 / Frozen ribbon.Blue Ribbon.500 |
+| Transparency primary / complementary / light / dark / shadow | Gunmetal.opacity / Chartreuse.opacity / Shark.opacity-light / Shark.opacity-dark / Gunmetal.opacity |
 | Fixed on-accent / on-dark | Shark.950 / Shark.0 |
 | Font-family Headings / Body / Alternative text / Code | DM-Sans / Inter / Inter / JetBrains Mono |
 
+The Figma kit defines every key above except `Complementary.deep`,
+`Backgrounds.atmosphere`, `Borders.focus`, `Transparency.shadow` and `Fixed`. Those are
+additions the code needs (focus rings, fine detail, shadows, theme-invariant colors), so
+keep them when syncing with a newer kit.
+
 The default dark overrides move surfaces to the Shark 700–950 ramp
 (`Backgrounds.principal` → Shark.950, `Backgrounds.contrast` → Shark.0), invert
-foregrounds and text to Shark 0–300, use Shark 600–800 for borders, and move the accent
-and focus to Chartreuse.400. Feedback colors use the 300 step (high) and 600 step (low) of
-their support palette.
+foregrounds and text to Shark 0–300, use Shark 600–800 for borders, move the accent and
+focus to Chartreuse.400, and darken `Transparency.shadow` to Shark.opacity-dark. Feedback
+colors use the 300 step (high) and 600 step (low) of their support palette.
 
 ## 5. Component vocabulary
 
 **Path grammar:** `{component}.{property}.{variant|size}.{state}`. Drop any segment that
-doesn't apply.
+doesn't apply. The kit calls the first three segments Object (component), Base
+(category) and Modifier (variant). Figma Variables separate the same segments with `/`
+(`button/background-color/primary/default`), and each segment becomes one nested JSON
+group.
 
 ```
 button.background-color.primary.hover
@@ -207,15 +257,29 @@ card-image.text-color.contrast.title
 
 | Segment | Vocabulary |
 |---|---|
-| component | kebab-case: `button`, `icon-button`, `input-field`, `text-area`, `tag`, `badge`, `status`, `nav-bar`, `footer`, `card-image`, `card-text`, … |
-| property | `background-color`, `text-color`, `border-color`, `outline-color`, `icon-color`, `fill-color`, `shadow-color`, `divider-color`, `spacing`, `sizing`, `border-radius`, `typography` (children: `font-family`, `font-weight`, `font-size`, `line-height`) |
-| variant | `primary`, `secondary`, `tertiary`, `ghost`; surface styles `flat`, `elevation`, `edge`, `contrast`; feedback `info`, `success`, `warning`, `error`, `neutral` |
+| component | kebab-case, named after the kit's catalog (below) |
+| property | `background-color`, `text-color`, `border-color`, `outline-color`, `icon-color`, `fill-color`, `shadow-color`, `divider-color`, `spacing`, `sizing`, `border-radius`, `shadow` (children: `offset-x`, `offset-y`, `blur-radius`, `spread-radius`), `typography` (children: `font-family`, `font-weight`, `font-size`, `line-height`) |
+| variant | `primary`, `secondary`, `tertiary`, `ghost-light`, `ghost-dark` (`ghost` when only one exists); surface styles `flat`, `elevation`, `edge`, `colorful`, `contrast`; feedback `discovery`, `info`, `success`, `warning`, `error`, `neutral` |
 | size | `large`, `small` (add `medium` only when a third size exists) |
 | state | `default`, `hover`, `active`, `focus`, `disabled`, `error` |
 | spacing leaf | `horizontal`, `vertical`, `gap`, or a named gap (`button-gap`, `icon-gap`) |
 
-Keep one vocabulary: `active`, not `actived`. A misspelled key becomes a misspelled public
-variable name.
+Keep one vocabulary: `active`, not `actived` (the kit's Figma labels use both). A
+misspelled key becomes a misspelled public variable name.
+
+**Component catalog.** The kit follows atomic design, with tokens as quarks. Reuse these
+names before inventing new ones:
+
+| Level | Components |
+|---|---|
+| Atoms | `icon-button`, `number-button`, `check-button`, typography styles, `logo`, `tag`, `badge`, `status`, `icon` (Phosphor Icons) |
+| Molecules | `button`, `dropdown`, `breadcrumb`, `pagination`, `calendar`, `input-field`, `text-area`, `checkbox`, `switch`, `radio-button`, `progress-bar`, `avatar`, `avatar-group`, `tooltip`, `alert`, `icon-box`, `entry-title`, `menu-avatar`, `accordion`, `header` |
+| Organisms | `button-group`, `float-tab`, `full-tab`, `select`, `card-input`, `card-image`, `card-icon`, `card-text` |
+| Templates | `menu`, `nav-label`, `nav-bar`, `footer`, `sidebar`, `sidebar-item`, `dialog`, `data-table` |
+
+A new component belongs one level above the parts it combines: an atom is built from
+quarks only, and a molecule, organism or template combines at least two different pieces
+from the level below.
 
 **Shared typography ramp** — `Typography.Styles.<Style>.<Size>`, each with `Font-family`,
 `Font-weight`, `Font-size`, `Line-height`:
@@ -291,9 +355,10 @@ untouched:
 }
 ```
 
-A brand palette that doesn't exist yet goes into global first (e.g. replace
-`Colors.Custom.Principal palette`, or add `Colors.Custom.<Brand>`) as `100`–`600` plus
-`opacity`. A further theme, such as high-contrast, is one more override file
+A brand palette that doesn't exist yet goes into global first, as `100`–`600` plus
+`opacity`. Fill `Colors.Custom.Principal palette` (repoint `Primary`,
+`Backgrounds.contrast`, `Borders.strong`) and `Colors.Custom.Complementary palette`
+(repoint `Complementary`), or add `Colors.Custom.<Brand>`. A further theme, such as high-contrast, is one more override file
 (`system-<theme>.json`) with the same rules and its own scope.
 
 **Type scale change:** pick `Base` and `Scale`, compute `round(Base × Scale^n)`, add any
@@ -312,7 +377,26 @@ What `scripts/quantum-tokens.mjs audit` reports:
 | `missing-token` | error | UI code referencing a token name that no JSON file defines |
 | `bad-usage` | warning | UI code referencing `system-tokens` or `global-tokens` directly |
 | `raw-value` | warning | A raw color in system or component tokens; a raw non-color without `$description`; a level skip or same-level chain; a reference inside global |
-| `hardcoded` | warning | Literal colors in UI code, and literal lengths/weights/families on spacing, radius and type properties |
+| `hardcoded` | warning | Literal colors in UI code, and literal lengths/weights/families on spacing, radius, `box-shadow` and type properties |
 | `duplicate` | info | System or component tokens of one type with identical resolved values |
 | `unused` | info | Globals no system token references; system tokens no component token references; component tokens no UI code uses |
 | `dark-coverage` | info | Light system colors with no dark override |
+
+## 8. Layout grids
+
+The kit's page grids. They aren't seeded as tokens. When a project adopts one, add its
+values under the app namespace (`Site.Page-layout.*`): reference `Sizing.container`
+(1140) and Spacing steps where they match, and use raw numbers with a `$description`
+for off-scale widths (1320, 716, 312).
+
+| Grid | Viewport | Columns | Gutter | Margin | Container |
+|---|---|---|---|---|---|
+| Fixed XL | ≥ 1440 | 12 | 16 | auto (centered) | 1320 |
+| Fixed LG | ≥ 1200 | 12 | 16 | auto (centered) | 1140 |
+| Fixed MD | ≥ 992 | 8 | 12 | auto (centered) | 716 |
+| Fixed SM | mobile | 4 | 8 | 24 at 360 wide | 312 |
+| Fluid container | any | 12 | 16 | 32 | stretch |
+| Fluid side menu | dashboards | menu 20–25% · content 75–80% | 48 | 32 | stretch |
+
+Fixed SM is labeled "8 columns / gutter 12" in the kit, but its drawing has 4 columns and
+8px gutters, which is what fits 312px. Use the drawing.

@@ -7,7 +7,7 @@ description: >
   a zero-dependency build and audit, sets up theming, and replaces hardcoded values
   until UI code uses component tokens only. Use whenever the user wants to set up or
   migrate a project to Quantum Design or design tokens, replace hardcoded
-  colors/spacing/radius/typography with tokens, add tokens for a component or page, fix
+  colors/spacing/radius/shadows/typography with tokens, add tokens for a component or page, fix
   dark mode values, re-theme to another palette, build a token pipeline (CSS variables,
   Sass, Tailwind, CSS-in-JS, iOS, Android, Flutter), or audit token usage; also on
   "Quantum Design", "DTCG", "system tokens", "component tokens", or
@@ -75,8 +75,8 @@ UI code    stylesheets, style objects, native views
    Style Dictionary/Theo/Figma token exports, theme objects, `prefers-color-scheme`,
    `data-theme`/`.dark` toggles. Note what each one controls.
 4. **Brand:** existing palette, fonts, and radius feel. Decide between the default schema
-   (Metal chartreuse + Principal palette), another of the nine schemas, or a custom brand
-   palette under `Colors.Custom`.
+   (Metal chartreuse: Gunmetal primary, Chartreuse accent), another of the ten schemas, or
+   custom brand palettes under `Colors.Custom`.
 5. **Inventory** (existing projects): copy `scripts/quantum-tokens.mjs` to the project's
    `scripts/` and seed `tokens/` (Phase 1), then run
    `node scripts/quantum-tokens.mjs audit --scan src`. The `hardcoded` section is the
@@ -89,11 +89,11 @@ answer it. Otherwise proceed with the default schema and say so.
 
 1. Copy the four files in `assets/tokens/` into the token source dir unchanged. Never
    re-type them: the global palettes hold exact values.
-2. **Brand.** If the project has its own palette, replace `Colors.Custom.Principal
-   palette` (or add `Colors.Custom.<Brand>`) as `100`–`600` plus `opacity` (15% alpha),
-   and repoint the `Primary` and `Complementary` system colors in both theme files. To
-   pick a schema instead, repoint them at `Colors.Schemas.<Schema>.<Palette>` (see
-   `references/token-spec.md` §6).
+2. **Brand.** If the project has its own palette, fill `Colors.Custom.Principal palette`
+   and `Colors.Custom.Complementary palette` (or add `Colors.Custom.<Brand>`) as
+   `100`–`600` plus `opacity` (15% alpha). Then repoint the `Primary` and `Complementary`
+   system colors at them in both theme files. To pick a schema instead, repoint them at
+   `Colors.Schemas.<Schema>.<Palette>` (see `references/token-spec.md` §6).
 3. **Fonts.** Repoint `system › Typography.Font-family.*` at the project's families. Add a
    missing family to `global › Typography.Font-family` as a complete stack. Load the font
    files the way the stack already loads fonts.
@@ -139,7 +139,9 @@ typography), then layouts and pages. For each literal:
 2. **Find the system token on the matching scale.** Run
    `node scripts/quantum-tokens.mjs match '#646cff' 20px 1.5rem`. It lists the nearest
    system and global colors by ΔE, and the nearest Spacing, Sizing, Border radius,
-   font-size, and Line-height steps. Pick by meaning first, distance second.
+   font-size, and Line-height steps. Pick by meaning first, distance second. Shadows map
+   to the `Elevations` level of matching intensity (soft → extreme). Page widths and
+   gutters map to the kit's layout grids (`references/token-spec.md` §8).
 3. **Add or reuse a component token** in `components.json`, using the grammar
    `{component}.{property}.{variant|size}.{state}`. Use the app namespace (`Site`) for
    page-level roles. Point it at the system token.
@@ -190,9 +192,10 @@ Mark a justified line with a `quantum-tokens-ignore` comment, or exempt a direct
 
 - **Token for an existing component:** reuse its property, variant and state names, point
   it at the system token whose meaning matches, rebuild, then use it.
-- **New component:** list every visual property per variant, size and state, and add
-  `components.json › <component>`. Typography follows the closest `Typography.Styles`
-  entry.
+- **New component:** take its name from the kit's catalog when one fits
+  (`references/token-spec.md` §5). List every visual property per variant, size and
+  state, and add `components.json › <component>`. Typography follows the closest
+  `Typography.Styles` entry.
 - **Dark-mode fix:** confirm the key exists in light, then add the same path to
   `system-dark.json` with a global reference. If no shade fits, add one to global first.
 - **Re-theme:** repoint system color references in light, then dark. Leave component
@@ -239,9 +242,17 @@ Mark a justified line with a `quantum-tokens-ignore` comment, or exempt a direct
   build time from the generated CSS and accept that they don't theme.
 - **Stories, tests, and specs** are skipped by the hardcoded scan. Demo scaffolding isn't
   product UI.
-- **Seed differences:** the seed's dark file references global shades everywhere (the
-  feedback colors use the 300/600 steps), and `components.json` ships the generic
-  components plus a minimal `Site` namespace. Rename `Site` to the app's name only if
-  every reference and generated name changes with it.
+- **Seed differences:** the seed follows the kit's Figma Variables. It adds what code needs
+  and the kit leaves out: system `Complementary.deep`, `Backgrounds.atmosphere`,
+  `Borders.focus`, `Transparency.shadow` and `Fixed`, plus global Shark `0`/`700`–`950`,
+  `Sizing.1140` and `Typography.Steps`. It also publishes `Elevations` values fitted to
+  the kit's rendering. The dark file references global shades everywhere (the feedback
+  colors use the 300/600 steps), and `components.json` ships the generic components plus
+  a minimal `Site` namespace. Rename `Site` to the app's name only if every reference and
+  generated name changes with it.
+- **Syncing with a newer kit:** compare the global palettes swatch by swatch, the system
+  color mapping, and the scales against the seed. Update the seed and
+  `references/token-spec.md` together, keep the code-only additions above, and run the
+  audit on `assets/tokens` until it shows 0 errors and 0 warnings.
 - **The `quantum-design` UI-generation skill** builds components on these tokens. This
   skill owns the token source, build, theming, and migration.

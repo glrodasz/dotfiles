@@ -2,8 +2,8 @@
   "meta": {
     "author": "Guillermo Rodas",
     "source": "~/dotfiles/skills",
-    "generated": "2026-09-03",
-    "count": 13
+    "generated": "2026-10-29",
+    "count": 18
   },
   "entries": [
     {
@@ -12,6 +12,13 @@
       "description": "Turns a branch diff into a manual QA plan with regression checks",
       "trigger": "before opening a PR",
       "invocation": "/branch-test-plan"
+    },
+    {
+      "name": "harvest-reviews",
+      "category": "git-workflow",
+      "description": "Distills merged-PR review comments into rules for the team reviewer",
+      "trigger": "after a batch of merged PRs",
+      "invocation": "/harvest-reviews"
     },
     {
       "name": "reviewable-commits",
@@ -28,11 +35,25 @@
       "invocation": "/stacked-pr-splitter"
     },
     {
+      "name": "team-reviewer",
+      "category": "git-workflow",
+      "description": "Reviews a diff the way your teammates would, from their past comments",
+      "trigger": "before requesting human review",
+      "invocation": "/team-reviewer"
+    },
+    {
       "name": "branch-comment-cleanup",
       "category": "code-quality",
       "description": "Strips filler comments and makes the code explain itself instead",
       "trigger": "tidying a diff before review",
       "invocation": "/branch-comment-cleanup"
+    },
+    {
+      "name": "feature-based-architecture",
+      "category": "code-quality",
+      "description": "Organizes a codebase by feature, with atomic UI and design tokens",
+      "trigger": "deciding where a file belongs",
+      "invocation": "/feature-based-architecture"
     },
     {
       "name": "minimal-code-changes",
@@ -42,11 +63,25 @@
       "invocation": "/minimal-code-changes"
     },
     {
+      "name": "quantum-design-tokens",
+      "category": "code-quality",
+      "description": "Moves hardcoded UI values onto a three-tier design token system",
+      "trigger": "replacing hardcoded colors and spacing",
+      "invocation": "/quantum-design-tokens"
+    },
+    {
       "name": "a11y-page-audit",
       "category": "web-audit",
       "description": "Audits a page for keyboard and screen-reader gaps, then fixes them",
       "trigger": "before shipping a page",
       "invocation": "/a11y-page-audit"
+    },
+    {
+      "name": "localization",
+      "category": "web-audit",
+      "description": "Adds languages to a site with locale URLs, a toggle and hreflang",
+      "trigger": "adding a language to a site",
+      "invocation": "/localization"
     },
     {
       "name": "prod-page-audit",

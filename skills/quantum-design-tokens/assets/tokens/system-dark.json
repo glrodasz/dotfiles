@@ -84,7 +84,7 @@
       },
       "disabled": {
         "$type": "color",
-        "$value": "{global.Colors.Custom.Principal palette.500}"
+        "$value": "{global.Colors.Support.Shark.500}"
       }
     },
     "Borders": {
@@ -222,6 +222,10 @@
         "$value": "{global.Colors.Support.Shark.opacity-light}"
       },
       "dark": {
+        "$type": "color",
+        "$value": "{global.Colors.Support.Shark.opacity-dark}"
+      },
+      "shadow": {
         "$type": "color",
         "$value": "{global.Colors.Support.Shark.opacity-dark}"
       }

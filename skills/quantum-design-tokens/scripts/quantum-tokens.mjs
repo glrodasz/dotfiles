@@ -301,8 +301,8 @@ function walk(dir, exempt, files = []) {
 const COLOR_IN_STYLE = /(^|[\s:,(])#[0-9a-fA-F]{3,8}\b|\b(?:rgba?|hsla?|oklch|oklab|lab|lch|hwb)\(/;
 const COLOR_IN_SCRIPT = /(['"`])#[0-9a-fA-F]{3,8}\1|(['"`])(?:rgba?|hsla?|oklch)\(/;
 const DECLARATION = /^\s*([a-z-]+)\s*:\s*(.+?)\s*$/;
-// Properties whose lengths come from the Spacing, Border radius and type scales.
-const LENGTH_PROPS = /^(padding|margin|gap|row-gap|column-gap|font-size|letter-spacing|border-radius|border-(?:top|bottom)-(?:left|right)-radius)(-[a-z-]+)?$/;
+// Properties whose lengths come from the Spacing, Border radius, Elevations and type scales.
+const LENGTH_PROPS = /^(padding|margin|gap|row-gap|column-gap|font-size|letter-spacing|border-radius|border-(?:top|bottom)-(?:left|right)-radius|box-shadow)(-[a-z-]+)?$/;
 const UNITLESS_PROPS = /^(line-height|font-weight)$/;
 const LENGTH = /(^|[^\w.-])-?\d*\.?\d+(px|rem|em|pt|ch|vh|vw|vmin|vmax)\b/;
 const BARE_NUMBER = /(^|[^\w.-])-?\d*\.?\d+(?![\w%])/;

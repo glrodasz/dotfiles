@@ -3,29 +3,29 @@
     "Primary": {
       "principal": {
         "$type": "color",
-        "$value": "{global.Colors.Custom.Principal palette.600}"
+        "$value": "{global.Colors.Schemas.Metal chartreuse.Gunmetal.600}"
       },
       "subtle": {
         "$type": "color",
-        "$value": "{global.Colors.Custom.Principal palette.500}"
+        "$value": "{global.Colors.Schemas.Metal chartreuse.Gunmetal.500}"
       },
       "off": {
         "$type": "color",
-        "$value": "{global.Colors.Custom.Principal palette.100}"
+        "$value": "{global.Colors.Schemas.Metal chartreuse.Gunmetal.100}"
       },
       "high": {
         "$type": "color",
-        "$value": "{global.Colors.Custom.Principal palette.600}"
+        "$value": "{global.Colors.Schemas.Metal chartreuse.Gunmetal.600}"
       }
     },
     "Complementary": {
       "principal": {
         "$type": "color",
-        "$value": "{global.Colors.Support.Supernova.300}"
+        "$value": "{global.Colors.Schemas.Metal chartreuse.Chartreuse.400}"
       },
       "subtle": {
         "$type": "color",
-        "$value": "{global.Colors.Schemas.Metal chartreuse.Chartreuse.600}"
+        "$value": "{global.Colors.Schemas.Metal chartreuse.Chartreuse.500}"
       },
       "off": {
         "$type": "color",
@@ -37,8 +37,8 @@
       },
       "deep": {
         "$type": "color",
-        "$value": "{global.Colors.Support.Supernova.400}",
-        "$description": "Gold for fine detail (thin lines, small marks) that must stay visible on light surfaces."
+        "$value": "{global.Colors.Schemas.Metal chartreuse.Chartreuse.500}",
+        "$description": "Accent for fine detail (thin lines, small marks) that must stay visible on light surfaces."
       }
     },
     "Neutral": {
@@ -118,7 +118,7 @@
       },
       "contrast": {
         "$type": "color",
-        "$value": "{global.Colors.Custom.Principal palette.600}"
+        "$value": "{global.Colors.Schemas.Metal chartreuse.Gunmetal.600}"
       },
       "neutral": {
         "$type": "color",
@@ -189,7 +189,7 @@
     "Borders": {
       "strong": {
         "$type": "color",
-        "$value": "{global.Colors.Custom.Principal palette.500}"
+        "$value": "{global.Colors.Schemas.Metal chartreuse.Gunmetal.500}"
       },
       "neutral": {
         "$type": "color",
@@ -224,6 +224,10 @@
       "dark": {
         "$type": "color",
         "$value": "{global.Colors.Support.Shark.opacity-dark}"
+      },
+      "shadow": {
+        "$type": "color",
+        "$value": "{global.Colors.Schemas.Metal chartreuse.Gunmetal.opacity}"
       }
     },
     "Fixed": {
@@ -378,6 +382,82 @@
     "full": {
       "$type": "number",
       "$value": "{global.Border radius.100}"
+    }
+  },
+  "Elevations": {
+    "soft": {
+      "offset-x": {
+        "$type": "number",
+        "$value": "{global.Sizing.0}"
+      },
+      "offset-y": {
+        "$type": "number",
+        "$value": "{global.Sizing.8}"
+      },
+      "blur-radius": {
+        "$type": "number",
+        "$value": "{global.Sizing.12}"
+      },
+      "spread-radius": {
+        "$type": "number",
+        "$value": -8,
+        "$description": "Negative spread pulls the shadow in from the edges; the sizing scale has no negative steps."
+      }
+    },
+    "medium": {
+      "offset-x": {
+        "$type": "number",
+        "$value": "{global.Sizing.0}"
+      },
+      "offset-y": {
+        "$type": "number",
+        "$value": "{global.Sizing.8}"
+      },
+      "blur-radius": {
+        "$type": "number",
+        "$value": "{global.Sizing.24}"
+      },
+      "spread-radius": {
+        "$type": "number",
+        "$value": -4,
+        "$description": "Negative spread pulls the shadow in from the edges; the sizing scale has no negative steps."
+      }
+    },
+    "high": {
+      "offset-x": {
+        "$type": "number",
+        "$value": "{global.Sizing.0}"
+      },
+      "offset-y": {
+        "$type": "number",
+        "$value": "{global.Sizing.12}"
+      },
+      "blur-radius": {
+        "$type": "number",
+        "$value": "{global.Sizing.32}"
+      },
+      "spread-radius": {
+        "$type": "number",
+        "$value": "{global.Sizing.0}"
+      }
+    },
+    "extreme": {
+      "offset-x": {
+        "$type": "number",
+        "$value": "{global.Sizing.0}"
+      },
+      "offset-y": {
+        "$type": "number",
+        "$value": "{global.Sizing.12}"
+      },
+      "blur-radius": {
+        "$type": "number",
+        "$value": "{global.Sizing.48}"
+      },
+      "spread-radius": {
+        "$type": "number",
+        "$value": "{global.Sizing.0}"
+      }
     }
   },
   "Typography": {
