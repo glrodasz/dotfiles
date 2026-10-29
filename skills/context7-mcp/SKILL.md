@@ -12,14 +12,17 @@ description: >
 # Context7 Documentation Lookup
 
 Answer from fetched docs. If Context7 returns nothing useful, say so rather than silently
-falling back to memory.
+falling back to memory. Every `query` is sent to an external API, so it never carries the
+user's pasted code, logs, internal URLs, secrets, or personal data.
 
 ## Phase 1 — Resolve the library ID
 
 Call `context7:resolve-library-id` with:
 
 - `libraryName`: the library name extracted from the user's question
-- `query`: the user's full question (improves relevance ranking)
+- `query`: what to look up in the docs, rewritten in your own words (improves relevance
+  ranking), e.g. `Next.js middleware redirect based on auth cookie`, not the user's
+  message with its pasted code
 
 ## Phase 2 — Select the best match
 
@@ -31,7 +34,10 @@ mentioned a version (e.g. "React 19"), prefer version-specific IDs.
 Call `context7:query-docs` with:
 
 - `libraryId`: the selected Context7 library ID (e.g. `/vercel/next.js`)
-- `query`: the user's specific question
+- `query`: one topic per call, rewritten the same way as in Phase 1. When the question
+  spans several topics, make one call per topic (at most 3 per question), unless it is
+  about how the topics interact.
+- `language`: the language the user writes in (e.g. `TypeScript`), when known
 
 ## Phase 4 — Answer with the docs
 
