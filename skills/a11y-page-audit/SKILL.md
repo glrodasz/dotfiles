@@ -169,9 +169,9 @@ reporting.
 
 Focus System     [PASS / BUILT / NEEDS WORK]
 Skip Link        [PASS / ADDED / MISSING]
-Keyboard Nav     [score /10] + findings
-Semantic HTML    [score /10] + findings
-ARIA             [score /10] + findings
+Keyboard Nav     ✅/⚠️/❌ per item + findings
+Semantic HTML    ✅/⚠️/❌ per item + findings
+ARIA             ✅/⚠️/❌ per item + findings
 SPA Focus Reset  [PASS / FIXED / N/A]
 
 ### Changes made

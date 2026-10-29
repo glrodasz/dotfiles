@@ -111,8 +111,10 @@ End with: "Apply the **Fix** items? (all / pick skills / none)".
 
 ## Phase 4 — Apply
 
-Only after a yes. Local skills have no git history, so if any approved skill is local,
-first run:
+Only after a yes. Record the repo's starting state, because files may already be
+modified before the audit (Phase 5 compares against it):
+`git -C ~/dotfiles status --short skills/ > "$TMPDIR/skills-before.txt"`.
+Local skills have no git history, so if any approved skill is local, also run:
 `rm -rf "$TMPDIR/skills.local.bak" && cp -R ~/.skills.local "$TMPDIR/skills.local.bak"`.
 Then, for each approved skill:
 
@@ -133,8 +135,10 @@ Then, for each approved skill:
    reported finding that was approved is gone; no new findings introduced.
 2. Re-read each edited description once more as a discovery signal: would the skill still
    trigger on every phrase it triggered on before?
-3. `git -C ~/dotfiles diff --stat skills/` — only the approved repo skills changed. For
-   local skills: `diff -ru "$TMPDIR/skills.local.bak" ~/.skills.local` — only the approved
+3. `git -C ~/dotfiles status --short skills/ | grep -v -x -F -f "$TMPDIR/skills-before.txt"`
+   — only files of the approved repo skills appear (a file already modified before the
+   audit and edited again won't show here; check those with `git diff`). For local
+   skills: `diff -ru "$TMPDIR/skills.local.bak" ~/.skills.local` — only the approved
    local skills changed.
 
 Report what was applied, what was skipped and why, and what remains in "Needs your call":

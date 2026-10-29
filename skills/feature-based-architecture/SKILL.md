@@ -46,7 +46,7 @@ touches its area:
 
 | Task touches | Load |
 |---|---|
-| Components, styling, colors/spacing, theming, "is this a design-system component?" | [references/design-system.md](references/design-system.md) |
+| Components, styling, colors/spacing, theming, "is this a design-system component?" | [references/design-system.md](references/design-system.md), plus the `quantum-design-tokens` skill (dependency) for any token, color, spacing or theme |
 | Next.js/React: pages, containers, hooks, handlers, SSR, API routes, React Query, frontend tests | [references/frontend-nextjs.md](references/frontend-nextjs.md) |
 | Node backend: Express/Fastify routers, services, repositories, validation, errors, config, backend tests | [references/backend-node.md](references/backend-node.md) |
 | Another feature needs this code, or deciding whether to extract it to `common/`, `utils/` or the design system | [references/sharing-code.md](references/sharing-code.md) |

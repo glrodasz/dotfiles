@@ -203,6 +203,17 @@ The work is complete only when:
 - relevant tests, linting, type checks, builds, or migration checks pass, or any
   unavailable validation is reported explicitly
 
+If `verify` reports a tree mismatch, recover from the backup branch instead of guessing:
+
+1. `git diff HEAD <backup-branch> --stat`, then `git diff HEAD <backup-branch>` to see
+   exactly what the rebuilt history is missing or has extra.
+2. Bring the working tree back to the backup's content for those paths with
+   `git checkout <backup-branch> -- <paths>` (remove any extra files the diff shows), then
+   fold the fix into the commit it belongs to: `git commit --fixup <sha>` and
+   `GIT_SEQUENCE_EDITOR=: git rebase -i --autosquash <merge-base>` (non-interactive). Add
+   it as its own commit only when it is a separate logical change.
+3. Rerun `verify` until it passes. Never delete the backup branch to make it pass.
+
 ## Phase 7 — Push only when requested
 
 When the user explicitly requests updating an existing remote branch or pull request, push

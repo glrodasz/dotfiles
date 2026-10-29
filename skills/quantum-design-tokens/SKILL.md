@@ -230,6 +230,9 @@ Mark a justified line with a `quantum-tokens-ignore` comment, or exempt a direct
 
 ## Notes & edge cases
 
+- **`feature-based-architecture` depends on this skill.** That skill decides where a
+  component lives (app or design-system package); this one owns every token, the build
+  and theming. In a two-package setup the token source lives in the design-system package.
 - **Big codebases:** migrate shared atoms first and land each component as its own commit.
   Bridge aliases keep the app working between commits.
 - **Existing DTCG with `$extensions` or Figma metadata:** strip it. Slim DTCG only, and the
@@ -255,5 +258,3 @@ Mark a justified line with a `quantum-tokens-ignore` comment, or exempt a direct
   color mapping, and the scales against the seed. Update the seed and
   `references/token-spec.md` together, keep the code-only additions above, and run the
   audit on `assets/tokens` until it shows 0 errors and 0 warnings.
-- **The `quantum-design` UI-generation skill** builds components on these tokens. This
-  skill owns the token source, build, theming, and migration.

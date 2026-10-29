@@ -71,6 +71,10 @@ After writing, re-read `.env` and confirm: (a) body key order equals `.env.examp
 order; (b) the set of active values is unchanged from the original; (c) no key disappeared
 except ones the user approved for deletion.
 
+If any check fails, write the original `.env` content (from the Phase 1 read) back
+unchanged, report which check failed by key name, and stop. Do not attempt a second
+rewrite.
+
 ## Report
 
 Always, after writing:

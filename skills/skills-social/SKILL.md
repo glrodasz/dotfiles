@@ -36,8 +36,9 @@ Defaults; each is overridable by invocation args.
 
 ## Phase 2 — Categorize
 
-Assign exactly one category from this fixed vocabulary, so the rendered image can
-color-code consistently. Do not invent a new value — widen an existing category instead.
+Assign exactly one category from this vocabulary, so the rendered image can color-code
+consistently. Prefer widening an existing category; add a new one only when three or more
+skills would share it (see Notes).
 
 | category | covers | current members |
 | --- | --- | --- |

@@ -60,8 +60,11 @@ modern browsers.
 1. Extract brand identity: primary color from CSS custom properties or dominant styles;
    initials from `<title>` / `og:site_name`; any existing logo SVG.
 2. Generate an SVG favicon — brand initial(s) on a rounded rect in the primary color.
-3. Save as `favicon.svg`; convert to PNG/ICO with sharp in Node projects or Pillow in
-   Python projects. If neither is installed, note conversion is a build-time step.
+3. Save as `favicon.svg`; render the PNG sizes from it and pack 16/32/48 into
+   `favicon.ico`. Node projects: sharp for the PNGs, `png-to-ico` for the ICO (sharp
+   can't write ICO). Python projects: Pillow for both
+   (`img.save("favicon.ico", sizes=[(16, 16), (32, 32), (48, 48)])`). If neither is
+   installed, note conversion is a build-time step.
 4. Inject the standard `<head>` links: SVG icon, 32×32 PNG, apple-touch-icon, manifest.
 5. Generate `site.webmanifest` if missing (name, short_name, 192/512 icons,
    theme/background color, `display: standalone`).
@@ -117,10 +120,10 @@ suggested fixes.
 ```
 ## Production Readiness Report — [Page Title]
 
-SEO          [score /10] — ✅/⚠️/❌ per item, one line each
+SEO          ✅/⚠️/❌ per item, one line each
 Favicon      [PASS / GENERATED / FAIL]
 Open Graph   [PASS / GENERATED / FAIL]
-Mobile       [score /10]
+Mobile       ✅/⚠️/❌ per item, one line each
 
 ### Changes made
 - [files modified or created]

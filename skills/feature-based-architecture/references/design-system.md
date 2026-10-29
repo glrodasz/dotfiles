@@ -1,11 +1,16 @@
 # Design system: atomic design and design tokens
 
-Load this when creating or styling a component, adding a visual value (color, spacing,
-radius, font size, shadow), theming, or deciding whether a component belongs in the app or
-in the design system.
+Load this when creating or styling a component, or deciding whether a component belongs in
+the app or in the design system.
+
+**Depends on the `quantum-design-tokens` skill.** Tokens, their naming, the token build,
+theming and dark mode follow that skill; load it whenever a visual value (color, spacing,
+radius, font size, shadow) or a theme is involved. This file covers only where components
+live and how they consume tokens.
 
 Reference implementation: `@glrodasz/components` (repo `cero-components`) consumed by
-`cero-web`.
+`cero-web`. Examples below write `<design-system-package>`; use the project's own package
+name.
 
 ## Contents
 
@@ -14,7 +19,6 @@ Reference implementation: `@glrodasz/components` (repo `cero-components`) consum
 - [Component anatomy in the design system](#component-anatomy-in-the-design-system)
 - [Design tokens](#design-tokens)
 - [Styling rules](#styling-rules)
-- [Theming](#theming)
 - [Testing](#testing)
 
 ## Two packages, one hierarchy
@@ -24,7 +28,7 @@ the app owns the levels that know the domain.
 
 | Atomic level | Lives in | Example | Knows the domain? |
 |---|---|---|---|
-| Tokens | design system `tokens/` → `styles/tokens.css` | `--color-primary`, `--card-border-radius` | No |
+| Tokens | design system `tokens/*.json` → generated CSS (see `quantum-design-tokens`) | `--components-tokens--card-image--border-radius--default` | No |
 | Atoms | design system `atoms/` | `Button`, `Input`, `Card`, `Heading`, `Icon`, `Modal` | No |
 | Molecules | design system `molecules/` | `AddButton`, `IconLabel`, `Accordion`, `LoadingError` | No |
 | Layout primitives | design system `layout/` | `Spacer`, `Container`, `CenteredContent`, `FullHeightContent` | No |
@@ -66,7 +70,7 @@ Rules:
   `Badge`, a `Tooltip`), add it to the design system, release it, and bump the dependency.
   If the app can't wait for a release, put a temporary copy in
   `features/common/components/<Name>/` with the same API, add a
-  `// TODO: replace with @glrodasz/components <Name> (<issue link>)` at the top, and
+  `// TODO: replace with <design-system-package> <Name> (<issue link>)` at the top, and
   delete it in the PR that bumps the package.
 - **Do not fork a design-system component to tweak it.** Add a prop/option to the
   original, or override a component token.
@@ -74,7 +78,7 @@ Rules:
   primitives (`Spacer.Vertical`, `Container`). Their own CSS should be layout, not
   look-and-feel.
 - Import primitives by name from the package root:
-  `import { Card, Paragraph, Spacer } from '@glrodasz/components'`. Never deep-import
+  `import { Card, Paragraph, Spacer } from '<design-system-package>'`. Never deep-import
   package internals.
 - Promotion from app to design system follows the same five questions as any promotion in
   `SKILL.md`; additionally strip every domain word from the name and props on the way.
@@ -87,7 +91,7 @@ Scaffold new components with the package's generator (`yarn cc`) when available;
 ```text
 atoms/Button/
 ├── Button.js            component + propTypes + defaultProps, default export wrapped with withStyles
-├── Button.module.css    styles, tokens only
+├── Button.module.css    styles, component tokens only
 ├── Button.stories.js    Storybook: title 'Atoms/Button', one story per option
 ├── Button.test.jsx      snapshot + behavior
 ├── constants.js         export const options = { types: ['primary', 'secondary', 'tertiary'] }
@@ -111,47 +115,31 @@ Conventions:
 
 ## Design tokens
 
-Tokens are the only source of visual values. They come in layers; each layer only
-references the one below it.
+Tokens follow the `quantum-design-tokens` skill: Global → System → Component levels in
+DTCG JSON, a generated CSS file, and UI code that uses component tokens only
+(`--components-tokens--<component>--<property>--<variant>--<state>`). Load that skill for
+naming, adding a value, the build, theming and dark mode. Don't restate its rules here.
 
-| Layer | Also called | Defined in | Naming | Examples |
-|---|---|---|---|---|
-| 1. Choices | global / primitive / palette | `tokens/index.js` → `choices` | `--<category>-<scale>` | `--color-brand-medium-purple`, `--color-amber-600`, `--border-radius-sm`, `--font-size-md`, `--box-shadow-xs`, `--z-index-10` |
-| 2. Decisions — semantic | system / alias | `tokens/index.js` → `decisions` | `--color-<role>[-<variant>]`, `--background-color-<role>` | `--color-primary`, `--color-primary-muted`, `--color-font-base`, `--background-color-primary` |
-| 3. Decisions — component | component | `tokens/index.js` → `decisions.<component>` | `--<component>-<property>[-<variant>]` | `--button-border-radius-lg`, `--input-height`, `--card-border-radius`, `--stopwatch-color` |
+What this architecture adds:
 
-Tokens are authored as JS objects (camelCase) and compiled to CSS custom properties
-(kebab-case) by `scripts/build-tokens.js` into `styles/tokens.css`. Never hand-edit the
-generated CSS.
-
-Rules:
-
-- **Components consume layers 2 and 3, not layer 1.** `Button.module.css` uses
-  `var(--color-primary)` and `var(--button-border-radius-lg)`, not
-  `var(--color-brand-medium-purple)`. A raw palette value in a component means a semantic
-  token is missing — add it.
-- **Add a component token when a value must be themeable per component** (dark mode wants
-  square cards → `--card-border-radius`). Otherwise reuse a semantic or scale token.
-- **Palette naming (layer 1):** brand colors by name under `color.brand`
-  (`--color-brand-medium-purple`); every other hue as a numeric scale 50–900
-  (`--color-orange-500`). A new hex first goes in as the closest scale step or a new brand
-  entry; then a semantic role points at it (`--color-warning: var(--color-orange-500)`).
-- **Variant suffixes:** `-muted`, `-highlight`, `-inverted` for color roles; `-xs … -lg`
-  for sizes; `-desktop` (or another breakpoint name) for responsive overrides.
-- **No magic numbers.** A literal `px`, hex, or `rgba()` in component CSS is a missing
-  token. Exceptions: `0`, `100%`, `auto`, `max-content`, and one-off structural values
-  with a comment.
-- **App-specific tokens** that the design system will never need (e.g.
-  `--bottom-menu-height`) live in the app's `styles/globals.scss` under `:root`, named
-  like component tokens. Use them sparingly; anything reusable belongs upstream.
+- **The token source lives in the design-system package**, next to the components that
+  consume it. The app imports the package's generated CSS once, first, and never edits it.
+- **Each design-system component owns its component tokens**
+  (`components.json › button`), added in the same change as the component.
+- **App-only roles** that the design system will never need (e.g. a bottom-menu height)
+  go under the app namespace that `quantum-design-tokens` defines. Use them sparingly;
+  anything reusable belongs upstream.
+- **Themes stay in the token source**, as system-level overrides. App components never
+  branch on the theme.
 
 ## Styling rules
 
 - Follow the project's styling technology. In the design system: CSS Modules +
   `withStyles`. In the app: styled-jsx for component-scoped layout, CSS Modules where
   already used. Do not introduce a third approach.
-- Every value is a `var(--token)`. Inline `style={{}}` is only acceptable for values
-  computed at runtime (a progress width); never for static colors or spacing.
+- Every value is a component token (`var(--components-tokens--…)`). Inline `style={{}}`
+  is only acceptable for values computed at runtime (a progress width); never for static
+  colors or spacing.
 - Spacing between primitives comes from layout primitives (`Spacer`) or spacing tokens,
   not ad-hoc margins.
 - Use `classnames` for conditional classes in the app (add it as a direct dependency if
@@ -160,36 +148,6 @@ Rules:
 - Stylelint: recommended config + idiomatic property order. Make sure the lint glob covers
   every style extension the project uses (`.css` and `.scss`).
 
-## Theming
-
-Theming means re-pointing layer-2 and layer-3 tokens; layer 1 never changes and components
-never change.
-
-```scss
-@mixin dark-color-scheme {
-  --color-primary: var(--color-amber-600);
-  --background-color-primary: var(--color-cool-gray-900);
-  --card-border-radius: var(--border-radius-xs);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-color-scheme='light']) { @include dark-color-scheme; }
-}
-:root[data-color-scheme='dark'] { @include dark-color-scheme; }
-```
-
-- Themes live in the **app** (`styles/globals.scss`), because they are product decisions;
-  the design system ships the default (light) values. Move a theme upstream only if
-  several products need the same one.
-- "Square" or "none" values still use the scale (`var(--border-radius-none)`), not a
-  literal `0`.
-- System preference applies unless the user chose explicitly; the explicit choice is
-  `html[data-color-scheme]`, persisted by one hook (`useColorScheme`). Keep the
-  persistence logic in one place.
-- Override values point at layer-1 tokens (`var(--color-amber-600)`), not at raw hex.
-- If a theme needs to change something no token controls, add the token to the design
-  system first.
-
 ## Testing
 
 - Design system: co-located `Component.test.jsx` with snapshot + behavior; every option in
@@ -197,7 +155,7 @@ never change.
 - App: mock the design-system package so tests stay about the app's composition:
 
 ```js
-jest.mock('@glrodasz/components', () => {
+jest.mock('<design-system-package>', () => {
   const { dummyRender } = require('../../../utils/testUtils/dummyRender')
   return {
     Spacer: { Vertical: dummyRender('Spacer.Vertical') },
@@ -207,4 +165,4 @@ jest.mock('@glrodasz/components', () => {
 ```
 
 - Transpile the package in the app's test runner if it ships untranspiled source
-  (`transformIgnorePatterns: ['node_modules/(?!@glrodasz/components)']`).
+  (`transformIgnorePatterns: ['node_modules/(?!<design-system-package>)']`).
