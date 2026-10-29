@@ -30,6 +30,10 @@ changing the user's real values.
 
 ## Phase 1 — Build the target layout
 
+Read both files fully and build key sets: example-order list, `.env`-active,
+`.env`-commented, `.env`-only. Detect value differences (same key active in both,
+different value) — collect, never change.
+
 Rewrite `.env` as three parts, in this order:
 
 1. **Mirrored body** — every section/comment/key from `.env.example`, in the **same** order.
@@ -48,8 +52,8 @@ Rewrite `.env` as three parts, in this order:
 Ask these as **one** batched question (skip any already answered):
 
 - Dead/deprecated `.env`-only blocks: move to Local extras, or delete?
-- Inline commented alternates (staging creds, alt project ids): keep inline next to their
-  key, or move all to Local extras?
+- Inline commented alternates (staging secrets, alt project ids): keep inline next to
+  their key, or move all to Local extras?
 
 Default if the user says "just do it": move everything `.env`-only to Local extras; delete
 nothing.
@@ -57,12 +61,8 @@ nothing.
 ## Phase 3 — Write
 
 ```
-- [ ] 1. Read both files fully
-- [ ] 2. Build key sets: example-order list, .env-active, .env-commented, .env-only
-- [ ] 3. Detect value differences (same key active in both, different value) — collect, never change
-- [ ] 4. Write mirrored body + Local extras block
-- [ ] 5. Diff old vs new .env; confirm no active value changed and no key was lost
-- [ ] 6. Report (see below)
+- [ ] 1. Write mirrored body + Local extras block
+- [ ] 2. Report (see below)
 ```
 
 ## Phase 4 — Verify
@@ -86,5 +86,5 @@ Always, after writing:
 - Unsure: <.env lines with no example counterpart that were not clearly classifiable>
 ```
 
-Flag value differences explicitly — when the value is not a credential they are real
+Flag value differences explicitly — when the value is not a secret they are real
 behavioral mismatches, not just secrets.

@@ -170,21 +170,21 @@ hover · `off` near-background tint · `high` maximum emphasis, used for pressed
 
 `ml` is the step after `md`, and `lm` is the step after `ml`. Both are deliberate.
 
-**Elevations** — `Elevations.<level>` with `offset-x`, `offset-y`, `blur-radius`,
+**Elevations** — `Elevations.<intensity>` with `offset-x`, `offset-y`, `blur-radius`,
 `spread-radius` (px), named by intensity:
 
-| Level | offset-x / offset-y / blur / spread (px) |
+| Intensity | offset-x / offset-y / blur / spread (px) |
 |---|---|
 | soft | 0 / 8 / 12 / −8 |
 | medium | 0 / 8 / 24 / −4 |
 | high | 0 / 12 / 32 / 0 |
 | extreme | 0 / 12 / 48 / 0 |
 
-All levels share `Colors.Transparency.shadow` (Gunmetal at 15% in light, black at 15% in
-dark). The kit shows the shadows but doesn't publish their values. These values were fitted
-to the kit's rendering and land on the Sizing scale. To give a component a shadow, add
-one component token per part pointing at a level (e.g. `card-image.shadow.elevation.*` →
-`{system.Elevations.medium.*}`), then compose them:
+All intensities share `Colors.Transparency.shadow` (Gunmetal at 15% in light, black at
+15% in dark). The kit shows the shadows but doesn't publish their values. These values
+were fitted to the kit's rendering and land on the Sizing scale. To give a component a
+shadow, add one component token per part pointing at an intensity (e.g.
+`card-image.shadow.elevation.*` → `{system.Elevations.medium.*}`), then compose them:
 
 ```css
 box-shadow: var(--components-tokens--card-image--shadow--elevation--offset-x)
@@ -270,16 +270,16 @@ misspelled key becomes a misspelled public variable name.
 **Component catalog.** The kit follows atomic design, with tokens as quarks. Reuse these
 names before inventing new ones:
 
-| Level | Components |
+| Tier | Components |
 |---|---|
 | Atoms | `icon-button`, `number-button`, `check-button`, typography styles, `logo`, `tag`, `badge`, `status`, `icon` (Phosphor Icons) |
 | Molecules | `button`, `dropdown`, `breadcrumb`, `pagination`, `calendar`, `input-field`, `text-area`, `checkbox`, `switch`, `radio-button`, `progress-bar`, `avatar`, `avatar-group`, `tooltip`, `alert`, `icon-box`, `entry-title`, `menu-avatar`, `accordion`, `header` |
 | Organisms | `button-group`, `float-tab`, `full-tab`, `select`, `card-input`, `card-image`, `card-icon`, `card-text` |
 | Templates | `menu`, `nav-label`, `nav-bar`, `footer`, `sidebar`, `sidebar-item`, `dialog`, `data-table` |
 
-A new component belongs one level above the parts it combines: an atom is built from
+A new component belongs one tier above the parts it combines: an atom is built from
 quarks only, and a molecule, organism or template combines at least two different pieces
-from the level below.
+from the tier below.
 
 **Shared typography ramp** — `Typography.Styles.<Style>.<Size>`, each with `Font-family`,
 `Font-weight`, `Font-size`, `Line-height`:
@@ -358,8 +358,9 @@ untouched:
 A brand palette that doesn't exist yet goes into global first, as `100`–`600` plus
 `opacity`. Fill `Colors.Custom.Principal palette` (repoint `Primary`,
 `Backgrounds.contrast`, `Borders.strong`) and `Colors.Custom.Complementary palette`
-(repoint `Complementary`), or add `Colors.Custom.<Brand>`. A further theme, such as high-contrast, is one more override file
-(`system-<theme>.json`) with the same rules and its own scope.
+(repoint `Complementary`), or add `Colors.Custom.<Brand>`. A further theme, such as
+high-contrast, is one more override file (`system-<theme>.json`) with the same rules and
+its own scope.
 
 **Type scale change:** pick `Base` and `Scale`, compute `round(Base × Scale^n)`, add any
 missing values to `global › Typography.Steps`, then repoint `system ›

@@ -39,11 +39,11 @@ The first draft of a skill usually needs refinement. Run the skill against real 
 
 Even a single pass of execute-then-revise noticeably improves quality, and complex domains often benefit from several.
 
-<Tip>
-  Read agent execution traces, not just final outputs. If the agent wastes time on unproductive steps, common causes include instructions that are too vague (the agent tries several approaches before finding one that works), instructions that don't apply to the current task (the agent follows them anyway), or too many options presented without a clear default.
-</Tip>
+> [!TIP]
+>
+> Read agent execution traces, not just final outputs. If the agent wastes time on unproductive steps, common causes include instructions that are too vague (the agent tries several approaches before finding one that works), instructions that don't apply to the current task (the agent follows them anyway), or too many options presented without a clear default.
 
-For a more structured approach to iteration, including test cases, assertions, and grading, see [Evaluating skill output quality](/skill-creation/evaluating-skills).
+For a more structured approach to iteration, including test cases, assertions, and grading, see [Evaluating skill output quality](https://agentskills.io/skill-creation/evaluating-skills.md).
 
 ## Spending context wisely
 
@@ -75,7 +75,7 @@ with pdfplumber.open("file.pdf") as pdf:
 ```
 ````
 
-Ask yourself about each piece of content: "Would the agent get this wrong without this instruction?" If the answer is no, cut it. If you're unsure, test it. And if the agent already handles the entire task well without the skill, the skill may not be adding value. See [Evaluating skill output quality](/skill-creation/evaluating-skills) for how to test this systematically.
+Ask yourself about each piece of content: "Would the agent get this wrong without this instruction?" If the answer is no, cut it. If you're unsure, test it. And if the agent already handles the entire task well without the skill, the skill may not be adding value. See [Evaluating skill output quality](https://agentskills.io/skill-creation/evaluating-skills.md) for how to test this systematically.
 
 ### Design coherent units
 
@@ -87,9 +87,9 @@ Overly comprehensive skills can hurt more than they help — the agent struggles
 
 ### Structure large skills with progressive disclosure
 
-The [specification](/specification#progressive-disclosure) recommends keeping `SKILL.md` under 500 lines and 5,000 tokens — just the core instructions the agent needs on every run. When a skill legitimately needs more content, move detailed reference material to separate files in `references/` or similar directories.
+The [specification](https://agentskills.io/specification.md#progressive-disclosure) recommends keeping `SKILL.md` under 500 lines and 5,000 tokens — just the core instructions the agent needs on every run. When a skill legitimately needs more content, move detailed reference material to separate files in `references/` or similar directories.
 
-The key is telling the agent *when* to load each file. "Read `references/api-errors.md` if the API returns a non-200 status code" is more useful than a generic "see references/ for details." This lets the agent load context on demand rather than up front, which is how [progressive disclosure](/specification#progressive-disclosure) is designed to work.
+The key is telling the agent *when* to load each file. "Read `references/api-errors.md` if the API returns a non-200 status code" is more useful than a generic "see references/ for details." This lets the agent load context on demand rather than up front, which is how [progressive disclosure](https://agentskills.io/specification.md#progressive-disclosure) is designed to work.
 
 ## Calibrating control
 
@@ -182,9 +182,9 @@ The highest-value content in many skills is a list of gotchas — environment-sp
 
 Keep gotchas in `SKILL.md` where the agent reads them before encountering the situation. A separate reference file works if you tell the agent when to load it, but for non-obvious issues, the agent may not recognize the trigger.
 
-<Tip>
-  When an agent makes a mistake you have to correct, add the correction to the gotchas section. This is one of the most direct ways to improve a skill iteratively (see [Refine with real execution](#refine-with-real-execution)).
-</Tip>
+> [!TIP]
+>
+> When an agent makes a mistake you have to correct, add the correction to the gotchas section. This is one of the most direct ways to improve a skill iteratively (see [Refine with real execution](#refine-with-real-execution)).
 
 ### Templates for output format
 
@@ -265,13 +265,13 @@ The key ingredient is step 3: a validation script that checks the plan (`field_v
 
 ### Bundling reusable scripts
 
-When [iterating on a skill](/skill-creation/evaluating-skills), compare the agent's execution traces across test cases. If you notice the agent independently reinventing the same logic each run — building charts, parsing a specific format, validating output — that's a signal to write a tested script once and bundle it in `scripts/`.
+When [iterating on a skill](https://agentskills.io/skill-creation/evaluating-skills.md), compare the agent's execution traces across test cases. If you notice the agent independently reinventing the same logic each run — building charts, parsing a specific format, validating output — that's a signal to write a tested script once and bundle it in `scripts/`.
 
-For more on designing and bundling scripts, see [Using scripts in skills](/skill-creation/using-scripts).
+For more on designing and bundling scripts, see [Using scripts in skills](https://agentskills.io/skill-creation/using-scripts.md).
 
 ## Next steps
 
 Once you have a working skill, two guides can help you refine it further:
 
-* **[Evaluating skill output quality](/skill-creation/evaluating-skills)** — Set up test cases, grade results, and iterate systematically.
-* **[Optimizing skill descriptions](/skill-creation/optimizing-descriptions)** — Test and improve your skill's `description` field so it triggers on the right prompts.
+* **[Evaluating skill output quality](https://agentskills.io/skill-creation/evaluating-skills.md)** — Set up test cases, grade results, and iterate systematically.
+* **[Optimizing skill descriptions](https://agentskills.io/skill-creation/optimizing-descriptions.md)** — Test and improve your skill's `description` field so it triggers on the right prompts.

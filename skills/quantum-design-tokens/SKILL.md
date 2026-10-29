@@ -7,10 +7,10 @@ description: >
   a zero-dependency build and audit, sets up theming, and replaces hardcoded values
   until UI code uses component tokens only. Use whenever the user wants to set up or
   migrate a project to Quantum Design or design tokens, replace hardcoded
-  colors/spacing/radius/shadows/typography with tokens, add tokens for a component or page, fix
-  dark mode values, re-theme to another palette, build a token pipeline (CSS variables,
-  Sass, Tailwind, CSS-in-JS, iOS, Android, Flutter), or audit token usage; also on
-  "Quantum Design", "DTCG", "system tokens", "component tokens", or
+  colors/spacing/radius/shadows/typography with tokens, add tokens for a component or
+  page, fix dark mode values, re-theme to another palette, build a token pipeline (CSS
+  variables, Sass, Tailwind, CSS-in-JS, iOS, Android, Flutter), or audit token usage;
+  also on "Quantum Design", "DTCG", "system tokens", "component tokens", or
   `--components-tokens--` variables.
 ---
 
@@ -140,7 +140,7 @@ typography), then layouts and pages. For each literal:
    `node scripts/quantum-tokens.mjs match '#646cff' 20px 1.5rem`. It lists the nearest
    system and global colors by ΔE, and the nearest Spacing, Sizing, Border radius,
    font-size, and Line-height steps. Pick by meaning first, distance second. Shadows map
-   to the `Elevations` level of matching intensity (soft → extreme). Page widths and
+   to the `Elevations` intensity that matches (soft → extreme). Page widths and
    gutters map to the kit's layout grids (`references/token-spec.md` §8).
 3. **Add or reuse a component token** in `components.json`, using the grammar
    `{component}.{property}.{variant|size}.{state}`. Use the app namespace (`Site`) for
@@ -167,7 +167,8 @@ Mark a justified line with a `quantum-tokens-ignore` comment, or exempt a direct
 
 ## Phase 5 — Verify
 
-1. Run: `node scripts/quantum-tokens.mjs build …` → 0 unresolved references.
+1. Run: `node scripts/quantum-tokens.mjs build --src tokens --out <generated css>` → 0
+   unresolved references.
 2. Run: `node scripts/quantum-tokens.mjs audit --scan src` → 0 errors. Every remaining
    warning is fixed or has a stated reason.
 3. Render the main pages in **both themes**. Use the `run` skill or the dev server and a

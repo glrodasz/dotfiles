@@ -17,7 +17,7 @@ description: >
 
 # Feature-Based Architecture
 
-Place code by ownership, not by technical type.
+Place code by ownership, not by technical type. Never restructure code unless asked.
 
 **Golden rule: put code where its knowledge belongs.** Code that knows about `Task` lives
 near tasks. Code that knows nothing about the domain may be a utility. Code that connects
@@ -29,6 +29,15 @@ a filing system for file types.
 
 The same rule applies on both sides of the wire: a frontend feature folder and a backend
 feature folder for the same domain should be recognizably the same thing.
+
+## Hard rules (never violate)
+
+1. A project `AGENTS.md`, `CLAUDE.md`, or architecture doc overrides this skill.
+2. The existing convention wins over this skill's defaults. A consistent project with
+   slightly different labels is better than one with two competing styles.
+3. Flag anti-patterns when you see them. Fix them only if the task calls for it.
+4. Refactor only when the user explicitly asks.
+5. Never start a parallel `features/` tree in a layered project unprompted (see rule 2).
 
 ## Which reference to load
 
@@ -52,8 +61,7 @@ Follow Phases 1–6 every time you create, move, or name a file.
 Before writing anything, inspect the existing structure and record its conventions:
 
 - Where features live (`features/`, `src/features/`, `modules/`, or none yet)
-- Whether the project has an `AGENTS.md`, `CLAUDE.md`, or architecture doc. **If it does,
-  it overrides this skill.**
+- Whether the project has an `AGENTS.md`, `CLAUDE.md`, or architecture doc
 - Naming case for feature folders, component files, and role files (`focusSession/` vs
   `focus-session/`, `Board/Board.js`, `tasks.router.ts`)
 - Whether feature roles are single files (`helpers.js`, `handlers.js`) or folders
@@ -64,9 +72,6 @@ Before writing anything, inspect the existing structure and record its conventio
   each one owns
 - Whether UI primitives come from an external design-system package
 - Language and module system (JS/TS, ESM/CommonJS, `.js` extensions in TS imports)
-
-The existing convention wins over this skill's defaults. A consistent project with
-slightly different labels is better than one with two competing styles.
 
 ## Phase 2 — Identify the owner
 
@@ -318,8 +323,6 @@ precisely, the grouping is probably wrong.
 
 ## Anti-patterns
 
-Flag these when you see them. Fix them only if the task calls for it.
-
 - A global `utils/` whose files are named after domain entities, or `utils/` importing
   from `features/`
 - Every component in one top-level `components/` directory by default
@@ -346,17 +349,14 @@ why (for example: "Kept `reorderTasks` in `features/tasks/helpers.js` because it
 ## Notes & edge cases
 
 - **Layered project** (no features directory; everything under `components/`, `hooks/`,
-  `utils/` or `routes/`, `services/`, `repositories/`): follow the layout that exists. Do
-  not start a parallel `features/` structure unprompted, because a half-migrated project
-  is worse than a consistently layered one. Keep the layered naming (`tweetsService.js`),
-  mention the option to the user, and let them decide.
+  `utils/` or `routes/`, `services/`, `repositories/`): follow the layout that exists.
+  Keep the layered naming (`tweetsService.js`), mention the option of moving to features
+  to the user, and let them decide.
 
 - **Refactoring**: only when the user explicitly asks. Then:
 
-  1. Map current files to their owning features and share the plan before moving anything. A
-     layered backend maps file-for-file: `routes/tweetsRouter.js` →
-     `features/tweets/tweets.router.js`, `services/tweetsService.js` →
-     `features/tweets/tweets.service.js`, and so on.
+  1. Map current files to their owning features and share the plan before moving
+     anything. For a layered backend, see "Mapping a layered project" in backend-node.md.
   2. Migrate one feature at a time.
   3. Move files without changing behavior. Keep structural changes separate from logic
      changes so the diff stays reviewable.

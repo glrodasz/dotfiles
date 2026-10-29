@@ -20,9 +20,8 @@ the page renders its locale) change per stack. When an app already localizes, co
 against the rules below and fix the deviations you touch instead of adding a second
 mechanism.
 
-- Core module, copied verbatim into every app: see `references/core-module.md`.
-- Edge, SSR and boot-script detection, SPA and static-site rendering, toggle components:
-  see `references/stack-adapters.md`.
+- Read `references/core-module.md` when creating or diffing `src/i18n/locale.ts`.
+- Read `references/stack-adapters.md` when wiring detection, rendering or the toggle.
 
 ## Phase 0 — Understand the target
 
@@ -40,6 +39,22 @@ mechanism.
    (`?lang=`, 301 redirects, a localStorage-only choice, hand-written prefixes, flags, a
    toggle in the header). Fix the ones you touch, replace the old mechanism instead of
    running two, and carry the rest into the report.
+
+## Phase 1 — Implement
+
+Apply *The model* and *Rules, and why* throughout, in this order:
+
+1. **Core module:** see *Core module* and *URL and link arrangement*.
+2. **Detection:** see *Where detection runs*.
+3. **Toggle:** see *Language toggle*.
+4. **Strings and formatting:** see *Strings and formatting*.
+5. **Per-language slugs** (only when content uses them): see *Content with per-language
+   slugs*.
+6. **SEO and metadata:** see *SEO and metadata checklist*.
+7. **Testing:** see *Testing*.
+
+When adding a locale to an app that already localizes, follow *Adding a locale*. For a
+native app sharing the links, also apply *Native apps*.
 
 ## The model
 
@@ -253,7 +268,7 @@ alternate falls back to the locale home.
 - **Links:** universal/deep links keep the web's `/es/...` shape, so shared links open in
   the right language everywhere.
 
-## Phase 1 — Verify
+## Phase 2 — Verify
 
 Before reporting done, copy and tick. Fix any unticked item and re-run the checklist
 before reporting.

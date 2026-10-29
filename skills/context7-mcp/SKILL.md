@@ -23,12 +23,8 @@ Call `context7:resolve-library-id` with:
 
 ## Phase 2 — Select the best match
 
-From the resolution results, choose based on:
-
-- Exact or closest name match to what the user asked for
-- Higher benchmark scores indicate better documentation quality
-- If the user mentioned a version (e.g. "React 19"), prefer version-specific IDs
-- Prefer official/primary packages over community forks
+From the resolution results, choose per the tool's own selection guidance. If the user
+mentioned a version (e.g. "React 19"), prefer version-specific IDs.
 
 ## Phase 3 — Fetch the documentation
 

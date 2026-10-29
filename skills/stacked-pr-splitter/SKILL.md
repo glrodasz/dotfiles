@@ -2,13 +2,13 @@
 name: stacked-pr-splitter
 description: >
   Analyze an oversized current pull request or branch diff and redesign it as a small,
-  reviewable set of independent and/or stacked pull requests. Use when a PR is difficult to
-  review, spans multiple features, modules, or teams, exceeds roughly 1,000 changed
-  human-authored lines, has tangled dependencies, or needs CODEOWNERS-aware review
-  boundaries. Inspect Git history, diff statistics, tests, generated files, and CODEOWNERS;
-  propose a dependency graph, branch and base plan, reviewer routing, tests, and exact
-  coverage of the original change. Apply the split locally or publish PRs only when
-  explicitly requested, while preserving final behavior and avoiding unrelated refactors.
+  reviewable set of independent and/or stacked pull requests. Inspect Git history, diff
+  statistics, tests, generated files, and CODEOWNERS; propose a dependency graph, branch
+  and base plan, reviewer routing, tests, and exact coverage of the original change —
+  applied locally or published only when explicitly requested, final behavior preserved,
+  no unrelated refactors. Use when a PR is difficult to review, spans multiple features,
+  modules, or teams, exceeds roughly 1,000 changed human-authored lines, has tangled
+  dependencies, or needs CODEOWNERS-aware review boundaries.
 ---
 
 # Stacked PR Splitter
@@ -59,31 +59,40 @@ requested.
 
 - Work from the repository root.
 - Resolve the source from the supplied PR, branch, or current `HEAD`.
-- Resolve the original PR base with `gh pr view` when available. Otherwise use the
-  configured remote default branch, then common base branches such as `main` or `master`.
-- Record the source branch, source commit SHA, base ref, merge-base SHA, and working-tree
-  status.
-- Treat the original base as the stack trunk.
-- Never discard, reset, clean, or auto-stash uncommitted work. If the tree is dirty,
-  continue in plan-only mode and state that local application is blocked.
 - When a Git repository is available, run (from the repository root):
 
 ```bash
 python3 <skill-directory>/scripts/analyze_pr.py --repo . --head HEAD --format json
 ```
 
-Pass `--base <ref>` when the base cannot be inferred reliably.
+Pass `--base <ref>` when the base cannot be inferred reliably. Take the values below and
+in Phases 2, 3, and 5 from its JSON output instead of deriving them by hand.
+
+- Take the original PR base from `base.ref`. The script resolves it with `gh pr view`
+  when available, otherwise the configured remote default branch, then common base
+  branches such as `main` or `master`; `base.resolution` says which applied.
+- Record the source branch, source commit SHA, base ref, merge-base SHA, and working-tree
+  status (`source.display_ref`, `source.sha`, `base.ref`, `base.merge_base_sha`,
+  `working_tree`).
+- Treat the original base as the stack trunk.
+- Never discard, reset, clean, or auto-stash uncommitted work. If the tree is dirty
+  (`working_tree.dirty`), continue in plan-only mode and state that local application is
+  blocked.
 
 ## Phase 2 — Inventory the change
 
 Inspect all of the following before designing boundaries:
 
-- Commit history between merge-base and source.
-- Changed files, additions, deletions, renames, binaries, and directory distribution.
+- Commit history between merge-base and source — script `commits`.
+- Changed files, additions, deletions, renames, binaries, and directory distribution —
+  script `files` (`status`, `old_path`, `additions`, `deletions`, `binary`) and
+  `area_summary`.
 - Relevant diffs, symbols, imports, interfaces, schemas, migrations, feature flags, and
-  tests.
-- Generated files, lockfiles, snapshots, vendored files, and machine-produced artifacts.
-- The effective `CODEOWNERS` file from the original base branch.
+  tests — read the diff itself.
+- Generated files, lockfiles, snapshots, vendored files, and machine-produced artifacts —
+  script `files[].category`.
+- The effective `CODEOWNERS` file from the original base branch — script
+  `codeowners.path`.
 - CI, branch protection, test, build, deployment, and migration constraints visible in the
   repository.
 
@@ -92,12 +101,14 @@ alone. Read enough of the actual diff to understand behavior and dependencies.
 
 ## Phase 3 — Map ownership correctly
 
-- Locate `CODEOWNERS` on the original base in this order: `.github/CODEOWNERS`,
-  `CODEOWNERS`, then `docs/CODEOWNERS`.
-- Apply the last matching valid pattern for each path.
-- Preserve entries with multiple owners and entries that intentionally clear ownership.
-- Do not invent an owner for unmatched files. Suggest a logical reviewer separately and
-  label that suggestion as inferred.
+- Take each path's owners from `files[].ownership` (`matched`, `owners`, `pattern`) and
+  per-owner totals from `ownership_summary`. The script locates `CODEOWNERS` on the
+  original base in this order: `.github/CODEOWNERS`, `CODEOWNERS`, then `docs/CODEOWNERS`,
+  and applies the last matching valid pattern for each path.
+- Preserve entries with multiple owners and entries that intentionally clear ownership
+  (`matched` with empty `owners`).
+- Do not invent an owner for unmatched files (`matched: false`). Suggest a logical
+  reviewer separately and label that suggestion as inferred.
 - Prefer one primary owner group per PR when semantic boundaries permit.
 - If one owner group's coherent change exceeds 1,000 reviewable lines, split it again by
   behavior, use case, endpoint, component, migration phase, or another semantic boundary.
@@ -109,9 +120,9 @@ alone. Read enough of the actual diff to understand behavior and dependencies.
 
 Load `references/splitting-rules.md` and apply its priority order and special cases.
 
-- Start with candidate independent vertical slices.
-- Extract shared prerequisites only when multiple slices truly depend on them or when they
-  form a meaningful review unit.
+- Start with candidate independent vertical PRs.
+- Extract shared prerequisites only when multiple PRs truly depend on them or when they
+  form a meaningful PR of their own.
 - Build a directed acyclic graph, not automatically one long chain.
 - Use multiple independent PRs or multiple short stacks when possible.
 - Keep stack depth as low as the dependency structure allows.
@@ -131,6 +142,11 @@ Define line counts as follows:
   files, and lockfiles.
 - **Total lines**: all numeric additions plus deletions. Report binary files separately.
 
+The script applies these definitions: per file `reviewable` and `changed_lines`, and
+totals in `summary` (`reviewable_lines`, `auxiliary_lines`, `total_numeric_lines`,
+`binary_files`). Sum `changed_lines` per proposed PR; count by hand only the hunks of
+files split across PRs.
+
 For every proposed PR, apply the budget from hard rules 7 to 9, and:
 
 - Do not split a coherent 300-line change merely to balance PR sizes.
@@ -139,34 +155,24 @@ For every proposed PR, apply the budget from hard rules 7 to 9, and:
 
 ## Phase 6 — Verify the plan
 
-Before presenting or applying the split, verify:
+Before presenting or applying the split, copy this checklist and tick each item:
 
-- Every original changed path and semantic change is assigned.
-- No semantic change is duplicated or omitted.
-- Shared-file hunks are assigned to the correct layer.
-- The dependency graph is acyclic.
-- Every PR has the correct base branch.
-- Every PR is understandable without reviewing higher layers.
-- Every PR can build and run its declared checks against its own base.
-- CODEOWNERS and inferred reviewers are explicit.
-- The union of all PRs reconstructs the original final tree.
-- The plan contains no unrelated improvements.
+```
+- [ ] Every original changed path and semantic change is assigned.
+- [ ] No semantic change is duplicated or omitted.
+- [ ] Shared-file hunks are assigned to the correct PR.
+- [ ] The dependency graph is acyclic.
+- [ ] Every PR has the correct base branch.
+- [ ] Every PR is understandable without reviewing higher PRs in the stack.
+- [ ] Every PR can build and run its declared checks against its own base.
+- [ ] CODEOWNERS and inferred reviewers are explicit.
+- [ ] The union of all PRs reconstructs the original final tree.
+- [ ] The plan contains no unrelated improvements.
+```
 
-## Phase 7 — Produce the review plan
+Fix any failure and recheck before Phase 7 or the report.
 
-Load `references/output-template.md` and follow it. Include:
-
-- Current PR metrics and why it is difficult to review.
-- A concise bottom-line recommendation.
-- Independent PRs and stack relationships.
-- A dependency diagram.
-- A summary table with base, dependency, owners, size, and test scope.
-- Detailed boundaries for every PR.
-- Coverage and equivalence checks.
-- Exact local execution steps when useful.
-- Assumptions and unresolved risks without pretending certainty.
-
-## Phase 8 — Apply the split locally
+## Phase 7 — Apply the split locally
 
 Perform these steps only in Apply locally or Publish mode:
 
@@ -177,8 +183,8 @@ Perform these steps only in Apply locally or Publish mode:
 4. Prefer existing commits only when an entire commit belongs to one proposed PR.
 5. When commits are mixed, reconstruct the final change from the recorded source SHA using
    whole-file restoration for exclusive files and hunk-level patches for files shared
-   across layers. Do not reimplement the feature from memory.
-6. Commit the final intended state for each review unit. Do not create artificial "work in
+   across PRs. Do not reimplement the feature from memory.
+6. Commit the final intended state for each PR. Do not create artificial "work in
    progress" evolution unless an intermediate compatibility layer is required.
 7. Run the narrowest relevant checks after each PR, then the repository's required checks
    when feasible.
@@ -194,15 +200,15 @@ Abort local application without destructive cleanup if a conflict cannot be reso
 confidently. Preserve all work and return the validated plan plus the exact blocking
 conflict.
 
-## Phase 9 — Publish the PRs
+## Phase 8 — Publish the PRs
 
 Perform these steps only in Publish mode:
 
 - Confirm that the remote, authentication, and push permissions are available through the
   existing environment.
 - Prefer GitHub's native `gh stack` workflow for a linear stack when `gh stack --help`
-  succeeds. Inspect the installed command help before relying on flags because the feature
-  may evolve.
+  succeeds (script `github_cli.stack_available`). Inspect the installed command help
+  before relying on flags because the feature may evolve.
 - Use ordinary branches and `gh pr create` as the portable fallback and for independent PR
   graphs.
 - Set the bottom PR base to the original trunk. Set each dependent PR base to its
@@ -219,8 +225,8 @@ Perform these steps only in Publish mode:
 
 ## Report
 
-Use the structure in `references/output-template.md`. Finish only when the result is one
-of these:
+Load `references/output-template.md` and follow it. State assumptions and unresolved
+risks without pretending certainty. Finish only when the result is one of these:
 
 - A compliant, fully specified split plan.
 - A locally created and equivalence-verified branch graph.

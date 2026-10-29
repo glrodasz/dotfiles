@@ -1,8 +1,12 @@
 # Backend: Node.js (TypeScript) feature modules
 
-Load this when adding or changing endpoints, routers, services, persistence, validation, error handling, config, or backend tests in an Express or Fastify service.
+Load this when adding or changing endpoints, routers, services, persistence, validation,
+error handling, config, or backend tests in an Express or Fastify service.
 
-Reference implementations: `cero-api/typescript-express` and `cero-api/typescript-fastify` (feature folders, ESM, Mongoose) for structure; the `twittr` course project for the layers added on demand (validation middleware, error pipeline, testable server). Follow the project's own docs where they exist.
+Reference implementations: `cero-api/typescript-express` and `cero-api/typescript-fastify`
+(feature folders, ESM, Mongoose) for structure; the `twittr` course project for the layers
+added on demand (validation middleware, error pipeline, testable server). Follow the
+project's own docs where they exist.
 
 ## Contents
 
@@ -45,9 +49,11 @@ src/
 
 Naming:
 
-- Feature folder: camelCase plural (`focusSessions/`). URL prefix: kebab-case (`/focus-sessions`).
+- Feature folder: camelCase plural (`focusSessions/`). URL prefix: kebab-case
+  (`/focus-sessions`).
 - Role files: `<feature>.<role>.ts`. Entity file: singular PascalCase (`FocusSession.ts`).
-- ESM with `"type": "module"` and `moduleResolution: NodeNext`: relative imports end in `.js` (`./tasks.service.js`). Use `import type` for types.
+- ESM with `"type": "module"` and `moduleResolution: NodeNext`: relative imports end in
+  `.js` (`./tasks.service.js`). Use `import type` for types.
 - IDs and fields are typed through the entity: `Task["id"]`, `Omit<Task, "id">`.
 
 ## Roles
@@ -69,11 +75,14 @@ export type Task = {
 };
 ```
 
-This file is the API contract the frontend mirrors. Change it deliberately and update the consumer in the same change. When several implementations of the same API exist, keep their entity files identical.
+This file is the API contract the frontend mirrors. Change it deliberately and update the
+consumer in the same change. When several implementations of the same API exist, keep
+their entity files identical.
 
 ### `<feature>.router.ts` — HTTP only
 
-Owns routes, reading `params`/`query`/`body`, calling the validator, calling the service, mapping results to status codes. No business rules, no DB access.
+Owns routes, reading `params`/`query`/`body`, calling the validator, calling the service,
+mapping results to status codes. No business rules, no DB access.
 
 The feature mounts itself, so `app.ts` only lists features:
 
@@ -96,13 +105,18 @@ export default async function tasksRouter(app: FastifyInstance) { app.get("/:id"
 // app.ts: app.register(tasksRouter, { prefix: "/tasks" })
 ```
 
-- Every handler either responds or forwards the error (`next(error)` in Express; throw in Fastify and let `setErrorHandler` answer). Don't catch-and-reply per route in Fastify; it bypasses the global handler.
+- Every handler either responds or forwards the error (`next(error)` in Express; throw in
+  Fastify and let `setErrorHandler` answer). Don't catch-and-reply per route in Fastify;
+  it bypasses the global handler.
 - Order specific routes before parameterized ones (`/active` before `/:id`).
 - Type responses: `Response<Task[] | ErrorResponse>`.
 
 ### `<feature>.service.ts` — business operations
 
-An object of async functions named by intent. Returns domain types, never ORM documents. Returns `null` for "not found" (the router maps it to 404). An operation that is not allowed in the current state throws a typed domain error (`ConflictError`), which the error pipeline maps to 409; never overload `null` with two meanings.
+An object of async functions named by intent. Returns domain types, never ORM documents.
+Returns `null` for "not found" (the router maps it to 404). An operation that is not
+allowed in the current state throws a typed domain error (`ConflictError`), which the
+error pipeline maps to 409; never overload `null` with two meanings.
 
 ```ts
 const toTask = (task: TaskDocument): Task => ({
@@ -119,9 +133,12 @@ export const tasksService = {
 };
 ```
 
-- **Business rules live here**, not in the router: priority limits, reordering, "only one active session", status transitions.
-- Limits that are configuration (`MAXIMUM_IN_PRIORITY_TASKS`) come from `config.ts`; limits that are domain facts go in `<Entity>.ts`.
-- While there is no repository, the ORM schema, model, and `toX()` mapper live at the top of the service, private to it.
+- **Business rules live here**, not in the router: priority limits, reordering, "only one
+  active session", status transitions.
+- Limits that are configuration (`MAXIMUM_IN_PRIORITY_TASKS`) come from `config.ts`;
+  limits that are domain facts go in `<Entity>.ts`.
+- While there is no repository, the ORM schema, model, and `toX()` mapper live at the top
+  of the service, private to it.
 
 ## Layers on demand
 
@@ -136,9 +153,15 @@ Add a layer when its trigger applies, not before. Each addition keeps the same n
 
 Validation conventions (from `twittr`):
 
-- One middleware factory, shared across features in `src/middlewares/`: `createValidationMiddleware({ body: schema })` / `({ params: schema })`, which forwards a 400 on failure.
-- Use the project's validation library. If there is none, prefer one that infers TypeScript types from the schema (so the handler's `req.body` type comes from the schema, not a hand-written type guard). Don't keep both a schema and a duplicate type guard.
-- Schemas are composed from small reusable pieces and exported per route. The course project (plain JS) does it with Joi:
+- One middleware factory, shared across features in `src/middlewares/`:
+  `createValidationMiddleware({ body: schema })` / `({ params: schema })`, which forwards
+  a 400 on failure.
+- Use the project's validation library. If there is none, prefer one that infers
+  TypeScript types from the schema (so the handler's `req.body` type comes from the
+  schema, not a hand-written type guard). Don't keep both a schema and a duplicate type
+  guard.
+- Schemas are composed from small reusable pieces and exported per route. The course
+  project (plain JS) does it with Joi:
   `const idSchema = joi.number(); const tweetIdSchema = { tweetId: idSchema.required() }`.
   In TypeScript, the same idea with a type-inferring library:
   `const taskIdSchema = z.object({ id: z.string() }); export type CreateTaskBody = z.infer<typeof createTaskSchema>`.
@@ -154,7 +177,9 @@ Validation conventions (from `twittr`):
 | `src/utils/httpStatus.ts` | `HTTP_STATUS` constants. Domain-free, so it lives in `utils/` where middlewares and features can both import it. (cero-api currently keeps it in `src/features/common/constants.ts`; move it when middlewares need it.) |
 | `src/errors/` | Typed errors carrying an HTTP status (`NotFoundError`, `ConflictError`, `ValidationError`); thrown by services, translated by `wrapErrors`/`errorHandler`. |
 
-Middleware factories take their config-driven switches as defaulted parameters so tests can flip them: `createCacheMiddleware(seconds, isActive = !config.dev)`, `withErrorStack(error, stack, isStackShown = config.dev)`.
+Middleware factories take their config-driven switches as defaulted parameters so tests
+can flip them: `createCacheMiddleware(seconds, isActive = !config.dev)`,
+`withErrorStack(error, stack, isStackShown = config.dev)`.
 
 ## Composition: app vs server
 
@@ -182,30 +207,47 @@ Importing `app.ts` must never connect to a DB or open a port.
 
 ## Errors and responses
 
-- Resources are returned bare (no envelope). Errors are `{ message: string }` (or the error library's payload, consistently).
-- Status codes through constants (`HTTP_STATUS.OK`, `.CREATED`, `.BAD_REQUEST`, `.NOT_FOUND`, `.INTERNAL_SERVER_ERROR`). 201 for creation; 404 when the service returns `null`.
+- Resources are returned bare (no envelope). Errors are `{ message: string }` (or the
+  error library's payload, consistently).
+- Status codes through constants (`HTTP_STATUS.OK`, `.CREATED`, `.BAD_REQUEST`,
+  `.NOT_FOUND`, `.INTERNAL_SERVER_ERROR`). 201 for creation; 404 when the service returns
+  `null`.
 - Error pipeline (Express), in `src/middlewares/errorHandlers.ts`:
   1. `notFoundHandler` — unmatched route → 404.
   2. `logErrors` — log once, with request context.
-  3. `wrapErrors` — convert unknown errors into the HTTP error type (e.g. `boom.badImplementation(err)`). **`return next(...)`** so `next` is called once.
-  4. `errorHandler` — respond with the status and payload; include the stack only in development.
-- Signals: `null` = not found (router → 404); typed `ConflictError` = invalid state (pipeline → 409); validation failure = 400 from the middleware. If a project prefers throwing `NotFoundError` instead of returning `null`, do that everywhere — one convention per project.
-- Never trust input in queries: validate ids (`isValidObjectId`) before using them; never build a `RegExp` from request input.
+  3. `wrapErrors` — convert unknown errors into the HTTP error type (e.g.
+     `boom.badImplementation(err)`). **`return next(...)`** so `next` is called once.
+  4. `errorHandler` — respond with the status and payload; include the stack only in
+     development.
+- Signals: `null` = not found (router → 404); typed `ConflictError` = invalid state
+  (pipeline → 409); validation failure = 400 from the middleware. If a project prefers
+  throwing `NotFoundError` instead of returning `null`, do that everywhere — one
+  convention per project.
+- Never trust input in queries: validate ids (`isValidObjectId`) before using them; never
+  build a `RegExp` from request input.
 
 ## Cross-feature use
 
-- A router may call another feature's service (`tasks.router` asking `focusSessionsService.getActiveSession()`), and an entity file may reference another's type with `import type`.
-- Services should not import each other in both directions. If two services need each other, move the orchestration into the router (simple cases) or into a service of the feature that owns the flow.
-- If the project gives features an `index.ts`, import through it; otherwise import the specific file.
+- A router may call another feature's service (`tasks.router` asking
+  `focusSessionsService.getActiveSession()`), and an entity file may reference another's
+  type with `import type`.
+- Services should not import each other in both directions. If two services need each
+  other, move the orchestration into the router (simple cases) or into a service of the
+  feature that owns the flow.
+- If the project gives features an `index.ts`, import through it; otherwise import the
+  specific file.
 
 ## Testing
 
 Same style as the frontend, so the whole stack reads alike:
 
 - Co-located `*.test.ts` next to the file under test.
-- `describe('[ features / tasks / tasksService ]')` → `describe('#getTask')` → `it('should …')`; Arrange / Act / Assert markers; `result` / `expected`.
-- Mock the layer directly below: router tests mock the service; service tests mock the repository (or the model while there is no repository).
-- Router tests run through a minimal app via supertest, mounting only the router under test:
+- `describe('[ features / tasks / tasksService ]')` → `describe('#getTask')` →
+  `it('should …')`; Arrange / Act / Assert markers; `result` / `expected`.
+- Mock the layer directly below: router tests mock the service; service tests mock the
+  repository (or the model while there is no repository).
+- Router tests run through a minimal app via supertest, mounting only the router under
+  test:
 
 ```ts
 export const testServer = (mount: (app: Application) => void) => {
@@ -216,19 +258,28 @@ export const testServer = (mount: (app: Application) => void) => {
 };
 ```
 
-- Integration tests against a real DB (docker-compose or an in-memory server) are separate from the unit run.
+- Integration tests against a real DB (docker-compose or an in-memory server) are separate
+  from the unit run.
 - Required scripts: `test`, `typecheck` (`tsc --noEmit`), `lint`.
 
 ## Tooling and deploy
 
-- `package.json` scripts: `dev` (`tsx watch --env-file=.env src/server.ts`), `build` (`tsc` with `outDir: dist`), `start` (`node dist/server.js`), `typecheck`, `lint`, `test`, plus database helpers (`start:database`, `stop:database`).
-- `tsconfig`: `strict`, `module`/`moduleResolution: NodeNext`, explicit `rootDir: src` and `outDir: dist`.
-- Lint/format config must match the code actually in the repo and be installed and run in CI; dead config is worse than none.
-- Dockerfile: multi-stage (deps → build → slim runtime), Node version equal to `.nvmrc`/`engines`, the package manager's own frozen-install flag (`yarn install --immutable` for Yarn Berry), `NODE_ENV=production`, `CMD ["node", "dist/server.js"]`. Platform config (`fly.toml`) next to it.
+- `package.json` scripts: `dev` (`tsx watch --env-file=.env src/server.ts`), `build`
+  (`tsc` with `outDir: dist`), `start` (`node dist/server.js`), `typecheck`, `lint`,
+  `test`, plus database helpers (`start:database`, `stop:database`).
+- `tsconfig`: `strict`, `module`/`moduleResolution: NodeNext`, explicit `rootDir: src` and
+  `outDir: dist`.
+- Lint/format config must match the code actually in the repo and be installed and run in
+  CI; dead config is worse than none.
+- Dockerfile: multi-stage (deps → build → slim runtime), Node version equal to
+  `.nvmrc`/`engines`, the package manager's own frozen-install flag
+  (`yarn install --immutable` for Yarn Berry), `NODE_ENV=production`,
+  `CMD ["node", "dist/server.js"]`. Platform config (`fly.toml`) next to it.
 
 ## Mapping a layered project
 
-A layered backend (`routes/`, `services/`, `repositories/`, `utils/schemas/`) maps file-for-file when the user asks to migrate:
+A layered backend (`routes/`, `services/`, `repositories/`, `utils/schemas/`) maps
+file-for-file when the user asks to migrate:
 
 | Layered | Feature-based |
 |---|---|

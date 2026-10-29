@@ -1,12 +1,13 @@
 # Output Template
 
-Use this structure for the final answer. Omit execution-only sections when operating in plan-only mode, but keep the plan and coverage sections.
+Use this structure for the final answer. Omit execution-only sections when operating in
+plan-only mode, but keep the plan and coverage sections.
 
 ## Contents
 
-- PR split recommendation — Bottom line, Current change, Proposed dependency graph, PR summary,
-  Detailed PR boundaries, Review and merge order, Coverage and equivalence, Execution plan,
-  Applied result, Assumptions and risks
+- PR split recommendation — Bottom line, Current change, Proposed dependency graph, PR
+  summary, Detailed PR boundaries, Review and merge order, Coverage and equivalence,
+  Execution plan, Applied result, Assumptions and risks
 - Pull request body template — the body for each published PR
 
 # PR split recommendation
@@ -19,7 +20,8 @@ State:
 - The number of proposed PRs.
 - How many are independent and how many are stacked.
 - The maximum stack depth.
-- The main organizing principle: behavior, dependency, ownership, rollout safety, or a combination.
+- The main organizing principle: behavior, dependency, ownership, rollout safety, or a
+  combination.
 
 ## Current change
 
@@ -38,7 +40,8 @@ Briefly explain why the current PR is hard to review.
 
 ## Proposed dependency graph
 
-Use a compact tree or Mermaid graph. Distinguish independent roots and dependent children. Example:
+Use a compact tree or Mermaid graph. Distinguish independent roots and dependent children.
+Example:
 
 ```text
 main
@@ -54,7 +57,8 @@ main
 |---|---|---|---|---|---:|---:|---|
 | 1 | `<imperative title>` | `<base>` | None | `<owners>` | `<n>` | `<n>` | Target / justified / non-compliant |
 
-List PRs in review and merge order. Use separate numbering for independent stacks only when that improves clarity.
+List PRs in review and merge order. Use separate numbering for independent stacks only
+when that improves clarity.
 
 ## Detailed PR boundaries
 
@@ -71,7 +75,8 @@ List PRs in review and merge order. Use separate numbering for independent stack
 - **Excluded changes:** Closely related work intentionally left to later PRs.
 - **Size:** `<reviewable>` reviewable, `<auxiliary>` auxiliary, `<binary>` binary files.
 - **Checks:** Exact tests, type checks, builds, migrations, or manual validation.
-- **Merge or rollout notes:** Compatibility, flags, sequencing, retargeting, or deployment concerns.
+- **Merge or rollout notes:** Compatibility, flags, sequencing, retargeting, or deployment
+  concerns.
 - **Why this boundary:** Explain semantic cohesion and dependency logic.
 
 Repeat for every PR.
@@ -83,7 +88,8 @@ State:
 1. Which PRs can be reviewed in parallel.
 2. Which approvals block higher layers.
 3. The bottom-up merge order for each stack.
-4. How child PRs are rebased or retargeted after a parent merges when native stack support is not used.
+4. How child PRs are rebased or retargeted after a parent merges when native stack support
+   is not used.
 
 ## Coverage and equivalence
 

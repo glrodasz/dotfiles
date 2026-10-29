@@ -10,7 +10,8 @@ description: >
 
 # Production Page Audit
 
-Audit + auto-fix workflow for web pages before they go to production.
+Audit + auto-fix workflow for web pages before they go to production. Don't restructure
+HTML blindly, and don't generate `robots.txt` or `sitemap.xml` unless asked.
 
 | Area | What's checked | Auto-fix? |
 |---|---|---|
@@ -30,6 +31,8 @@ Audit + auto-fix workflow for web pages before they go to production.
 If ambiguous, ask one focused question before proceeding.
 
 ## Phase 1 — SEO
+
+For each item in Phases 1–4, record the file path, current state, and verdict (✅/⚠️/❌).
 
 **Check**:
 - `<title>`: exists, 50–60 chars, descriptive and unique

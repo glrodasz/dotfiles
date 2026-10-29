@@ -41,9 +41,9 @@ color-code consistently. Do not invent a new value — widen an existing categor
 
 | category | covers | current members |
 | --- | --- | --- |
-| `git-workflow` | branches, commits, PRs | `reviewable-commits`, `stacked-pr-splitter`, `branch-test-plan` |
-| `code-quality` | how code gets written and changed | `branch-comment-cleanup`, `minimal-code-changes` |
-| `web-audit` | shipping a page or site | `a11y-page-audit`, `prod-page-audit` |
+| `git-workflow` | branches, commits, PRs | `reviewable-commits`, `stacked-pr-splitter`, `branch-test-plan`, `harvest-reviews`, `team-reviewer` |
+| `code-quality` | how code gets written and changed | `branch-comment-cleanup`, `minimal-code-changes`, `feature-based-architecture`, `quantum-design-tokens` |
+| `web-audit` | shipping a page or site | `a11y-page-audit`, `prod-page-audit`, `localization` |
 | `tooling` | environment, docs, config plumbing | `context7-mcp`, `env-example-sync` |
 | `meta` | skills and dotfiles about themselves | `skills-audit`, `skill-best-practices-sync`, `shell-aliases-social`, `skills-social` |
 

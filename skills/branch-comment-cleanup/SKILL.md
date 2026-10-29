@@ -15,7 +15,7 @@ introduced. Where a comment exists because the code is unclear, fix the code —
 extract, name the constant — rather than rewording the comment.
 
 **Mode: apply, then report.** Make the edits, verify, and report. `git diff` is the review
-surface. Stop and ask only for the cases listed under "Needs your call".
+surface. Ask before exported-API renames; list the rest under "Needs your call".
 
 ## Hard rules (never violate)
 
@@ -40,7 +40,8 @@ surface. Stop and ask only for the cases listed under "Needs your call".
    uncommitted work — `-U0` gives the exact added-line ranges with no context bleed.
 4. Build a per-file list of touched line ranges. Only comments **inside** those ranges are
    in scope.
-5. Record `git diff $BASE...HEAD --name-only` now — Phase 3 compares against it.
+5. Record `git diff $BASE --name-only` plus `git ls-files --others --exclude-standard`
+   (untracked files) now — Phase 3 compares against it.
 
 ## Phase 1 — Classify every comment in scope
 
@@ -82,8 +83,8 @@ the code this branch introduced.
 
 - Run the repo's **real** commands — discover them from `package.json` scripts, `Makefile`,
   `justfile`, or CI config. Don't assume `npm test`. Typecheck, lint, tests, build.
-- **Scope check**: `git diff $BASE...HEAD --name-only` must match the list recorded in
-  Phase 0. A new file appearing means you edited out of scope — revert it.
+- **Scope check**: the same two commands must match the list recorded in Phase 0. A new
+  file appearing means you edited out of scope — revert it (delete it if untracked).
 - Re-read the diff and confirm no logic line changed meaning.
 
 ## Report

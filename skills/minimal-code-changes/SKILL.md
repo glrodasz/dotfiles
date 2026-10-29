@@ -2,13 +2,13 @@
 name: minimal-code-changes
 description: >
   Enforce minimal, narrowly scoped modifications when implementing features, fixing bugs,
-  changing tests, updating configuration, or otherwise editing an existing codebase. Use
-  whenever code must be changed and the requested behavior can be delivered without broad
-  cleanup, especially for requests mentioning minimal diffs, surgical changes, preserving
-  existing structure, avoiding refactors, or not touching unrelated code. Prevent
+  changing tests, updating configuration, or otherwise editing an existing codebase — no
   opportunistic renaming, reformatting, abstraction, dependency upgrades, architecture
-  changes, and unrelated fixes. Do not block an explicitly requested refactor, but keep even
-  that refactor strictly within the named scope.
+  changes, or unrelated fixes; an explicitly requested refactor is allowed but kept
+  strictly within the named scope. Use whenever code must be changed and the requested
+  behavior can be delivered without broad cleanup, especially for requests mentioning
+  minimal diffs, surgical changes, preserving existing structure, avoiding refactors, or
+  not touching unrelated code.
 ---
 
 # Minimal Code Changes
@@ -31,70 +31,6 @@ Apply these priorities in order:
 3. Minimize the semantic and textual diff.
 4. Follow the codebase's existing local conventions.
 5. Improve elegance only within the lines that must change.
-
-## Phase 1 — Define the change contract
-
-Before editing, identify:
-
-- The exact requested outcome.
-- The narrowest relevant file, symbol, function, component, or configuration entry.
-- The existing behavior that must remain unchanged.
-- The focused validation needed to prove the change.
-
-When the request is ambiguous, choose the least expansive reasonable interpretation and
-state the assumption. Do not silently broaden the task.
-
-## Phase 2 — Inspect narrowly
-
-Read enough surrounding code to understand the target and its immediate dependencies.
-Search for existing patterns that the patch should follow.
-
-Do not turn repository exploration into a cleanup exercise.
-
-## Phase 3 — Establish the change boundary
-
-Use this default boundary:
-
-- **Primary boundary:** the exact function, class, component, module, or configuration
-  entry responsible for the requested behavior.
-- **Secondary boundary:** immediate callers, dependencies, types, or tests only when the
-  primary change cannot work correctly without them.
-- **Outside the boundary:** read-only unless the user explicitly expands the scope.
-
-Prefer changing an existing condition, branch, argument, or local implementation over
-introducing a new abstraction.
-
-## Phase 4 — Implement surgically
-
-- Edit the fewest files and lines reasonably possible.
-- Preserve existing names, control flow, public APIs, file locations, and architecture.
-- Reuse current dependencies and established local patterns.
-- Match nearby formatting instead of reformatting surrounding code.
-- Add comments or documentation only when required to explain new non-obvious behavior.
-- Preserve pre-existing user changes in the working tree.
-- Avoid destructive Git operations and never revert unrelated work.
-- Do not alter lockfiles unless dependency resolution actually changed.
-
-## Phase 5 — Validate narrowly
-
-Run the most focused relevant checks available, such as a targeted test, type check, lint
-command, or build for the affected package.
-
-Add or modify only tests that directly verify the requested behavior. Do not rewrite broad
-test suites, regenerate unrelated snapshots, or fix unrelated failures.
-
-If an unrelated pre-existing issue blocks validation, report it separately. Do not repair
-it unless the requested change cannot be delivered safely without doing so.
-
-## Phase 6 — Verify the diff
-
-Review the final diff before finishing.
-
-For every changed line, ask: **Can this line be justified directly by the requested
-behavior, its focused validation, or a necessary compatibility constraint?**
-
-If not, revert that line. Remove formatting churn, reordered imports, renamed variables,
-generated noise, and incidental cleanup.
 
 ## Refactor gate
 
@@ -138,6 +74,71 @@ A serious unrelated issue may be reported as a separate follow-up, but must not 
 into the patch without authorization unless leaving it untouched would make the requested
 implementation immediately unsafe.
 
+## Phase 1 — Define the change contract
+
+Before editing, identify:
+
+- The exact requested outcome.
+- The narrowest relevant file, symbol, function, component, or configuration entry.
+- The existing behavior that must remain unchanged.
+- The focused validation needed to prove the change.
+
+When the request is ambiguous, choose the least expansive reasonable interpretation and
+state the assumption. Do not silently broaden the task.
+
+## Phase 2 — Inspect narrowly
+
+Read enough surrounding code to understand the target and its immediate dependencies.
+Search for existing patterns that the patch should follow.
+
+Do not turn repository exploration into a cleanup exercise.
+
+## Phase 3 — Establish the change boundary
+
+Use this default boundary:
+
+- **Primary boundary:** the exact function, class, component, module, or configuration
+  entry responsible for the requested behavior.
+- **Secondary boundary:** immediate callers, dependencies, types, or tests only when the
+  primary change cannot work correctly without them.
+- **Outside the boundary:** read-only unless the user explicitly expands the scope.
+
+Prefer changing an existing condition, branch, argument, or local implementation over
+introducing a new abstraction.
+
+## Phase 4 — Implement surgically
+
+- Edit the fewest files and lines reasonably possible.
+- Preserve existing control flow, and make none of the
+  [changes forbidden by default](#changes-forbidden-by-default).
+- Reuse current dependencies and established local patterns.
+- Match nearby formatting.
+- Add comments or documentation only when required to explain new non-obvious behavior.
+- Preserve pre-existing user changes in the working tree.
+- Avoid destructive Git operations and never revert unrelated work.
+- Do not alter lockfiles unless dependency resolution actually changed.
+
+## Phase 5 — Validate narrowly
+
+Run the most focused relevant checks available, such as a targeted test, type check, lint
+command, or build for the affected package.
+
+Add or modify only tests that directly verify the requested behavior. Do not rewrite broad
+test suites, regenerate unrelated snapshots, or fix unrelated failures.
+
+If an unrelated pre-existing issue blocks validation, report it separately. Do not repair
+it unless the requested change cannot be delivered safely without doing so.
+
+## Phase 6 — Verify the diff
+
+Review the final diff before finishing.
+
+For every changed line, ask: **Can this line be justified directly by the requested
+behavior, its focused validation, or a necessary compatibility constraint?**
+
+If not, revert that line. Remove formatting churn, reordered imports, renamed variables,
+generated noise, and incidental cleanup, then rerun the Phase 5 checks.
+
 ## Examples
 
 ### Add a timeout to one request
@@ -176,7 +177,7 @@ Keep the final report focused:
 ```
 ## <requested change> — <file or area>
 
-1. State what behavior changed and where.
-2. State which focused checks were run and their result.
-3. Mention an intentionally untouched adjacent issue only when it is important for the user to know.
+- Changed: <behavior> in <file>
+- Checks: <focused command> → <result>
+- Untouched: <adjacent issue left alone — only if important for the user to know>
 ```

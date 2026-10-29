@@ -37,7 +37,8 @@ Better rebuilt history:
 feat(api): add validated export endpoint
 ```
 
-Include the endpoint in its final form, final field names, validation, and tests in the same commit.
+Include the endpoint in its final form, final field names, validation, and tests in the
+same commit.
 
 ## 2. Group by behavior, not architectural layer
 
@@ -82,7 +83,8 @@ Preferred unless the repository explicitly requires red/green commits:
 fix(billing): calculate prorations in account timezone
 ```
 
-Include the regression test in the same commit so the reviewer sees the defect, contract, and fix together.
+Include the regression test in the same commit so the reviewer sees the defect, contract,
+and fix together.
 
 ## 4. Separate required mechanical work only when it clarifies review
 
@@ -113,7 +115,9 @@ build(api): add the OpenAPI code generator dependency
 feat(api): define invoice export and regenerate the client
 ```
 
-The dependency commit includes the package manifest and lockfile. The feature commit includes the OpenAPI source and generated client. Do not create a generic `update lockfile` or `regenerate files` commit.
+The dependency commit includes the package manifest and lockfile. The feature commit
+includes the OpenAPI source and generated client. Do not create a generic
+`update lockfile` or `regenerate files` commit.
 
 ## 6. Split independent changes even inside one file
 
@@ -126,11 +130,15 @@ fix(customers): preserve cursor when filtering results
 feat(customers): add CSV export
 ```
 
-Use patch staging so each hunk goes with its own purpose. Shared supporting edits belong with the change that needs them, or in a prerequisite commit only when both later commits genuinely depend on them.
+Use patch staging so each hunk goes with its own purpose. Shared supporting edits belong
+with the change that needs them, or in a prerequisite commit only when both later commits
+genuinely depend on them.
 
 ## 7. Avoid arbitrary size-based splitting
 
-A 900-line generated parser update may belong in one commit with its grammar source. A 40-line diff containing two independent fixes should be two commits. Optimize for reviewer reasoning, not a fixed line count.
+A 900-line generated parser update may belong in one commit with its grammar source. A
+40-line diff containing two independent fixes should be two commits. Optimize for reviewer
+reasoning, not a fixed line count.
 
 ## 8. Respect deployment compatibility
 
@@ -141,4 +149,6 @@ feat(db): add nullable canonical_customer_id
 feat(customers): dual-write canonical customer IDs
 ```
 
-Do not invent this sequence merely to make history look incremental. Use it only when each state is intentionally deployable or independently reviewable. Otherwise keep the migration and application behavior atomic.
+Do not invent this sequence merely to make history look incremental. Use it only when each
+state is intentionally deployable or independently reviewable. Otherwise keep the
+migration and application behavior atomic.

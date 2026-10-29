@@ -3,8 +3,7 @@ name: reviewable-commits
 description: >
   Reorganize the final diff of the current Git branch or pull request into a small sequence
   of logical, reviewable commits without preserving the accidental chronology of
-  development — local Git only (GitHub CLI just for PR metadata), exact final code state
-  preserved, no unrelated refactors, safety snapshot first, verified, never pushed unless
+  development — local Git only, exact final code state preserved, never pushed unless
   explicitly requested.
   Use when the user asks to split, rebuild, clean up, or improve commits for code review;
   turn a large or WIP branch into coherent commits; squash fixups into their intended
@@ -24,27 +23,28 @@ fixups, or intermediate states.
    commit boundaries unless they already match the desired structure.
 2. Preserve the exact final code state, including intended uncommitted and untracked
    non-ignored files.
-3. Make each commit represent one coherent purpose, behavior, or independently reviewable
-   mechanical operation.
-4. Keep implementation, directly related tests, documentation, configuration, generated
-   output, and lockfile changes together when they belong to the same purpose.
-5. Avoid development-history commits such as “add implementation,” “fix implementation,”
-   “address review,” “rename after feedback,” or separate red/green test commits. Show the
-   final intended form directly.
-6. Do not introduce unrelated refactors, cleanup, renames, formatting, dependency
+3. Do not introduce unrelated refactors, cleanup, renames, formatting, dependency
    upgrades, or style changes merely because they appear beneficial.
-7. Prefer fewer complete commits over many tiny commits. Do not split by file, directory,
-   architectural layer, or arbitrary line count.
-8. Prefer every commit to build and pass relevant tests. Never create a temporarily broken
+4. Prefer every commit to build and pass relevant tests. Never create a temporarily broken
    state solely to make commits smaller.
-9. Never rewrite the base branch, a detached HEAD, or a repository with unresolved
+5. Never rewrite the base branch, a detached HEAD, or a repository with unresolved
    conflicts or an in-progress merge, rebase, cherry-pick, or revert.
-10. Never discard changes. Create a full-tree safety snapshot before resetting history.
-11. Never push or force-push unless the user explicitly asks. When updating an existing
-    remote branch or PR after verification, use `--force-with-lease`, never `--force`.
+6. Never discard changes. Create a full-tree safety snapshot before resetting history.
+7. Work in local Git only; use the GitHub CLI just to read PR metadata.
+8. Never push or force-push unless the user explicitly asks. When updating an existing
+   remote branch or PR after verification, use `--force-with-lease`, never `--force`.
 
 ## Grouping rules
 
+- Make each commit represent one coherent purpose, behavior, or independently reviewable
+  mechanical operation.
+- Keep implementation, directly related tests, documentation, configuration, generated
+  output, and lockfile changes together when they belong to the same purpose.
+- Avoid development-history commits such as “add implementation,” “fix implementation,”
+  “address review,” “rename after feedback,” or separate red/green test commits. Show the
+  final intended form directly.
+- Prefer fewer complete commits over many tiny commits. Do not split by file, directory,
+  architectural layer, or arbitrary line count.
 - Keep tests with the behavior they verify. Create a standalone test commit only when it
   documents existing behavior independently and the repository explicitly benefits from
   that convention.
@@ -73,18 +73,13 @@ fixups, or intermediate states.
 3. Determine the comparison base in this priority order:
    1. Base explicitly supplied by the user.
    2. Base branch of the active pull request, when `gh pr view` is available and the PR
-      head matches the current branch.
+      head matches the current branch. Read it with
+      `gh pr view --json number,url,headRefName,baseRefName`.
    3. The repository's remote default branch only when it is unambiguous.
 4. Fetch the selected base when a remote is available, then use the merge base rather than
    assuming the branch tip itself is the fork point.
 5. Stop and ask for the base only when it cannot be inferred safely. Do not guess across
    plausible release, integration, or stacked-branch bases.
-
-For an active GitHub pull request, a useful inspection command is:
-
-```bash
-gh pr view --json number,url,headRefName,baseRefName
-```
 
 ## Phase 2 — Analyze the final change
 
@@ -169,7 +164,12 @@ For every planned commit:
 3. Confirm the staged patch contains no unrelated formatting, refactors, generated files
    without their source, or tests for another change.
 4. Run the narrowest meaningful validation before committing.
-5. Commit using the repository's existing message convention.
+5. Commit using the repository's existing message convention, inferred from
+   `git log -20 --pretty=format:%s`. Use Conventional Commits only when the repository
+   already uses them. Write a concise imperative subject describing the completed intent —
+   never `WIP`, `fix stuff`, `cleanup`, or `changes`. Add a body when the reason,
+   constraint, migration behavior, or tradeoff is not obvious; explain **why** the change
+   exists rather than narrating file operations.
 6. Reinspect the remaining unstaged diff and adjust later grouping only when the actual
    dependency structure requires it.
 
@@ -178,31 +178,7 @@ the entire file arbitrarily. When a hunk cannot be split safely, keep the couple
 together or temporarily edit the working copy while preserving the final tree for the
 final verification.
 
-## Phase 6 — Write the commit messages
-
-Infer the repository's convention from recent history:
-
-```bash
-git log -20 --pretty=format:%s
-```
-
-Use Conventional Commits only when the repository already uses them. Otherwise follow the
-local style.
-
-Write a concise imperative subject describing the completed intent. Add a body when the
-reason, constraint, migration behavior, or tradeoff is not obvious. Explain **why** the
-change exists rather than narrating file operations.
-
-Avoid subjects such as:
-
-- `WIP`
-- `fix stuff`
-- `address comments`
-- `cleanup`
-- `changes`
-- `fix previous commit`
-
-## Phase 7 — Verify the rebuilt history
+## Phase 6 — Verify the rebuilt history
 
 After all commits are created, run from the target repository root:
 
@@ -227,7 +203,7 @@ The work is complete only when:
 - relevant tests, linting, type checks, builds, or migration checks pass, or any
   unavailable validation is reported explicitly
 
-## Phase 8 — Push only when requested
+## Phase 7 — Push only when requested
 
 When the user explicitly requests updating an existing remote branch or pull request, push
 only after successful verification:

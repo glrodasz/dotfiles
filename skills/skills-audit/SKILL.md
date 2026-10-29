@@ -2,10 +2,11 @@
 name: skills-audit
 description: >
   Review every skill in ~/dotfiles/skills and the private ~/.skills.local against the
-  skill-authoring best practices and the house style, report findings per skill, then standardize frontmatter, structure and
-  wording — audit, fix, and verify, not just a report. Use when the user wants to review,
-  audit, lint, standardize, or clean up their skills, asks whether a SKILL.md follows best
-  practices, or after adding or editing a skill.
+  skill-authoring best practices and the house style, report findings per skill, then
+  standardize frontmatter, structure and wording — audit, fix, and verify, not just a
+  report. Use when the user wants to review, audit, lint, standardize, or clean up their
+  skills, asks whether a SKILL.md follows best practices, or after adding or editing a
+  skill.
 ---
 
 # Skills Audit
@@ -14,14 +15,11 @@ Bring every `<skill>/SKILL.md` in the collection up to the same standard: valid 
 spec, aligned with the distilled best practices, and written in the house style. Findings
 are reported first; files are only edited after an explicit yes.
 
-The collection is `~/dotfiles/skills` (tracked in git) plus `~/.skills.local` when it
-exists (private skills that are never committed, like `~/.zshrc.local`). The linter picks
-up both, and the lint output tags local skills with `(local)`.
-
 Two references drive the review — read both fully before judging anything:
 
-- `../skill-best-practices-sync/references/best-practices.md` — the upstream digest
-  (MUST/SHOULD, source-tagged). Owned by the `skill-best-practices-sync` skill.
+- `<skill-directory>/../skill-best-practices-sync/references/best-practices.md` — the
+  upstream digest (MUST/SHOULD, source-tagged). Owned by the `skill-best-practices-sync`
+  skill.
 - `references/house-style.md` — the local conventions (layout, frontmatter shape,
   section order, tone).
 
@@ -34,18 +32,28 @@ Two references drive the review — read both fully before judging anything:
    a judgment call for the user.
 3. Never edit a skill without showing the proposed change first and getting a yes.
 
+## Inputs
+
+- **Collection**: `~/dotfiles/skills` (tracked in git) plus `~/.skills.local` when it
+  exists (private skills that are never committed, like `~/.zshrc.local`). The linter
+  picks up both, and the lint output tags local skills with `(local)`.
+- **One skill**: when the user names one skill (or just added one), scope Phases 1–5 to
+  it with `--skill <name>`, but still run the collection-level checks so it matches its
+  neighbors.
+
 ## Phase 0 — Confirm the rubric is current
 
-Run: `python3 ../skill-best-practices-sync/scripts/sync_sources.py check`
+Run: `python3 <skill-directory>/../skill-best-practices-sync/scripts/sync_sources.py check`
 
 - All `UNCHANGED` → continue.
 - Any `CHANGED` / `NEW` → tell the user the digest may be stale and offer to run the
-  `skill-best-practices-sync` skill first. Continue with the current digest if they decline.
+  `skill-best-practices-sync` skill first. Continue with the current digest if they
+  decline.
 - `FETCH-ERR` (offline) → note it in the report and continue.
 
 ## Phase 1 — Mechanical lint
 
-Run: `python3 scripts/lint_skills.py`
+Run: `python3 <skill-directory>/scripts/lint_skills.py`
 
 Add `--skill <name>` (repeatable) to scope to one skill, `--json` for machine output.
 Severities: `error` = spec violation, `warn` = checkable SHOULD from the digest,
@@ -57,8 +65,7 @@ The linter does not judge prose. Phase 2 does.
 ## Phase 2 — Read and judge
 
 Read each `SKILL.md` in full, from both folders (plus any `references/` and `scripts/`
-it bundles), and answer,
-per skill, citing line numbers:
+it bundles), and answer, per skill, citing line numbers:
 
 - **Conciseness**: which sentences explain something the model already knows? Which
   paragraphs would the skill work without?
@@ -105,7 +112,8 @@ End with: "Apply the **Fix** items? (all / pick skills / none)".
 ## Phase 4 — Apply
 
 Only after a yes. Local skills have no git history, so if any approved skill is local,
-first run `rm -rf "$TMPDIR/skills.local.bak" && cp -R ~/.skills.local "$TMPDIR/skills.local.bak"`.
+first run:
+`rm -rf "$TMPDIR/skills.local.bak" && cp -R ~/.skills.local "$TMPDIR/skills.local.bak"`.
 Then, for each approved skill:
 
 1. Edit `SKILL.md` in place. Keep every trigger phrase; keep every hard rule; keep the
@@ -121,8 +129,8 @@ Then, for each approved skill:
 
 ## Phase 5 — Verify
 
-1. `python3 scripts/lint_skills.py` → zero errors; every previously reported finding that
-   was approved is gone; no new findings introduced.
+1. `python3 <skill-directory>/scripts/lint_skills.py` → zero errors; every previously
+   reported finding that was approved is gone; no new findings introduced.
 2. Re-read each edited description once more as a discovery signal: would the skill still
    trigger on every phrase it triggered on before?
 3. `git -C ~/dotfiles diff --stat skills/` — only the approved repo skills changed. For
@@ -146,15 +154,8 @@ Report what was applied, what was skipped and why, and what remains in "Needs yo
 
 ## Notes & edge cases
 
-- **Single skill**: when the user names one skill (or just added one), scope Phases 1–5 to
-  it with `--skill <name>`, but still run the collection-level checks so it matches its
-  neighbors.
 - **This skill and `skill-best-practices-sync` are in scope too.** Audit them like the
   rest; do not exempt them.
-- **Cross-skill path**: `../skill-best-practices-sync/…` resolves because both skills live
-  in `~/dotfiles/skills` and are symlinked side by side into `~/.claude/skills`. If the
-  path fails, run from `~/dotfiles/skills/skills-audit`. Always run from here, not from a
-  local skill's folder.
 - **Local skills** (`~/.skills.local`): untracked and never committed. The same rules and
   fixes apply as for repo skills. A local skill that reuses a repo skill's name is an
   `XS003` error: report it and suggest renaming the local skill.

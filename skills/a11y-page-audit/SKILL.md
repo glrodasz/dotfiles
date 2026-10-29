@@ -159,6 +159,9 @@ focusable children — the parent clips an outline that extends beyond its bound
 unavailable). Treat the score as a regression catch, not a substitute for the manual
 walkthrough.
 
+Fix any failure found, then repeat the walkthrough and checks until they pass before
+reporting.
+
 ## Report
 
 ```
