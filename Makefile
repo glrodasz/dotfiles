@@ -10,6 +10,7 @@ LOCAL_SKILLS_DIR := $(HOME)/.skills.local
 LOCAL_SKILLS     := $(notdir $(patsubst %/,%,$(dir $(wildcard $(LOCAL_SKILLS_DIR)/*/SKILL.md))))
 
 .PHONY: help slink slink-skills slink-skills-cursor slink-skills-claude slink-skills-agents slink-zsh slink-vim \
+        zip-skills \
         install install-brew install-npm \
         backup backup-brew backup-apps backup-npm
 
@@ -76,6 +77,17 @@ slink-vim: ## Symlink ~/.vimrc and solarized colors
 	@mkdir -p ~/.vim/colors
 	@ln -sfn $(DOTFILES)/vim/vim-colors-solarized/colors/solarized.vim ~/.vim/colors/solarized.vim
 	@echo "linked ~/.vimrc and solarized colors"
+
+## Package
+
+# Lists files through git so gitignored data (.review-harvest, .DS_Store) never ships.
+zip-skills: ## Zip each skill into skills/<name>.zip for uploading to Claude
+	@for s in $(SKILLS); do \
+		rm -f "$(DOTFILES)/skills/$$s.zip"; \
+		(cd "$(DOTFILES)/skills" && git ls-files -co --exclude-standard "$$s" | \
+			while IFS= read -r f; do [ -e "$$f" ] && echo "$$f"; done | zip -q "$$s.zip" -@) || exit 1; \
+		echo "  zipped $$s"; \
+	done
 
 ## Install
 

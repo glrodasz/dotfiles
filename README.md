@@ -13,6 +13,9 @@ Run `make` or `make help` from `~/dotfiles` to list all targets.
 - `make slink-zsh` — symlink `~/.zshrc`
 - `make slink-vim` — symlink `~/.vimrc` and solarized colors
 
+### Package
+- `make zip-skills` — zip each skill into `skills/<name>.zip` for uploading to Claude
+
 ### Install (`install-*`)
 - `make install` — install brew and npm packages from backups
 - `make install-brew` — install packages from `brew/packages`

@@ -8,3 +8,6 @@
 
 # github-audit.sh output (includes private repo metadata)
 scripts/github-audit/
+
+# make zip-skills output
+skills/*.zip
