@@ -2,8 +2,8 @@
   "meta": {
     "author": "Guillermo Rodas",
     "source": "~/dotfiles/skills",
-    "generated": "2026-10-29",
-    "count": 18
+    "generated": "2026-11-01",
+    "count": 19
   },
   "entries": [
     {
@@ -103,6 +103,13 @@
       "description": "Aligns your .env with .env.example and flags the leftovers",
       "trigger": "when you run it after pulling",
       "invocation": "/env-example-sync"
+    },
+    {
+      "name": "great-readme",
+      "category": "tooling",
+      "description": "Rewrites a README as a product page with a quick start and C1 diagram",
+      "trigger": "before publishing an open source repo",
+      "invocation": "/great-readme"
     },
     {
       "name": "shell-aliases-social",
