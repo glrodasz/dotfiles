@@ -111,7 +111,7 @@ genuinely ambiguous:
 6. Never delete a rule because this batch lacks evidence for it — staleness (unseen for
    6 months) and contradictions are computed and shown by the renderer.
 
-## Phase 4 — Render and report
+## Phase 4 — Render and verify
 
 1. Run: `node ${CLAUDE_SKILL_DIR}/scripts/render.mjs --commit`. It recomputes evidence
    count, last seen, contradicted and stale status, regenerates the markdown and the
@@ -121,7 +121,6 @@ genuinely ambiguous:
 2. If it says `NOT committed`, classify the missing ids and rerun. Use `--force` only
    when the user agrees to drop them.
 3. Fix every warning it prints (unknown category, dangling `ruleId`) and rerun.
-4. Show the report below.
 
 ## Report
 

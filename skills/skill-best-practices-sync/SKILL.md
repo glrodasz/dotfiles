@@ -64,6 +64,8 @@ line per rule, tags on every line. Do not paste source prose in; distill it.
 3. `references/best-practices.md` still opens with its Contents list and stays under
    ~250 lines.
 
+Fix any failure and rerun these checks before the report.
+
 ## Report
 
 ```

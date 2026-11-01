@@ -22,6 +22,7 @@ else is a **SHOULD** — a judgment call that the audit reports but may leave al
 - Scripts and bundled files
 - Anti-patterns
 - Testing and iteration
+- Pre-share checklist
 - Where the sources differ
 
 ## Frontmatter

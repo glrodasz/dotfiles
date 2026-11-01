@@ -96,10 +96,12 @@ produces a stable diff. Two-space indent, trailing newline.
 4. No private paths, hostnames, project IDs or credentials leaked out of any `SKILL.md` —
    the output is committed to a public repo.
 
+Fix any failure and recheck until all four pass.
+
 ## Report
 
-Compare against the committed version (`git -C <root> diff -- skills-social.json`) and
-print:
+Compare against the committed version (`git -C <root> diff HEAD -- skills-social.json`)
+and print:
 
 ```
 ## Skills social — <date>

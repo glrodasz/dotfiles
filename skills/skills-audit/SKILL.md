@@ -142,7 +142,13 @@ Then, for each approved skill:
    skills: `diff -ru "$TMPDIR/skills.local.bak" ~/.skills.local` — only the approved
    local skills changed.
 
-Report what was applied, what was skipped and why, and what remains in "Needs your call":
+Fix any failure and rerun these checks. Undo a fix that can't pass and list it under
+"Skipped".
+
+## Report
+
+After Phase 5, report what was applied, what was skipped and why, and what remains in
+"Needs your call":
 
 ```
 ## Skills audit — applied

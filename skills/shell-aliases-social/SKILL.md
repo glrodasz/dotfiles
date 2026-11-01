@@ -82,7 +82,7 @@ Include an alias/function if it meets at least one criterion:
 
 ## Report
 
-Compare against the committed version (`git -C <dotfiles repo> diff -- <output>`) and
+Compare against the committed version (`git -C <dotfiles repo> diff HEAD -- <output>`) and
 print:
 
 ```

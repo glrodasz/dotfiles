@@ -87,6 +87,9 @@ the code this branch introduced.
   file appearing means you edited out of scope — revert it (delete it if untracked).
 - Re-read the diff and confirm no logic line changed meaning.
 
+Fix any failure and rerun the checks before reporting. If a failure can't be fixed, revert
+the edit that caused it and list it under "Needs your call".
+
 ## Report
 
 ```
@@ -116,7 +119,6 @@ the code this branch introduced.
 
 - **Unticketed TODO/FIXME**: never delete silently. List it under "Needs your call" — it
   may be a real open thread.
-- **Exported API renames**: ask first. The blast radius extends past the repo.
 - **Tests**: descriptive comments in tests are often redundant with the `it(...)` name —
   fold the meaning into the test name rather than keeping both.
 - **Generated files** (lockfiles, codegen output, migrations from a tool): skip entirely,

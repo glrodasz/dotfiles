@@ -102,15 +102,15 @@ Scenario table shape:
 ## Phase 5 — Verify
 
 Before printing the plan, confirm every cited path still exists — a stale `file:line`
-makes the whole plan untrustworthy.
+makes the whole plan untrustworthy. Correct or drop any stale citation, then recheck.
 
 ## Report
 
-- Print the plan in the chat response. **Do not write files or post to GitHub as part of
-  the run.**
-- After printing, offer two follow-ups and wait for an explicit yes:
-  - save it to a markdown file (let the user pick the path)
-  - post it as a PR comment via `gh pr comment`
+Print the plan in the chat response, then offer two follow-ups and wait for an explicit
+yes:
+
+- save it to a markdown file (let the user pick the path)
+- post it as a PR comment via `gh pr comment`
 
 ## Notes & edge cases
 

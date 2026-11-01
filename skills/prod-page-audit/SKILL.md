@@ -122,6 +122,8 @@ suggested fixes.
      --chrome-flags="--headless"
    ```
 
+Fix any failure and rerun these checks before the report.
+
 ## Report
 
 ```

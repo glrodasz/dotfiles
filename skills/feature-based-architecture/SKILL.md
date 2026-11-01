@@ -12,7 +12,8 @@ description: >
   directories; extracting or sharing code between features; or restructuring a
   project's folder layout. Trigger even when the user never says "architecture" and only
   asks "where should this go?", "add X to the project", "add an endpoint", "style this",
-  or "clean up this utils folder".
+  or "clean up this utils folder". Not for non-JS/TS projects or bug fixes inside existing
+  files.
 ---
 
 # Feature-Based Architecture
@@ -51,7 +52,7 @@ touches its area:
 | Node backend: Express/Fastify routers, services, repositories, validation, errors, config, backend tests | [references/backend-node.md](references/backend-node.md) |
 | Another feature needs this code, or deciding whether to extract it to `common/`, `utils/` or the design system | [references/sharing-code.md](references/sharing-code.md) |
 
-A feature that spans the stack (new entity end to end) needs all three; read
+A full-stack feature needs the design-system, frontend and backend references; read
 [references/end-to-end-feature.md](references/end-to-end-feature.md) too and build in that order.
 
 Follow Phases 1–6 every time you create, move, or name a file.
@@ -95,7 +96,7 @@ direction](#dependency-direction).
 ## Phase 6 — Verify
 
 Run the project's linter and type checker. Fix any import that breaks the direction
-rules or the build, then re-run until both pass.
+rules or the build, then re-run until both pass; report failures that predate this change.
 
 ## Where code lives
 

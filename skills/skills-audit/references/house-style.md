@@ -10,8 +10,9 @@ recent, most consistent skills (`branch-test-plan`, `branch-comment-cleanup`,
   `references/` (read on demand), `assets/` (data or templates the skill copies into a
   project, e.g. seed token files). No other top-level files.
 - `name` equals the directory name.
-- Skills are symlinked into `~/.claude/skills` and `~/.cursor/skills-cursor` by
-  `make slink-skills`, so everything must be self-contained and path-relative.
+- Skills are symlinked into `~/.claude/skills`, `~/.cursor/skills-cursor` and
+  `~/.agents/skills` by `make slink-skills`, so everything must be self-contained and
+  path-relative.
 
 ## Frontmatter
 

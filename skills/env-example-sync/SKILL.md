@@ -34,7 +34,7 @@ Read both files fully and build key sets: example-order list, `.env`-active,
 `.env`-commented, `.env`-only. Detect value differences (same key active in both,
 different value) — collect, never change.
 
-Rewrite `.env` as three parts, in this order:
+Plan the new `.env` as two parts, in this order:
 
 1. **Mirrored body** — every section/comment/key from `.env.example`, in the **same** order.
    - Key active in `.env`: keep the `.env` value (uncommented), placed at the example's
@@ -45,7 +45,8 @@ Rewrite `.env` as three parts, in this order:
 2. **Trailing block** `# ===== Local extras (not in .env.example) =====` — every line that
    exists only in `.env` (orphan keys, inline alternates, commented variants), kept in
    their original commented/active state.
-3. Nothing else. No invented keys.
+
+Nothing else. No invented keys.
 
 ## Phase 2 — Confirm decisions
 
@@ -60,10 +61,7 @@ nothing.
 
 ## Phase 3 — Write
 
-```
-- [ ] 1. Write mirrored body + Local extras block
-- [ ] 2. Report (see below)
-```
+Write the mirrored body and the Local extras block to `.env`.
 
 ## Phase 4 — Verify
 

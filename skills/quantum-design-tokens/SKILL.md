@@ -63,6 +63,8 @@ UI code    stylesheets, style objects, native views
 - **Generated CSS:** next to the global stylesheet (e.g. `src/styles/design-tokens.css`).
 - **Scope:** the whole UI by default. If the user names components or pages, migrate only
   those, but still set up the full token source and build.
+- **Already migrated:** for a small change in a project already on these tokens, skip
+  Phases 0–4 and follow *After migration — day-to-day changes*.
 
 ## Phase 0 — Understand the target
 
@@ -77,8 +79,8 @@ UI code    stylesheets, style objects, native views
 4. **Brand:** existing palette, fonts, and radius feel. Decide between the default schema
    (Metal chartreuse: Gunmetal primary, Chartreuse accent), another of the ten schemas, or
    custom brand palettes under `Colors.Custom`.
-5. **Inventory** (existing projects): copy `scripts/quantum-tokens.mjs` to the project's
-   `scripts/` and seed `tokens/` (Phase 1), then run
+5. **Inventory** (existing projects): copy `<skill-directory>/scripts/quantum-tokens.mjs`
+   to the project's `scripts/` and seed `tokens/` (Phase 1), then run
    `node scripts/quantum-tokens.mjs audit --scan src`. The `hardcoded` section is the
    migration backlog, and its count is the baseline for the report.
 
@@ -87,8 +89,8 @@ answer it. Otherwise proceed with the default schema and say so.
 
 ## Phase 1 — Seed the token source
 
-1. Copy the four files in `assets/tokens/` into the token source dir unchanged. Never
-   re-type them: the global palettes hold exact values.
+1. Copy the four files in `<skill-directory>/assets/tokens/` into the token source dir
+   unchanged. Never re-type them: the global palettes hold exact values.
 2. **Brand.** If the project has its own palette, fill `Colors.Custom.Principal palette`
    and `Colors.Custom.Complementary palette` (or add `Colors.Custom.<Brand>`) as
    `100`–`600` plus `opacity` (15% alpha). Then repoint the `Primary` and `Complementary`
@@ -104,8 +106,9 @@ answer it. Otherwise proceed with the default schema and say so.
 
 ## Phase 2 — Wire the build
 
-1. Copy `scripts/quantum-tokens.mjs` into the project (`scripts/` or `tools/`), unless the
-   Phase 0 inventory already did. It is the project's generator, not a dependency.
+1. Copy `<skill-directory>/scripts/quantum-tokens.mjs` into the project (`scripts/` or
+   `tools/`), unless the Phase 0 inventory already did. It is the project's generator, not
+   a dependency.
 2. Add `tokens:build` and `tokens:audit` package scripts, and run the build before `dev`,
    `build`, Storybook, and tests (recipes in `references/platforms.md` §3).
 3. Run: `node scripts/quantum-tokens.mjs build --src tokens --out <generated css>`. It
@@ -179,6 +182,9 @@ Mark a justified line with a `quantum-tokens-ignore` comment, or exempt a direct
    doesn't is reading a resolved literal (JS constants, canvas, Tailwind without
    `inline`).
 
+Fix any failure and rerun these checks. A check that can't pass goes under "Still needs
+human attention". Copy this checklist and tick it before the report:
+
 ```
 - [ ] Token JSON seeded; build passes with 0 unresolved references.
 - [ ] Generated CSS imported first; never hand-edited; build runs before dev/build/CI.
@@ -246,15 +252,7 @@ Mark a justified line with a `quantum-tokens-ignore` comment, or exempt a direct
   build time from the generated CSS and accept that they don't theme.
 - **Stories, tests, and specs** are skipped by the hardcoded scan. Demo scaffolding isn't
   product UI.
-- **Seed differences:** the seed follows the kit's Figma Variables. It adds what code needs
-  and the kit leaves out: system `Complementary.deep`, `Backgrounds.atmosphere`,
-  `Borders.focus`, `Transparency.shadow` and `Fixed`, plus global Shark `0`/`700`–`950`,
-  `Sizing.1140` and `Typography.Steps`. It also publishes `Elevations` values fitted to
-  the kit's rendering. The dark file references global shades everywhere (the feedback
-  colors use the 300/600 steps), and `components.json` ships the generic components plus
-  a minimal `Site` namespace. Rename `Site` to the app's name only if every reference and
-  generated name changes with it.
-- **Syncing with a newer kit:** compare the global palettes swatch by swatch, the system
-  color mapping, and the scales against the seed. Update the seed and
-  `references/token-spec.md` together, keep the code-only additions above, and run the
-  audit on `assets/tokens` until it shows 0 errors and 0 warnings.
+- **`Site` namespace:** rename it to the app's name only if every reference and generated
+  name changes with it.
+- **Seed differs from the Figma kit, or syncing with a newer kit:** read
+  `references/token-spec.md` §9.

@@ -14,6 +14,7 @@ here.
 6. Theming and re-theming
 7. Audit checks
 8. Layout grids
+9. Seed differences and kit sync
 
 ---
 
@@ -401,3 +402,18 @@ for off-scale widths (1320, 716, 312).
 
 Fixed SM is labeled "8 columns / gutter 12" in the kit, but its drawing has 4 columns and
 8px gutters, which is what fits 312px. Use the drawing.
+
+## 9. Seed differences and kit sync
+
+**Seed differences.** The seed follows the kit's Figma Variables. It adds what code needs
+and the kit leaves out: system `Complementary.deep`, `Backgrounds.atmosphere`,
+`Borders.focus`, `Transparency.shadow` and `Fixed`, plus global Shark `0`/`700`–`950`,
+`Sizing.1140` and `Typography.Steps`. It also publishes `Elevations` values fitted to the
+kit's rendering. The dark file references global shades everywhere (the feedback colors
+use the 300/600 steps), and `components.json` ships the generic components plus a minimal
+`Site` namespace.
+
+**Syncing with a newer kit.** Compare the global palettes swatch by swatch, the system
+color mapping, and the scales against the seed. Update the seed and this file together,
+keep the code-only additions above, and run the audit on `assets/tokens` until it shows 0
+errors and 0 warnings.

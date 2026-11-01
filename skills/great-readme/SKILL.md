@@ -29,7 +29,7 @@ Delivered as a PR per repo; the default branch is never touched.
 Before writing, read the current README, package metadata (`package.json`,
 `pyproject.toml`, `Package.swift`…), CI workflows, LICENSE, `docs/`, existing
 logos/screenshots, the live URL, and enough source to verify every claim (entry points,
-workflow/graph definitions, schedules). Never describe what the code doesn't do.
+workflow/graph definitions, schedules).
 
 **Keep what's already good.** Preserve accurate prose, design principles, tables and
 links. Change structure and missing pieces, not the author's voice.
@@ -111,9 +111,9 @@ Rules:
 ### Missing hero assets
 
 During the audit, check for a logo (favicon, app icon, `public/`, `assets/`, `docs/`) and
-an OG image (then a product visual). Never ship a hero with a broken image or a
-placeholder. When one is missing, ask using the Phase 1 options; the table below says how
-to carry out each. If the answer is to add it later, leave a one-line HTML comment slot
+an OG image (then a product visual). When one is missing, ask using the Phase 1 options;
+the table below says how to carry out each. If the answer is to add it later, leave a
+one-line HTML comment slot
 (`<!-- Logo slot: add … then uncomment -->`) and the commented-out tag; nothing about it
 appears in the rendered README.
 
@@ -125,9 +125,7 @@ appears in the rendered README.
 | **Screenshot of a native or desktop app** | Ask the user for one, telling them exactly which screen and state to capture; or, with their OK, take it through computer use on their machine. |
 | **Logo / app icon** | Offer to design an original mark with Claude: a simple SVG (a design artifact in chat, or hand-written SVG here), square app-icon tile so it sits well on the left of the hero, readable at 32px, working on light and dark. Suggest 2–3 directions tied to what the product does and let the user pick. Use an existing app icon or favicon when there is one. |
 
-Rules: a mockup or generated image is never presented as a screenshot of the real
-product; no third-party logos, characters or brand marks in a generated logo; ask before
-running anything on the user's computer.
+No third-party logos, characters or brand marks in a generated logo.
 
 ## Phase 3 — Write the sections
 
@@ -173,10 +171,10 @@ an agent to the developer.
    which command validates it, what CI runs. Link `CONTRIBUTING.md` if it exists.
 9. **License** — license plus data/asset attributions.
 
-**No Roadmap, status or Sustainability/business-model sections in the README, ever.**
-They go stale and the real roadmap lives in the user's own tooling. If the README already
-has one, remove it (also from the link row and any TOC) and list the removal in the PR
-description. Don't move it to another doc or replace it with a link.
+Roadmap, status and Sustainability/business-model sections go stale, and the real roadmap
+lives in the user's own tooling. If the README already has one, remove it (also from the
+link row and any TOC) and list the removal in the PR description. Don't move it to another
+doc or replace it with a link.
 
 Keep the README under ~400 lines. Prose is short and scannable markdown; tables for
 comparisons and step-by-step mechanics; bold sparingly.
@@ -328,6 +326,8 @@ can't pass goes in the PR description, never in the README.
   badges with `page.route` so the hero layout is still real.
   Install what's missing: `pip install markdown playwright`, `playwright install chromium`,
   `npm install github-markdown-css`.
+
+## Phase 6 — Deliver
 
 When the checklist passes, wait for the user's explicit yes on the screenshots before
 pushing or opening the PR; on an unattended run, skip the wait. Deliver on a branch

@@ -1,6 +1,6 @@
 # Skills
 
-Agent skills symlinked into Cursor and Claude from `~/dotfiles/skills`.
+Agent skills symlinked into Cursor, Claude and Agents from `~/dotfiles/skills`.
 
 ## Install
 
@@ -8,9 +8,9 @@ Agent skills symlinked into Cursor and Claude from `~/dotfiles/skills`.
 make slink-skills
 ```
 
-This links every skill in this folder into both `~/.cursor/skills-cursor` and `~/.claude/skills`.
+This links every skill in this folder into `~/.cursor/skills-cursor`, `~/.claude/skills` and `~/.agents/skills`.
 
-Individual targets: `make slink-skills-cursor`, `make slink-skills-claude`.
+Individual targets: `make slink-skills-cursor`, `make slink-skills-claude`, `make slink-skills-agents`.
 
 ## Local skills
 

@@ -41,13 +41,15 @@ Call `context7:query-docs` with:
   about how the topics interact.
 - `language`: the language the user writes in (e.g. `TypeScript`), when known
 
-## Phase 4 — Answer with the docs
+## Phase 4 — Draft the answer
 
-Answer from the fetched docs: include their code examples and cite the resolved version.
+Draft the answer from the fetched docs: include their code examples and cite the resolved
+version.
 
 ## Phase 5 — Verify
 
 Before sending, confirm the answer rests on the fetched docs, not on memory: every API
 name or option mentioned appears in the `query-docs` result, and the version cited is the
-one that was resolved. If resolution or the query returned nothing useful, say so
-explicitly rather than answering from training data as if it were current.
+one that was resolved. Re-query or remove any claim the docs don't support, then recheck.
+If resolution or the query returned nothing useful, say so explicitly rather than
+answering from training data as if it were current.
