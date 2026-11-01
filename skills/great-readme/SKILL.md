@@ -318,14 +318,15 @@ can't pass goes in the PR description, never in the README.
 - All relative links and image paths resolve; badge URLs point at real workflows.
 - Diagram step names match the code; no prose inside any SVG; light and dark previews
   checked; C1 is in the README.
-- Render the README and `docs/ARCHITECTURE.md` like GitHub and show the screenshots to
-  the user before opening the PR: Python `markdown` (`tables`, `fenced_code`,
-  `md_in_html`) inside `<article class="markdown-body">` with the official
-  `github-markdown-css` from npm (`github-markdown-light.css` / `-dark.css`), screenshot
-  with Playwright in both color schemes. If shields.io is unreachable, draw stand-in
-  badges with `page.route` so the hero layout is still real.
-  Install what's missing: `pip install markdown playwright`, `playwright install chromium`,
-  `npm install github-markdown-css`.
+- Render the README and `docs/ARCHITECTURE.md` (when it exists) like GitHub and show the
+  screenshots to the user before opening the PR. Run from the target repo's root:
+  ```bash
+  python3 <skill-directory>/scripts/render_readme.py README.md docs/ARCHITECTURE.md --out "$TMPDIR/readme-preview"
+  ```
+  It writes `<name>-light.png` / `-dark.png`, draws stand-in badges if shields.io is
+  unreachable, and exits 1 listing images that failed to load. Needs npm, plus
+  `pip install markdown playwright` and `playwright install chromium`. Lists nested by 2
+  spaces look flat here (Python-Markdown, not GitHub's parser) but nest on GitHub: leave them.
 
 ## Phase 6 — Deliver
 
