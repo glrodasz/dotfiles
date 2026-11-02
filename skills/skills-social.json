@@ -2,8 +2,8 @@
   "meta": {
     "author": "Guillermo Rodas",
     "source": "~/dotfiles/skills",
-    "generated": "2026-11-01",
-    "count": 19
+    "generated": "2026-11-02",
+    "count": 20
   },
   "entries": [
     {
@@ -75,6 +75,13 @@
       "description": "Audits a page for keyboard and screen-reader gaps, then fixes them",
       "trigger": "before shipping a page",
       "invocation": "/a11y-page-audit"
+    },
+    {
+      "name": "light-dark-mode",
+      "category": "web-audit",
+      "description": "Adds light/dark mode with no flash, OS sync and an accessible toggle",
+      "trigger": "when a site needs dark mode",
+      "invocation": "/light-dark-mode"
     },
     {
       "name": "localization",
