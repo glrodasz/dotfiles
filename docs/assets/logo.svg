@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img">
+  <title>dotfiles logo</title>
+  <desc>A dark terminal tile with window dots, a pink prompt chevron, a cyan tilde and slash, and a cursor block.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#34364a"/>
+      <stop offset="1" stop-color="#1e1f29"/>
+    </linearGradient>
+  </defs>
+  <rect x="8" y="8" width="496" height="496" rx="112" fill="url(#bg)" stroke="#4a4d63" stroke-width="4"/>
+  <circle cx="104" cy="100" r="20" fill="#ff5c57"/>
+  <circle cx="162" cy="100" r="20" fill="#f3f99d"/>
+  <circle cx="220" cy="100" r="20" fill="#5af78e"/>
+  <g transform="translate(14 0)">
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="38">
+    <path d="M100 236 L170 296 L100 356" stroke="#ff6ac1"/>
+    <path d="M214 314 C230 278 256 274 274 296 C292 318 318 316 334 280" stroke="#57c7ff"/>
+    <path d="M392 224 L352 368" stroke="#57c7ff"/>
+  </g>
+  <rect x="412" y="326" width="40" height="46" rx="6" fill="#eff0eb"/>
+  </g>
+</svg>
