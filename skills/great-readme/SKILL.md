@@ -149,6 +149,10 @@ an agent to the developer.
   address contributors directly ("run `make build`"), but never with internal to-dos.
 - Findings that need the user's action (a failing test, an undeclared dependency, an old
   name in config) go in the PR description, never in the README.
+- **No em or en dashes as punctuation** (`—`, `–`, or ` - ` between clauses). Use a
+  period, comma, colon or parentheses instead. This applies to all README text, alt
+  text, tables and `docs/` files you write. Hyphens inside words (`light-dark`) and
+  numeric ranges (`2-4`, written with a hyphen) are fine.
 
 ### Sections (fixed order)
 
@@ -307,6 +311,8 @@ can't pass goes in the PR description, never in the README.
 - No Roadmap, status or Sustainability section anywhere in the README.
 - Voice: nothing in the rendered README talks about the README, its files or its diagrams;
   no "yet"/"no X" absence notices; copyright names the owner.
+- No em or en dashes used as punctuation anywhere in the README or the docs you wrote
+  (`grep -n '[—–]' README.md docs/*.md` returns nothing you added).
 - Every gap was asked about (or the recommended default was taken and listed in the PR).
 - Logo on the left; the column beside it doesn't wrap under the logo (or the inline-title
   fallback is used).
