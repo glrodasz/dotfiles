@@ -41,8 +41,8 @@ fixups, or intermediate states.
   mechanical operation.
 - Keep implementation, directly related tests, documentation, configuration, generated
   output, and lockfile changes together when they belong to the same purpose.
-- Avoid development-history commits such as “add implementation,” “fix implementation,”
-  “address review,” “rename after feedback,” or separate red/green test commits. Show the
+- Avoid development-history commits such as "add implementation," "fix implementation,"
+  "address review," "rename after feedback," or separate red/green test commits. Show the
   final intended form directly.
 - Prefer fewer complete commits over many tiny commits. Do not split by file, directory,
   architectural layer, or arbitrary line count.

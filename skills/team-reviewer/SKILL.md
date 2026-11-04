@@ -78,7 +78,7 @@ The rest of the store, in `${CLAUDE_SKILL_DIR}/.review-harvest/`:
 1. Re-open each cited `file:line` and confirm the finding still holds in the new code,
    not in a removed line or context the diff left untouched.
 2. Drop any finding that matches `false-positives.md` or that the stated intent from
-   Phase 0 already explains.
+   Phase 0 already explains. Then recheck the remaining findings.
 3. Check every `Rule:` id exists in `index.md`; a finding without a matching rule moves
    to **Novel**.
 

@@ -9,7 +9,7 @@ description: >
   Light/Dark/System control. Use whenever the user asks for dark mode, a theme toggle or
   switcher, prefers-color-scheme, data-theme, color-scheme, theme-color, a flash of the
   wrong theme on load, dark mode for code blocks, canvas or images, or says the site
-  'should follow the system theme', even if they only say 'add a dark version'. Not for
+  "should follow the system theme", even if they only say "add a dark version". Not for
   Quantum Design token files (`system-light.json`, `system-dark.json`), which belong to
   the `quantum-design-tokens` skill.
 ---

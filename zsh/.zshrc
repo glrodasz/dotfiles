@@ -257,6 +257,20 @@ fbr() {
     git checkout $(echo "$branch" | sed "s:.* remotes/origin/::" | sed "s:.* ::")
 }
 
+# Git checkout; if the branch is checked out in another worktree, cd there
+unalias gco 2>/dev/null
+gco() {
+    local out
+    out=$(git checkout "$@" 2>&1) && { [[ -n $out ]] && print -r -- "$out"; return 0; }
+    if [[ $out =~ "(checked out|used by worktree) at '([^']+)'" ]]; then
+        echo "Branch is in a worktree, moving to ${match[2]}"
+        cd "${match[2]}"
+    else
+        print -r -- "$out" >&2
+        return 1
+    fi
+}
+
 # Find a process given a port
 findport() {
     sudo lsof -n -i :$1 | egrep "LISTEN|PID"

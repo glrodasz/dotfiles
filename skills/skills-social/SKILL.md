@@ -46,7 +46,7 @@ skills would share it (see Notes).
 | --- | --- | --- |
 | `git-workflow` | branches, commits, PRs | `reviewable-commits`, `stacked-pr-splitter`, `branch-test-plan`, `harvest-reviews`, `team-reviewer` |
 | `code-quality` | how code gets written and changed | `branch-comment-cleanup`, `minimal-code-changes`, `feature-based-architecture`, `quantum-design-tokens` |
-| `web-audit` | shipping a page or site | `a11y-page-audit`, `prod-page-audit`, `localization` |
+| `web-audit` | shipping a page or site | `a11y-page-audit`, `prod-page-audit`, `localization`, `light-dark-mode` |
 | `tooling` | environment, docs, config plumbing | `context7-mcp`, `env-example-sync`, `great-readme` |
 | `meta` | skills and dotfiles about themselves | `skills-audit`, `skill-best-practices-sync`, `shell-aliases-social`, `skills-social` |
 
