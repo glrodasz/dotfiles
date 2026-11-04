@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Turn one themeable diagram SVG into GitHub-ready light and dark files.
 
-Author the diagram once with semantic classes (see SKILL.md, "Phase 4 — Draw the diagrams"),
+Author the diagram once with semantic classes (see SKILL.md, "Phase 4: Draw the diagrams"),
 then run:
 
     python theme_svg.py docs/diagrams/src/architecture.svg --out docs/diagrams
