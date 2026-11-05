@@ -1,3 +1,12 @@
+# >>> ghost-complete initialize >>>
+# !! Contents within this block are managed by 'ghost-complete install' !!
+if [[ -f '/Users/guillermo.rodas/.config/ghost-complete/shell/init.zsh' ]]; then
+  builtin source '/Users/guillermo.rodas/.config/ghost-complete/shell/init.zsh'
+else
+  echo "ghost-complete: init script missing: "'/Users/guillermo.rodas/.config/ghost-complete/shell/init.zsh' >&2
+  echo "ghost-complete: run 'ghost-complete install' to restore it" >&2
+fi
+# <<< ghost-complete initialize <<<
 #====================
 # Initialization
 #====================
@@ -399,3 +408,7 @@ fi
 # .zshrc.local for secrets and machine-specific configurations
 # This file should NOT be tracked in git.
 [[ -f ~/.zshrc.local ]] && zsh-defer -mp source ~/.zshrc.local
+# >>> ghost-complete shell integration >>>
+# !! Contents within this block are managed by 'ghost-complete install' !!
+source '/Users/guillermo.rodas/.config/ghost-complete/shell/ghost-complete.zsh'
+# <<< ghost-complete shell integration <<<
