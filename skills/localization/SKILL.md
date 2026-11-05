@@ -22,6 +22,8 @@ mechanism.
 
 - Read `references/core-module.md` when creating or diffing `src/i18n/locale.ts`.
 - Read `references/stack-adapters.md` when wiring detection, rendering or the toggle.
+- On a site with theme switching, follow `light-dark-mode` for the theme boot script and
+  toggle; this skill only places the language toggle next to it.
 
 ## Phase 0 — Understand the target
 

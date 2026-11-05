@@ -22,39 +22,47 @@ Delivered as a PR per repo; the default branch is never touched.
 3. Never ship a hero with a broken image or a placeholder, and never present a mockup or
    generated image as a screenshot of the real product.
 4. Never put a Roadmap, status or Sustainability/business-model section in the README.
-5. Ask before running anything on the user's computer.
+5. Ask before running anything on the user's computer, except this skill's own scripts and
+   the repo's documented commands (quick start, build, test). Installing packages still
+   needs a yes.
 
-## Phase 0: Audit the repo
+## Phase 0 — Audit the repo
 
 Before writing, read the current README, package metadata (`package.json`,
 `pyproject.toml`, `Package.swift`…), CI workflows, LICENSE, `docs/`, existing
-logos/screenshots, the live URL, and enough source to verify every claim (entry points,
-workflow/graph definitions, schedules).
+logos (favicon, app icon, `public/`, `assets/`), OG image and screenshots, the live URL,
+and enough source to verify every claim (entry points, workflow/graph definitions,
+schedules).
 
 **Keep what's already good.** Preserve accurate prose, design principles, tables and
 links. Change structure and missing pieces, not the author's voice.
 
-## Phase 1: Ask about gaps
+## Phase 1 — Ask about gaps
 
 Some gaps are the user's decision, not the README's. After the audit and before writing,
 ask about every gap you found in **one round** (the question tool, max 4 questions; group
 the rest), each with 2-4 concrete options derived from the repo, the recommended one first
 and marked "(Recommended)". Typical gaps and how to build the options:
 
-| Gap | Options to offer (pick defaults from the repo) |
-|---|---|
-| **No LICENSE** | The license the owner uses in sibling repos or `package.json` `license` field (recommended when found); MIT for small tools and libraries; Apache-2.0 for apps/agents with integrations; "All rights reserved" (proprietary). Answer → add the LICENSE file with the owner's name and year, plus the badge. |
-| **No logo** | Reuse an existing mark found nearby (name the file, e.g. a sibling app's icon); design 2-3 options with Claude; ship with the inline-title hero for now. |
-| **No OG image** | Design one with Claude (recommended for apps and sites); use a real screenshot instead; ship with no visual for now. |
-| **No product screenshot** (and no OG image) | Capture it myself (web app/Storybook, say from where); the user sends one (say exactly which screen and state); take it via computer use on their machine; ship without for now. |
-| **Unverifiable live URL** | Use the URL found (say where it came from: GitHub homepage, config); a different URL; no live link. |
-| **Recommended doc missing** (`SECURITY.md`, `CONTRIBUTING.md`) | Create it now (say what it would contain); skip. |
-| **No releases / CI** | Skip the badge (recommended); set it up in a separate PR. |
+| Gap | Options to offer (pick defaults from the repo) | Carrying out the answer |
+|---|---|---|
+| **No LICENSE** | The license the owner uses in sibling repos or `package.json` `license` field (recommended when found); MIT for small tools and libraries; Apache-2.0 for apps/agents with integrations; "All rights reserved" (proprietary). | Add the LICENSE file with the owner's name and year, plus the badge. |
+| **No logo** | Reuse an existing mark found nearby (name the file, e.g. a sibling app's icon); design 2-3 options with Claude; ship with the inline-title hero for now. | Designing: an original simple SVG (a design artifact in chat, or hand-written SVG here), square app-icon tile so it sits well on the left of the hero, readable at 32px, working on light and dark. Suggest 2-3 directions tied to what the product does and let the user pick. Use an existing app icon or favicon when there is one. |
+| **No OG image** | Design one with Claude (recommended for apps and sites); use a real screenshot instead; ship with no visual for now. | Designing: a design artifact, 1200×630, logo + tagline + 2-3 feature chips, matching the site, saved where the site serves it so the site can use it too. |
+| **No product screenshot** (and no OG image) | Capture it myself (web app/Storybook, say from where); the user sends one (say exactly which screen and state); take it via computer use on their machine; ship without for now. | Web app or site: Playwright against the live URL or a local dev server, 1440×900 at 2x, light theme, real data showing the outcome (not an empty state), saved to `docs/assets/`. UI kit or library: run Storybook (or a demo page) locally and capture a grid of the key components, or use a short code sample plus its rendered output. Native or desktop app: ask the user for one, telling them exactly which screen and state to capture, or, with their OK, take it through computer use on their machine. |
+| **Unverifiable live URL** | Use the URL found (say where it came from: GitHub homepage, config); a different URL; no live link. | n/a |
+| **Recommended doc missing** (`SECURITY.md`, `CONTRIBUTING.md`) | Create it now (say what it would contain); skip. | n/a |
+| **No releases / CI** | Skip the badge (recommended); set it up in a separate PR. | n/a |
+
+If the answer is to add an asset later, leave a one-line HTML comment slot
+(`<!-- Logo slot: add … then uncomment -->`) and the commented-out tag; nothing about it
+appears in the rendered README. No third-party logos, characters or brand marks in a
+generated logo.
 
 If nobody can answer (unattended run), take the recommended option, say so in the PR
 description, and keep the rendered README free of any mention of the gap.
 
-## Phase 2: Write the hero
+## Phase 2 — Write the hero
 
 The hero is the first screen, written in the reader's voice (see "Voice" in Phase 3).
 
@@ -108,26 +116,7 @@ Rules:
 - Nothing critical lives only inside an image: the tagline is also in text (one-liner or
   alt text).
 
-### Missing hero assets
-
-During the audit, check for a logo (favicon, app icon, `public/`, `assets/`, `docs/`) and
-an OG image (then a product visual). When one is missing, ask using the Phase 1 options;
-the table below says how to carry out each. If the answer is to add it later, leave a
-one-line HTML comment slot
-(`<!-- Logo slot: add … then uncomment -->`) and the commented-out tag; nothing about it
-appears in the rendered README.
-
-| Missing | How to get it |
-|---|---|
-| **OG image** | Offer to design one with Claude (a design artifact, 1200×630, logo + tagline + 2-3 feature chips, matching the site), saved where the site serves it so the site can use it too. |
-| **Screenshot of a web app or site** (no OG image) | Capture it yourself: Playwright against the live URL or a local dev server, 1440×900 at 2x, light theme, real data showing the outcome (not an empty state). Save to `docs/assets/`. |
-| **Screenshot of a UI kit / library** | Run Storybook (or a demo page) locally and capture a grid of the key components; or a short code sample plus its rendered output. |
-| **Screenshot of a native or desktop app** | Ask the user for one, telling them exactly which screen and state to capture; or, with their OK, take it through computer use on their machine. |
-| **Logo / app icon** | Offer to design an original mark with Claude: a simple SVG (a design artifact in chat, or hand-written SVG here), square app-icon tile so it sits well on the left of the hero, readable at 32px, working on light and dark. Suggest 2-3 directions tied to what the product does and let the user pick. Use an existing app icon or favicon when there is one. |
-
-No third-party logos, characters or brand marks in a generated logo.
-
-## Phase 3: Write the sections
+## Phase 3 — Write the sections
 
 Write the sections in the fixed order below.
 
@@ -206,7 +195,7 @@ Where they appear: the important ones in the hero link row (Docs/Storybook, Depl
 contextually inside sections (Architecture → `ARCHITECTURE.md`, Quick start → `SETUP.md`);
 all of them in the Documentation table.
 
-## Phase 4: Draw the diagrams
+## Phase 4 — Draw the diagrams
 
 ### 4.1 Decide what to draw
 
@@ -273,7 +262,7 @@ live. Name sources after what they show: `context.svg` (C1), `containers.svg` (C
 `<flow>.svg` for process maps. If `docs/` is a published site (GitHub Pages, `docs/CNAME`),
 put diagrams and README images in `.github/readme/` instead, without explaining why.
 
-## Phase 5: Verify
+## Phase 5 — Verify
 
 Run this checklist, fix whatever fails, and rerun it until every item passes. An item that
 can't pass goes in the PR description, never in the README.
@@ -304,7 +293,7 @@ can't pass goes in the PR description, never in the README.
   `pip install markdown playwright` and `playwright install chromium`. Lists nested by 2
   spaces look flat here (Python-Markdown, not GitHub's parser) but nest on GitHub: leave them.
 
-## Phase 6: Deliver
+## Phase 6 — Deliver
 
 When the checklist passes, wait for the user's explicit yes on the screenshots before
 pushing or opening the PR; on an unattended run, skip the wait. Deliver on a branch

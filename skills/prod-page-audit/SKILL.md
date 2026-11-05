@@ -33,6 +33,8 @@ If ambiguous, ask one focused question before proceeding.
 ## Phase 1 — SEO
 
 For each item in Phases 1–4, record the file path, current state, and verdict (✅/⚠️/❌).
+If `a11y-page-audit` already ran on this page, skip the landmarks, single `<h1>`, `alt`
+and `lang` checks below and report them as covered there.
 
 **Check**:
 - `<title>`: exists, 50–60 chars, descriptive and unique

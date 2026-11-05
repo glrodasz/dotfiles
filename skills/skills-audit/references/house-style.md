@@ -39,7 +39,9 @@ recent, most consistent skills (`branch-test-plan`, `branch-comment-cleanup`,
 - Opens with `# <Human-Readable Title>` (Title Case), then one short paragraph stating the
   goal and the guardrail (what is never touched, what is never written to disk).
 - Sections are H2, in this order when they apply:
-  - `## Hard rules (never violate)` — numbered, only for skills that edit user files.
+  - `## Hard rules (never violate)` — numbered, only for skills that edit user files and
+    have three or more guardrails. One or two guardrails may stay in the opening
+    paragraph instead.
   - `## Inputs` — default paths, sources and output, and how invocation args override
     them; only for skills that take arguments or default paths.
   - `## Phase 0 — <Scope / Understand the target>` … `## Phase N — Verify` — em-dash
@@ -57,7 +59,9 @@ recent, most consistent skills (`branch-test-plan`, `branch-comment-cleanup`,
   `Run:` (execute) or `See` (read as reference).
 - Bundled scripts that act on a target repo are run from that repo's root as
   `python3 <skill-directory>/scripts/<script>` — never from the skill directory, where the
-  current directory would resolve to the dotfiles repo.
+  current directory would resolve to the dotfiles repo. Exception: skills that pre-approve
+  commands in `allowed-tools` or inject shell output with `!` use `${CLAUDE_SKILL_DIR}`,
+  because those need a real variable (`harvest-reviews`, `team-reviewer`).
 - Checklists use `- [ ]` inside a fenced block when the model should copy and tick them.
 - Output goes to the chat response unless the skill's purpose is to write a file; any
   file write or external post is preceded by an explicit yes from the user.

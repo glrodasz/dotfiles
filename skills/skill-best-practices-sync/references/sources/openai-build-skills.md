@@ -140,7 +140,7 @@ Codex reads skills from repository, user, admin, and system locations. For repos
 | `REPO`      | `$REPO_ROOT/.agents/skills` <br /> The topmost root folder when you launch Codex inside a Git repository. | If you're in a repository with nested folders, organizations can check in skills relevant to everyone using the repository. These serve as root skills available to any subfolder in the repository. |
 | `USER`      | `$HOME/.agents/skills` <br /> Any skills checked into the user's personal folder.                         | Use to curate skills relevant to a user that apply to any repository the user may work in.                                                                                                           |
 | `ADMIN`     | `/etc/codex/skills` <br /> Any skills checked into the machine or container in a shared, system location. | Use for SDK scripts, automation, and for checking in default admin skills available to each user on the machine.                                                                                     |
-| `SYSTEM`    | Bundled with Codex by OpenAI.                                                                             | Useful skills relevant to a broad audience such as the skill-creator and plan skills. Available to everyone when they start Codex.                                                                   |
+| `SYSTEM`    | Bundled with Codex by OpenAI.                                                                             | Includes `skill-creator` and `skill-installer`. Enabled by default.                                                                                                                                  |
 
 Codex supports symlinked skill folders and follows the symlink target when scanning these locations.
 
@@ -184,7 +184,19 @@ path = "/path/to/skill/SKILL.md"
 enabled = false
 ```
 
-Restart Codex after changing `~/.codex/config.toml`.
+Use exactly one selector per entry. An absolute `path` matches one
+`SKILL.md` file. A `name` matches every skill with that name. When more than
+one entry matches a skill, the last matching entry wins.
+
+To turn off all bundled system skills for the current project, add this setting
+to its trusted `.codex/config.toml`:
+
+```toml
+[skills.bundled]
+enabled = false
+```
+
+Restart Codex after changing the configuration.
 
 ## Optional metadata
 
