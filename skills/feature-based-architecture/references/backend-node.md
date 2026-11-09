@@ -42,7 +42,7 @@ src/
 ├── utils/                           httpStatus.ts, isEmpty.ts (domain-free)
 ├── errors/                          (on demand) typed domain errors: NotFoundError, ConflictError
 ├── middlewares/                     errorHandlers.ts, notFound.ts, createValidationMiddleware.ts
-├── config.ts
+├── config.ts                        the only reader of process.env, validated on load
 ├── app.ts
 └── server.ts
 ```
@@ -170,7 +170,7 @@ Validation conventions (from `twittr`):
 
 | File | Owns |
 |---|---|
-| `src/config.ts` | The only reader of `process.env`. Exports a typed `as const` object with defaults for local dev. `.env.example` lists exactly the keys `config.ts` reads. |
+| `src/config.ts` | The only reader of `process.env`. Parses and validates every key on load, throws listing every problem, and exports a frozen, typed object. `.env.example` lists exactly the keys `config.ts` reads. See [Config](#config). |
 | `src/lib/db.ts` | DB connection (`connectDatabase()`), called from `server.ts`. No credentials inline; they come from `config`. |
 | `src/lib/logger.ts` | One logger (framework logger in Fastify; `debug` namespaces like `app:server`, `app:database` or a pino instance in Express). No bare `console.log` in features. |
 | `src/middlewares/` | Error pipeline, not-found, validation factory, cache headers. Generic: never imports a feature. |
@@ -180,6 +180,55 @@ Validation conventions (from `twittr`):
 Middleware factories take their config-driven switches as defaulted parameters so tests
 can flip them: `createCacheMiddleware(seconds, isActive = !config.dev)`,
 `withErrorStack(error, stack, isStackShown = config.dev)`.
+
+### Config
+
+```ts
+// src/config.ts
+import { z } from "zod";
+
+const envSchema = z.object({
+  NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
+  PORT: z.coerce.number().int().positive().default(4000),
+  LOG_LEVEL: z.enum(["debug", "info", "warn", "error"]).default("info"),
+  DATABASE_URL: z.url(),
+  CORS_ORIGIN: z.url(),
+  MAXIMUM_IN_PRIORITY_TASKS: z.coerce.number().int().positive().default(3),
+  CACHE_ENABLED: z.stringbool().default(true),
+});
+
+const result = envSchema.safeParse(process.env);
+if (!result.success) {
+  throw new Error(`Invalid environment variables:\n${z.prettifyError(result.error)}`);
+}
+const env = result.data;
+
+export const config = Object.freeze({
+  dev: env.NODE_ENV === "development",
+  port: env.PORT,
+  logLevel: env.LOG_LEVEL,
+  databaseUrl: env.DATABASE_URL,
+  corsOrigin: env.CORS_ORIGIN,
+  maximumInPriorityTasks: env.MAXIMUM_IN_PRIORITY_TASKS,
+  isCacheEnabled: env.CACHE_ENABLED,
+});
+
+export type Config = typeof config;
+```
+
+- `server.ts` imports `config` before anything else, so a bad environment stops the
+  process before the DB connects.
+- Booleans use `z.stringbool()`, never `z.coerce.boolean()`, which turns `"false"` into
+  `true`.
+- An empty value (`PORT=`) is a value, not a missing key: the default does not apply and
+  the check fails. Delete the line to get the default.
+- The examples use Zod 4. On Zod 3: `z.string().url()` for URLs,
+  `z.enum(["true", "false"]).transform((value) => value === "true")` for booleans, and
+  `result.error.flatten().fieldErrors` for the message.
+- Unit tests load a committed `.env.test` (`--env-file=.env.test` or the runner's setup
+  file) so importing `config` never throws. Code that varies with config takes the value
+  as a defaulted parameter (as the middleware factories above do) instead of tests
+  mutating `process.env`.
 
 ## Composition: app vs server
 
@@ -267,6 +316,8 @@ export const testServer = (mount: (app: Application) => void) => {
 - `package.json` scripts: `dev` (`tsx watch --env-file=.env src/server.ts`), `build`
   (`tsc` with `outDir: dist`), `start` (`node dist/server.js`), `typecheck`, `lint`,
   `test`, plus database helpers (`start:database`, `stop:database`).
+- A root `Makefile` wraps those scripts (`setup`, `dev`, `test`, `lint`, `typecheck`,
+  `build`). The template and rules are under "Config and commands" in SKILL.md.
 - `tsconfig`: `strict`, `module`/`moduleResolution: NodeNext`, explicit `rootDir: src` and
   `outDir: dist`.
 - Lint/format config must match the code actually in the repo and be installed and run in

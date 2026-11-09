@@ -11,6 +11,10 @@ Personal macOS dotfiles. Configs live here and are symlinked into `$HOME` with
   refactors or reformatting.
 - Secrets and machine-specific settings go in `~/.zshrc.local`, which is never
   tracked.
+- Never hardcode a home directory or username (e.g. `/Users/guillermo.rodas`).
+  These dotfiles are shared across machines with different usernames, so use
+  `$HOME` (or `~`). In zsh, use double quotes so `$HOME` expands:
+  `"$HOME/.foo"`, not `'/Users/name/.foo'`.
 
 ## Zsh (`zsh/.zshrc`, `zsh/.zprofile`)
 
@@ -52,7 +56,8 @@ on this machine because endpoint security inspects each exec.
   sourcing it.
 - **Installer-appended lines**: installers (rustup, etc.) append lines to the
   end of `.zshrc`. Move them into the matching section using the patterns
-  above, or remove them if the tool isn't used.
+  above, or remove them if the tool isn't used. Installers often write
+  absolute home paths; replace them with `$HOME`.
 
 ### Verify
 

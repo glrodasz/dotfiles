@@ -189,15 +189,72 @@ browser at the backend. The page and hook code do not change.
 
 ## Config and environment
 
-- `config/` is the only place that reads `process.env`. Everything else imports named
-  values.
+`config/` is the only place that reads `process.env`. Everything else imports named
+values. It holds two modules because the browser bundle only receives `NEXT_PUBLIC_*`
+values, and Next.js inlines them only where the code spells out the literal
+`process.env.NEXT_PUBLIC_<NAME>`. Passing `process.env` itself, or reading
+`process.env[key]`, comes back empty in the browser.
+
+```js
+// config/client.js — safe anywhere, including components and hooks
+import { z } from 'zod'
+
+const clientSchema = z.object({
+  NEXT_PUBLIC_API_URL: z.url(),
+  NEXT_PUBLIC_DATA_SOURCE: z.enum(['api', 'memory']).default('api'),
+})
+
+const result = clientSchema.safeParse({
+  NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
+  NEXT_PUBLIC_DATA_SOURCE: process.env.NEXT_PUBLIC_DATA_SOURCE,
+})
+if (!result.success) {
+  throw new Error(`Invalid client environment variables:\n${z.prettifyError(result.error)}`)
+}
+
+export const clientConfig = Object.freeze({
+  apiUrl: result.data.NEXT_PUBLIC_API_URL,
+  dataSource: result.data.NEXT_PUBLIC_DATA_SOURCE,
+})
+```
+
+```js
+// config/server.js — only from getServerSideProps, API routes, queries.js, datasources/
+import { z } from 'zod'
+
+const serverSchema = z.object({
+  REDIS_URL: z.url(),
+  SESSION_SECRET: z.string().min(32),
+  MAXIMUM_IN_PRIORITY_TASKS: z.coerce.number().int().positive().default(3),
+})
+
+const result = serverSchema.safeParse(process.env)
+if (!result.success) {
+  throw new Error(`Invalid server environment variables:\n${z.prettifyError(result.error)}`)
+}
+
+export const serverConfig = Object.freeze({
+  redisUrl: result.data.REDIS_URL,
+  sessionSecret: result.data.SESSION_SECRET,
+  maximumInPriorityTasks: result.data.MAXIMUM_IN_PRIORITY_TASKS,
+})
+```
+
+- Import both modules from `next.config` (`import './config/server.js'`) so `next dev` and
+  `next build` fail on a bad environment, not the first request. If CI builds without the
+  server secrets, skip only that build-time import behind an explicit flag
+  (`SKIP_ENV_VALIDATION=1`); the runtime check stays.
+- `config/server.js` never reaches the browser bundle: components, hooks and handlers
+  import `config/client.js` only. In the App Router, start `config/server.js` with
+  `import 'server-only'` so a client import fails the build.
 - **One selector per decision.** If a single question ("which backend?") is answered by an
   env var, every derived value (browser `API_URL`, server store) comes from that one
-  selector (`config/dataSource.js`). Never add a second variable that decides half of it.
-  An unrecognized value throws at build time.
+  selector (`config/dataSource.js`, built on `clientConfig.dataSource`). Never add a second
+  variable that decides half of it. An unrecognized value fails the schema's enum at build
+  time.
 - `NEXT_PUBLIC_*` values are baked in at build time; changing them requires a rebuild.
-- Every committed env file sets every numeric config key; a missing one becomes `NaN` and
-  silently disables comparisons.
+- Unit tests load a committed `.env.test` (Next's Jest config reads it when
+  `NODE_ENV=test`) so importing either module never throws.
 
 ## Serverless rules
 

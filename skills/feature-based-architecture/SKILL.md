@@ -9,7 +9,8 @@ description: >
   component or adding a color/spacing value; deciding whether a component belongs in the
   app or in the design system; wiring server-side rendering (getServerSideProps, React
   Query initial data); naming files or directories; extracting or sharing code between
-  features; or restructuring a project's folder layout. Trigger even when the user never
+  features; restructuring a project's folder layout; or adding an env var, a config
+  value, or Makefile setup/dev targets. Trigger even when the user never
   says "architecture" and only asks "where should this go?", "add X to the project",
   "style this", or "clean up this utils folder". Not for non-JS/TS projects or bug fixes
   inside existing files.
@@ -47,7 +48,7 @@ touches its area:
 | Task touches | Load |
 |---|---|
 | Components, styling, colors/spacing, theming, "is this a design-system component?" | [references/design-system.md](references/design-system.md), plus the `quantum-design-tokens` skill (dependency) for any token, color, spacing or theme |
-| Next.js/React: pages, containers, hooks, handlers, SSR, API routes, React Query, frontend tests | [references/frontend-nextjs.md](references/frontend-nextjs.md) |
+| Next.js/React: pages, containers, hooks, handlers, SSR, API routes, React Query, env config, frontend tests | [references/frontend-nextjs.md](references/frontend-nextjs.md) |
 | Node backend: Express/Fastify routers, services, repositories, validation, errors, config, backend tests | [references/backend-node.md](references/backend-node.md) |
 | Another feature needs this code, or deciding whether to extract it to `common/`, `utils/` or the design system | [references/sharing-code.md](references/sharing-code.md) |
 
@@ -70,6 +71,8 @@ Before writing anything, inspect the existing structure and record its conventio
 - What the generic folder is called (`utils/`, `utilities/`) and what is actually in it
 - Which infrastructure folders exist (`api/`, `datasources/`, `config/`, `lib/`) and what
   each one owns
+- Whether there is a root `Makefile` (or another task runner) and a config module, and
+  which keys `.env.example` lists
 - Whether UI primitives come from an external design-system package
 - Language and module system (JS/TS, ESM/CommonJS, `.js` extensions in TS imports)
 
@@ -102,6 +105,8 @@ rules or the build, then re-run until both pass; report failures that predate th
 Default layout for a frontend app (Next.js pages router shown; adapt to the framework):
 
 ```text
+Makefile                      setup, dev, test, lint, typecheck, build
+.env.example                  every key the config module reads, with local values
 features/
 ├── tasks/                    domain feature
 │   ├── components/           presentational: Board/Board.js + Board/index.js
@@ -121,7 +126,7 @@ features/
 pages/                        thin routes: getServerSideProps + render a container
 api/                          infrastructure: browser HTTP client
 datasources/                  infrastructure: server-side storage access
-config/                       infrastructure: env reads, the one place process.env is read
+config/                       infrastructure: server.js + client.js, the only readers of process.env
 utils/                        generic, domain-free functions
 styles/                       global styles and token overrides only
 ```
@@ -129,6 +134,8 @@ styles/                       global styles and token overrides only
 Default layout for a Node backend:
 
 ```text
+Makefile                          setup, dev, test, lint, typecheck, build
+.env.example                      every key config.ts reads, with local values
 src/
 ├── features/
 │   ├── tasks/
@@ -141,7 +148,7 @@ src/
 ├── lib/                          db connection, logger
 ├── utils/                        httpStatus.ts and other domain-free code
 ├── middlewares/                  error pipeline, not-found, validation factory
-├── config.ts
+├── config.ts                     the only reader of process.env, validated on load
 ├── app.ts                        builds the app (testable)
 └── server.ts                     connects + listens
 ```
@@ -260,6 +267,87 @@ src/features/tasks/tasks.service.ts ← what tasks does with it
 Do not put pure functions like `groupBy` in infrastructure, and do not put a DB client in
 `utils/`. Do not create per-feature `api.js` re-exports of the shared HTTP client.
 
+## Config and commands
+
+Every project, frontend or backend, has two fixed entry points: a root `Makefile` for
+running it and one config module for reading its environment.
+
+### Makefile
+
+A fresh clone reaches a running app with `make setup && make dev`, and CI calls the same
+targets.
+
+```make
+.PHONY: help setup dev test lint typecheck build
+
+help: ## List the targets
+	@grep -E '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | awk -F ':.*## ' '{printf "%-10s %s\n", $$1, $$2}'
+
+setup: ## Check Node, install deps, create .env, start the database
+	@node -v | grep -q "^v$$(sed 's/^v//' .nvmrc)" || { echo "Node $$(cat .nvmrc) required (run: nvm use)"; exit 1; }
+	npm ci
+	@[ -f .env ] || cp .env.example .env
+	npm run start:database
+
+dev: ## Start the app in watch mode
+	npm run dev
+
+test: ## Run the unit tests
+	npm test
+
+lint: ## Lint the code
+	npm run lint
+
+typecheck: ## Type-check without emitting
+	npm run typecheck
+
+build: ## Build for production
+	npm run build
+```
+
+- Targets delegate to `package.json` scripts. The scripts stay the source of truth; the
+  Makefile adds no build logic of its own.
+- `setup` is idempotent: a second run changes nothing and never overwrites an existing
+  `.env`.
+- `setup` uses the package manager's frozen install (`npm ci`,
+  `pnpm install --frozen-lockfile`, `yarn install --immutable`).
+- Include only targets the project can run: no `start:database` without a database, and
+  no Node check when `.nvmrc` holds an alias like `lts/*`.
+- Recipes are indented with tabs.
+- A repository holding several apps (`web/`, `api/`) gets a root Makefile that calls each
+  app's own: `$(MAKE) -C api setup`.
+- The README's getting-started section is `make setup` and `make dev`.
+- A project that already uses another task runner (`just`, Taskfile, Turborepo) keeps it,
+  with the same target names, instead of gaining a Makefile.
+
+### Config module
+
+One module is the only reader of `process.env`: `src/config.ts` on the backend,
+`config/server.js` and `config/client.js` on a Next.js frontend (split because the
+browser bundle only receives `NEXT_PUBLIC_*` values). The module:
+
+1. Declares every key in one schema: its type, whether it is required, and its default.
+2. Parses on load. Numbers become numbers, booleans become booleans, enums are checked,
+   so a bad value never turns into `NaN` or a `"false"` string that reads as true.
+3. Fails fast. A missing or invalid key throws once, at startup (or `next build`), listing
+   every problem, before a port opens or a request is served.
+4. Exports a frozen, typed object with camelCase names (`config.port`,
+   `config.databaseUrl`). Nothing else imports `process.env`.
+
+- Defaults only for values that are safe in every environment (port, log level, limits).
+  Credentials and external-service URLs have no default; their local values live in
+  `.env.example`. A production deploy missing `DATABASE_URL` then fails at startup instead
+  of connecting to localhost.
+- `.env.example` is committed and lists exactly the keys the schema declares, with
+  working local values and no real secrets. `.env` is gitignored.
+- A change that needs a new value adds it to the schema and to `.env.example` in the same
+  commit.
+- Validate with the schema library the project already uses for request input (zod in
+  this skill's examples). With none, write the checks by hand in the same file rather
+  than adding a dependency only for config.
+
+Code for each side is in the backend and frontend references.
+
 ## Dependency direction
 
 Imports point inward toward more generic code, never outward toward more specific code.
@@ -338,6 +426,10 @@ precisely, the grouping is probably wrong.
 - A backend router talking to the DB model directly, or a service returning raw ORM
   documents
 - `process.env` read outside the config module
+- Env values used unvalidated, so a missing key surfaces as `undefined` or `NaN` at the
+  first request instead of failing at startup
+- No `make setup` / `make dev`, or Makefile targets that duplicate the logic of
+  `package.json` scripts instead of calling them
 - The same function copy-pasted twice inside one project
 
 ## Report
