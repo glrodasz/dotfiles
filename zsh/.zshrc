@@ -81,13 +81,13 @@ export PYENV_ROOT="${PYENV_ROOT:-$HOME/.pyenv}"
 # instead of being frozen at startup (which made each line overwrite the last).
 
 # Go path (binaries from `go install`, e.g. golines, golangci-lint, gotestsum)
-zsh-defer -mp -c 'export GOPATH="$HOME/go"; export PATH="$GOPATH/bin:$PATH"'
+[[ -d "$HOME/go" ]] && zsh-defer -mp -c 'export GOPATH="$HOME/go"; export PATH="$GOPATH/bin:$PATH"'
 
-# Ruby-related Paths (RVM and additional Ruby binaries)
-zsh-defer -mp -c 'export PATH="$HOME/.rvm/bin:/usr/local/opt/ruby/bin:$PATH"'
+# Ruby RVM path
+[[ -d "$HOME/.rvm/bin" ]] && zsh-defer -mp -c 'export PATH="$HOME/.rvm/bin:$PATH"'
 
 # MongoDB path
-zsh-defer -mp -c 'export PATH="$PATH:/usr/local/mongodb/bin"'
+[[ -d "/usr/local/mongodb/bin" ]] && zsh-defer -mp -c 'export PATH="$PATH:/usr/local/mongodb/bin"'
 
 # Android SDK path
 zsh-defer -mp -c 'export ANDROID_HOME="$HOME/Library/Android/sdk"; export PATH="$PATH:$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools"'
@@ -96,7 +96,7 @@ zsh-defer -mp -c 'export ANDROID_HOME="$HOME/Library/Android/sdk"; export PATH="
 zsh-defer -mp -c 'export JAVA_HOME="/opt/homebrew/opt/openjdk@21"; export PATH="$JAVA_HOME/bin:$PATH"'
 
 # Antigravity path
-zsh-defer -mp -c 'export PATH="$HOME/.antigravity/antigravity/bin:$PATH"'
+[[ -d "$HOME/.antigravity/antigravity/bin" ]] && zsh-defer -mp -c 'export PATH="$HOME/.antigravity/antigravity/bin:$PATH"'
 
 # Rust cargo path
 [[ -d "$HOME/.cargo/bin" ]] && zsh-defer -mp -c 'export PATH="$HOME/.cargo/bin:$PATH"'
@@ -107,12 +107,8 @@ zsh-defer -mp -c 'export PATH="$HOME/.antigravity/antigravity/bin:$PATH"'
 #====================
 # OS-Specific Config
 #====================
-# Optimized HOMEBREW_PREFIX Setting | checks for ARM vs Intel
-if [[ "$CPUTYPE" == "arm64" ]]; then
-    export HOMEBREW_PREFIX="/opt/homebrew"
-else
-    export HOMEBREW_PREFIX="/usr/local"
-fi
+# Homebrew prefix
+export HOMEBREW_PREFIX="/opt/homebrew"
 
 # macOS
 [[ "$OSTYPE" == darwin* ]] && {
@@ -395,7 +391,7 @@ busy() {
 #====================
 # Development Tools
 zsh-defer -mp . "$NVM_DIR/nvm.sh" --no-use
-zsh-defer -mp . "$HOME/.deno/env"
+[[ -f "$HOME/.deno/env" ]] && zsh-defer -mp . "$HOME/.deno/env"
 
 # Google Cloud SDK
 if [ -f "$HOME/google-cloud-sdk/path.zsh.inc" ]; then 

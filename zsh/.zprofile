@@ -1,10 +1,6 @@
 # Homebrew environment. Static equivalent of `eval "$(brew shellenv zsh)"`, which
 # spawns brew on every login shell just to print these same lines.
-if [[ "$CPUTYPE" == "arm64" ]]; then
-    export HOMEBREW_PREFIX="/opt/homebrew" HOMEBREW_REPOSITORY="/opt/homebrew"
-else
-    export HOMEBREW_PREFIX="/usr/local" HOMEBREW_REPOSITORY="/usr/local/Homebrew"
-fi
+export HOMEBREW_PREFIX="/opt/homebrew" HOMEBREW_REPOSITORY="/opt/homebrew"
 if [[ -x "$HOMEBREW_PREFIX/bin/brew" ]]; then
     export HOMEBREW_CELLAR="$HOMEBREW_PREFIX/Cellar"
     fpath[1,0]="$HOMEBREW_PREFIX/share/zsh/site-functions"
