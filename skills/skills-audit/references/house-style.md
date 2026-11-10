@@ -44,11 +44,19 @@ recent, most consistent skills (`branch-test-plan`, `branch-comment-cleanup`,
     paragraph instead.
   - `## Inputs` — default paths, sources and output, and how invocation args override
     them; only for skills that take arguments or default paths.
+  - Reference sections — rules, decision tables, vocabularies, examples — as H2s with
+    descriptive names (`## Grouping rules`, `## Refactor gate`), so every rule is read
+    before the phases that apply it. One used by a single phase is an H3 inside that
+    phase instead; one that is long or only sometimes needed goes to `references/`.
   - `## Phase 0 — <Scope / Understand the target>` … `## Phase N — Verify` — em-dash
     (`—`) separator, "Phase" not "Step", sentence-case titles.
     A Verify phase is a loop, not a list: it says to fix any failing check and rerun the
     checks before the report, and what to do when a check can't pass (restore, stop, or
     list it under "Still needs human attention").
+  - Delivery phases — push, publish, open a PR, apply a validated plan — come after
+    Verify and run only once it passes (`## Phase 6 — Deliver`). They are the only
+    phases allowed after Verify; nothing else but `## Report` and
+    `## Notes & edge cases` follows it.
   - `## Report` — followed by a fenced template the model fills in. Report templates
     typically contain `### Changes made`, `### Still needs human attention`.
   - `## Notes & edge cases` — bolded lead-in per bullet (`- **Big diffs**: …`). Always last.

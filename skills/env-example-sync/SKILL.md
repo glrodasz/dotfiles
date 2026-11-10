@@ -2,8 +2,8 @@
 name: env-example-sync
 description: >
   Reorder a .env to mirror its .env.example, add missing keys as commented defaults, and
-  move .env-only lines to a Local extras block. Use when the user wants to sync, mirror, align, or diff a
-  .env against a .env.example (any project).
+  move .env-only lines to a Local extras block. Use when the user wants to sync, mirror,
+  align, or diff a .env against a .env.example (any project).
 disable-model-invocation: true
 ---
 

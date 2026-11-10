@@ -16,9 +16,7 @@ description: >
 One pattern for static sites, SSR apps, client-rendered SPAs and the native apps that
 share their links. The **core** (URL scheme, precedence, persistence, toggle behavior)
 must behave identically in every app. Only the **adapters** (where detection runs, how
-the page renders its locale) change per stack. When an app already localizes, compare it
-against the rules below and fix the deviations you touch instead of adding a second
-mechanism.
+the page renders its locale) change per stack.
 
 - Read `references/core-module.md` when creating or diffing `src/i18n/locale.ts`.
 - Read `references/stack-adapters.md` when wiring detection, rendering or the toggle.
@@ -58,7 +56,7 @@ Apply *The model* and *Rules, and why* throughout, in this order:
 When adding a locale to an app that already localizes, follow *Adding a locale*. For a
 native app sharing the links, also apply *Native apps*.
 
-## The model
+### The model
 
 ```
 request /about?utm=x
@@ -73,7 +71,7 @@ request /about?utm=x
         └─ target ≠ default ─► 307 / location.replace → /es/about?utm=x
 ```
 
-## Rules, and why
+### Rules, and why
 
 1. **The URL is the source of truth for what a page renders.** Detection only decides
    where an *unprefixed* first visit lands. A shared `/es/...` link must open in Spanish
@@ -104,7 +102,7 @@ request /about?utm=x
 9. **Everything locale-specific derives from `pageLocale(pathname)`:** `<html lang>`,
    `og:locale`, hreflang, feeds, date formats, form payloads, 404 page.
 
-## URL and link arrangement
+### URL and link arrangement
 
 | Resource | Default (`en`) | Other (`es`) |
 |---|---|---|
@@ -121,7 +119,7 @@ trailing-slash form per app (e.g. `/es` on an SPA, `/es/` on static directory ou
 use it consistently in canonical, hreflang and the toggle. If the host serves `/es/`,
 change the root case in `localizePath`.
 
-## Core module
+### Core module
 
 `src/i18n/locale.ts` holds the config (`LOCALES`, `DEFAULT_LOCALE`, `LOCALE_COOKIE`,
 `COOKIE_DOMAIN`, `EXEMPT_PATHS`, `LANGUAGE_NAMES`, `OG_LOCALES`) and the pure functions
@@ -131,7 +129,7 @@ change the root case in `localizePath`.
 writer. Copy both from `references/core-module.md` as-is and change only the config block.
 Never re-implement any of this logic inside an adapter or component.
 
-## Where detection runs
+### Where detection runs
 
 Detection must finish before first paint, or Spanish visitors see an English flash.
 
@@ -146,7 +144,7 @@ Detection must finish before first paint, or Spanish visitors see an English fla
 Code for both, plus SSR, React Router and Astro rendering: see
 `references/stack-adapters.md`.
 
-## Language toggle
+### Language toggle
 
 **Placement: a preferences cluster `[🌐 Español] [☾ Dark]`**
 - On desktop, put it at the right end of the footer bottom bar, language first, then
@@ -175,7 +173,7 @@ Code for both, plus SSR, React Router and Astro rendering: see
 
 React and Astro components: see `references/stack-adapters.md`.
 
-## Strings and formatting
+### Strings and formatting
 
 - **Dictionaries.** Keep one dictionary per locale (and per namespace) with an identical
   shape. The default locale is the type source (`typeof en`, or `satisfies Messages`), so
@@ -193,7 +191,7 @@ React and Astro components: see `references/stack-adapters.md`.
 - **Content conventions.** Rules like "IA" in Spanish vs "AI" in English belong in the
   app's `AGENTS.md`, not here.
 
-## Content with per-language slugs
+### Content with per-language slugs
 
 Store entries as `content/posts/{locale}/<slug>.md`. Each entry declares its counterparts
 in frontmatter (e.g. `languageVersions: [{ language: es, url: /es/posts/... }]`). Build an
@@ -205,7 +203,7 @@ and the head:
   `EXEMPT_PATHS`. An English slug has no Spanish twin at `/es/<same-slug>`, so a redirect
   would 404.
 
-## SEO and metadata checklist
+### SEO and metadata checklist
 
 - `<html lang>` = `pageLocale(pathname)`.
 - Self-referencing canonical. Never canonicalize `/es/x` to `/x`.
@@ -218,7 +216,7 @@ and the head:
   current locale's feed.
 - JSON-LD `inLanguage`.
 
-## Testing
+### Testing
 
 **Unit tests: the shared truth table.** Every app's core must pass this table:
 
@@ -248,7 +246,7 @@ alternate falls back to the locale home.
   counterpart, and a reload stays there.
 - Per locale, check `<html lang>`, `og:locale`, and the hreflang count.
 
-## Adding a locale
+### Adding a locale
 
 1. Append it to `LOCALES`, `LANGUAGE_NAMES` and `OG_LOCALES`.
 2. Add its dictionaries. The type check flags any gaps.
@@ -259,7 +257,7 @@ alternate falls back to the locale home.
    toggle).
 6. Extend the truth table.
 
-## Native apps
+### Native apps
 
 - **Precedence without a URL:** saved in-app choice → OS preferred languages
   (`Intl.DateTimeFormat().resolvedOptions().locale`, Expo `getLocales()`,

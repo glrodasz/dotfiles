@@ -42,13 +42,13 @@ Assign exactly one category from this vocabulary, so the rendered image can colo
 consistently. Prefer widening an existing category; add a new one only when three or more
 skills would share it (see Notes).
 
-| category | covers | current members |
+| category | covers | examples |
 | --- | --- | --- |
-| `git-workflow` | branches, commits, PRs | `reviewable-commits`, `stacked-pr-splitter`, `branch-test-plan`, `harvest-reviews`, `team-reviewer` |
-| `code-quality` | how code gets written and changed | `branch-comment-cleanup`, `minimal-code-changes`, `feature-based-architecture`, `quantum-design-tokens` |
-| `web-audit` | shipping a page or site | `a11y-page-audit`, `prod-page-audit`, `localization`, `light-dark-mode` |
-| `tooling` | environment, docs, config plumbing | `context7-mcp`, `env-example-sync`, `great-readme` |
-| `meta` | skills and dotfiles about themselves | `skills-audit`, `skill-best-practices-sync`, `shell-aliases-social`, `skills-social` |
+| `git-workflow` | branches, commits, PRs | `reviewable-commits`, `branch-test-plan` |
+| `code-quality` | how code gets written and changed | `branch-comment-cleanup`, `minimal-code-changes` |
+| `web-audit` | shipping a page or site | `a11y-page-audit`, `prod-page-audit` |
+| `tooling` | environment, docs, config plumbing | `context7-mcp`, `env-example-sync` |
+| `meta` | skills and dotfiles about themselves | `skills-audit`, `skills-social` |
 
 ## Phase 3 — Write the taglines
 

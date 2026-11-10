@@ -71,9 +71,41 @@ refactor gate:
 - Rewrite tests simply to make them cleaner.
 - Modify generated files when changing their source is sufficient.
 
-A serious unrelated issue may be reported as a separate follow-up, but must not be folded
-into the patch without authorization unless leaving it untouched would make the requested
-implementation immediately unsafe.
+A serious unrelated issue, including a pre-existing one that blocks validation, may be
+reported as a separate follow-up, but must not be folded into the patch without
+authorization unless leaving it untouched would make the requested implementation
+immediately unsafe.
+
+## Examples
+
+### Add a timeout to one request
+
+**Do:** Pass the timeout through the existing client call and update the focused test.
+
+**Do not:** Introduce a new HTTP client factory, rename environment variables, centralize
+all request settings, or upgrade the HTTP library.
+
+### Fix a null-value crash in a parser
+
+**Do:** Add the narrowest guard at the failing path and add a regression test.
+
+**Do not:** Rewrite the parser, redesign its return type, rename neighboring fields, or
+clean up unrelated branches.
+
+### Add one field to an existing response
+
+**Do:** Update the responsible mapping, its type only if required, and focused tests.
+
+**Do not:** Reorganize the response layer, replace the serializer, or normalize every
+related endpoint.
+
+### Explicitly requested refactor
+
+**Do:** Refactor only the named service, component, or pattern and preserve behavior with
+focused validation.
+
+**Do not:** extend the refactor into adjacent modules simply because they use similar
+code.
 
 ## Phase 1 — Define the change contract
 
@@ -127,9 +159,6 @@ command, or build for the affected package.
 Add or modify only tests that directly verify the requested behavior. Do not rewrite broad
 test suites, regenerate unrelated snapshots, or fix unrelated failures.
 
-If an unrelated pre-existing issue blocks validation, report it separately. Do not repair
-it unless the requested change cannot be delivered safely without doing so.
-
 ## Phase 6 — Verify the diff
 
 Review the final diff before finishing.
@@ -139,37 +168,6 @@ behavior, its focused validation, or a necessary compatibility constraint?**
 
 If not, revert that line. Remove formatting churn, reordered imports, renamed variables,
 generated noise, and incidental cleanup, then rerun the Phase 5 checks.
-
-## Examples
-
-### Add a timeout to one request
-
-**Do:** Pass the timeout through the existing client call and update the focused test.
-
-**Do not:** Introduce a new HTTP client factory, rename environment variables, centralize
-all request settings, or upgrade the HTTP library.
-
-### Fix a null-value crash in a parser
-
-**Do:** Add the narrowest guard at the failing path and add a regression test.
-
-**Do not:** Rewrite the parser, redesign its return type, rename neighboring fields, or
-clean up unrelated branches.
-
-### Add one field to an existing response
-
-**Do:** Update the responsible mapping, its type only if required, and focused tests.
-
-**Do not:** Reorganize the response layer, replace the serializer, or normalize every
-related endpoint.
-
-### Explicitly requested refactor
-
-**Do:** Refactor only the named service, component, or pattern and preserve behavior with
-focused validation.
-
-**Do not:** extend the refactor into adjacent modules simply because they use similar
-code.
 
 ## Report
 

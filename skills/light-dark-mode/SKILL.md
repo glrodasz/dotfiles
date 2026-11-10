@@ -307,7 +307,8 @@ Run the site and check each case, in both themes:
 
 1. Hard reload with no stored value, OS light and OS dark (DevTools → Rendering →
    emulate `prefers-color-scheme`); then with `light` and `dark` stored. First paint is
-   already correct: no flash, including with CPU throttling and the cache disabled.
+   already correct: no flash, including with CPU throttling and the cache disabled. SSR
+   stacks log no hydration warnings.
 2. Toggle at runtime: every component follows without a reload. Anything that doesn't
    still has a literal color; grep for `#hex`/`rgb(` outside the token file.
 3. Form controls, scrollbars and autofill look native in dark (`color-scheme`).
@@ -327,23 +328,6 @@ Run the site and check each case, in both themes:
 
 Fix any failing case and rerun the checks before the report. A case that can't pass or
 can't be run goes under `Verified` in the report, with the reason.
-
-### Checklist
-
-```
-- [ ] One mechanism: data-theme on <html>; old .dark/media-only blocks removed
-- [ ] Light block on :root, [data-theme="light"]; dark overrides on [data-theme="dark"]
-- [ ] color-scheme set in both blocks
-- [ ] No literal colors outside the token block (or listed in the report)
-- [ ] Blocking inline boot script first in <head>, after the theme-color meta
-- [ ] Stored value validated; every storage access in try/catch
-- [ ] Same key, default and theme-color values in boot script and controller
-- [ ] OS changes followed only while preference is system; cross-tab sync works
-- [ ] Toggle/segmented control: native button/radios, accessible name, focus ring, translated
-- [ ] SSR: no hydration warnings; App Router has suppressHydrationWarning on <html>
-- [ ] Code blocks, canvas, images, Storybook follow the theme
-- [ ] All applicable verification cases pass
-```
 
 ## Report
 

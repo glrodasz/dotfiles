@@ -10,10 +10,9 @@ description: >
   app or in the design system; wiring server-side rendering (getServerSideProps, React
   Query initial data); naming files or directories; extracting or sharing code between
   features; restructuring a project's folder layout; or adding an env var, a config
-  value, or Makefile setup/dev targets. Trigger even when the user never
-  says "architecture" and only asks "where should this go?", "add X to the project",
-  "style this", or "clean up this utils folder". Not for non-JS/TS projects or bug fixes
-  inside existing files.
+  value, or Makefile setup/dev targets — even when the user only asks "where should this
+  go?", "add X to the project", "style this", or "clean up this utils folder". Not for
+  non-JS/TS projects or bug fixes inside existing files.
 ---
 
 # Feature-Based Architecture
@@ -50,55 +49,11 @@ touches its area:
 | Components, styling, colors/spacing, theming, "is this a design-system component?" | [references/design-system.md](references/design-system.md), plus the `quantum-design-tokens` skill (dependency) for any token, color, spacing or theme |
 | Next.js/React: pages, containers, hooks, handlers, SSR, API routes, React Query, env config, frontend tests | [references/frontend-nextjs.md](references/frontend-nextjs.md) |
 | Node backend: Express/Fastify routers, services, repositories, validation, errors, config, backend tests | [references/backend-node.md](references/backend-node.md) |
+| Env vars, the config module, `.env.example`, Makefile setup/dev targets | [references/config-and-commands.md](references/config-and-commands.md) |
 | Another feature needs this code, or deciding whether to extract it to `common/`, `utils/` or the design system | [references/sharing-code.md](references/sharing-code.md) |
 
 A full-stack feature needs the design-system, frontend and backend references; read
 [references/end-to-end-feature.md](references/end-to-end-feature.md) too and build in that order.
-
-Follow Phases 1–6 every time you create, move, or name a file.
-
-## Phase 1 — Read the project first
-
-Before writing anything, inspect the existing structure and record its conventions:
-
-- Where features live (`features/`, `src/features/`, `modules/`, or none yet)
-- Whether the project has an `AGENTS.md`, `CLAUDE.md`, or architecture doc
-- Naming case for feature folders, component files, and role files (`focusSession/` vs
-  `focus-session/`, `Board/Board.js`, `tasks.router.ts`)
-- Whether feature roles are single files (`helpers.js`, `handlers.js`) or folders
-  (`helpers/`)
-- Whether components are folder + barrel (`Board/index.js`) or flat files
-- What the generic folder is called (`utils/`, `utilities/`) and what is actually in it
-- Which infrastructure folders exist (`api/`, `datasources/`, `config/`, `lib/`) and what
-  each one owns
-- Whether there is a root `Makefile` (or another task runner) and a config module, and
-  which keys `.env.example` lists
-- Whether UI primitives come from an external design-system package
-- Language and module system (JS/TS, ESM/CommonJS, `.js` extensions in TS imports)
-
-## Phase 2 — Identify the owner
-
-Ask what the code *knows about*, not what kind of file it is. See [Placement
-decision](#placement-decision).
-
-## Phase 3 — Place it
-
-Put the file in the owning feature, or in the correct shared location if it has no domain
-owner.
-
-## Phase 4 — Name it
-
-Match the project's established style. See [Naming](#naming).
-
-## Phase 5 — Check the dependency direction
-
-Confirm the new imports point the allowed way. See [Dependency
-direction](#dependency-direction).
-
-## Phase 6 — Verify
-
-Run the project's linter and type checker. Fix any import that breaks the direction
-rules or the build, then re-run until both pass; report failures that predate this change.
 
 ## Where code lives
 
@@ -271,82 +226,8 @@ Do not put pure functions like `groupBy` in infrastructure, and do not put a DB 
 
 Every project, frontend or backend, has two fixed entry points: a root `Makefile` for
 running it and one config module for reading its environment.
-
-### Makefile
-
-A fresh clone reaches a running app with `make setup && make dev`, and CI calls the same
-targets.
-
-```make
-.PHONY: help setup dev test lint typecheck build
-
-help: ## List the targets
-	@grep -E '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | awk -F ':.*## ' '{printf "%-10s %s\n", $$1, $$2}'
-
-setup: ## Check Node, install deps, create .env, start the database
-	@node -v | grep -q "^v$$(sed 's/^v//' .nvmrc)" || { echo "Node $$(cat .nvmrc) required (run: nvm use)"; exit 1; }
-	npm ci
-	@[ -f .env ] || cp .env.example .env
-	npm run start:database
-
-dev: ## Start the app in watch mode
-	npm run dev
-
-test: ## Run the unit tests
-	npm test
-
-lint: ## Lint the code
-	npm run lint
-
-typecheck: ## Type-check without emitting
-	npm run typecheck
-
-build: ## Build for production
-	npm run build
-```
-
-- Targets delegate to `package.json` scripts. The scripts stay the source of truth; the
-  Makefile adds no build logic of its own.
-- `setup` is idempotent: a second run changes nothing and never overwrites an existing
-  `.env`.
-- `setup` uses the package manager's frozen install (`npm ci`,
-  `pnpm install --frozen-lockfile`, `yarn install --immutable`).
-- Include only targets the project can run: no `start:database` without a database, and
-  no Node check when `.nvmrc` holds an alias like `lts/*`.
-- Recipes are indented with tabs.
-- A repository holding several apps (`web/`, `api/`) gets a root Makefile that calls each
-  app's own: `$(MAKE) -C api setup`.
-- The README's getting-started section is `make setup` and `make dev`.
-- A project that already uses another task runner (`just`, Taskfile, Turborepo) keeps it,
-  with the same target names, instead of gaining a Makefile.
-
-### Config module
-
-One module is the only reader of `process.env`: `src/config.ts` on the backend,
-`config/server.js` and `config/client.js` on a Next.js frontend (split because the
-browser bundle only receives `NEXT_PUBLIC_*` values). The module:
-
-1. Declares every key in one schema: its type, whether it is required, and its default.
-2. Parses on load. Numbers become numbers, booleans become booleans, enums are checked,
-   so a bad value never turns into `NaN` or a `"false"` string that reads as true.
-3. Fails fast. A missing or invalid key throws once, at startup (or `next build`), listing
-   every problem, before a port opens or a request is served.
-4. Exports a frozen, typed object with camelCase names (`config.port`,
-   `config.databaseUrl`). Nothing else imports `process.env`.
-
-- Defaults only for values that are safe in every environment (port, log level, limits).
-  Credentials and external-service URLs have no default; their local values live in
-  `.env.example`. A production deploy missing `DATABASE_URL` then fails at startup instead
-  of connecting to localhost.
-- `.env.example` is committed and lists exactly the keys the schema declares, with
-  working local values and no real secrets. `.env` is gitignored.
-- A change that needs a new value adds it to the schema and to `.env.example` in the same
-  commit.
-- Validate with the schema library the project already uses for request input (zod in
-  this skill's examples). With none, write the checks by hand in the same file rather
-  than adding a dependency only for config.
-
-Code for each side is in the backend and frontend references.
+Read [references/config-and-commands.md](references/config-and-commands.md) when adding
+an env var or config value, or creating or changing Makefile targets.
 
 ## Dependency direction
 
@@ -432,6 +313,51 @@ precisely, the grouping is probably wrong.
   `package.json` scripts instead of calling them
 - The same function copy-pasted twice inside one project
 
+## Phase 1 — Read the project first
+
+Follow Phases 1–6 every time you create, move, or name a file.
+
+Before writing anything, inspect the existing structure and record its conventions:
+
+- Where features live (`features/`, `src/features/`, `modules/`, or none yet)
+- Whether the project has an `AGENTS.md`, `CLAUDE.md`, or architecture doc
+- Naming case for feature folders, component files, and role files (`focusSession/` vs
+  `focus-session/`, `Board/Board.js`, `tasks.router.ts`)
+- Whether feature roles are single files (`helpers.js`, `handlers.js`) or folders
+  (`helpers/`)
+- Whether components are folder + barrel (`Board/index.js`) or flat files
+- What the generic folder is called (`utils/`, `utilities/`) and what is actually in it
+- Which infrastructure folders exist (`api/`, `datasources/`, `config/`, `lib/`) and what
+  each one owns
+- Whether there is a root `Makefile` (or another task runner) and a config module, and
+  which keys `.env.example` lists
+- Whether UI primitives come from an external design-system package
+- Language and module system (JS/TS, ESM/CommonJS, `.js` extensions in TS imports)
+
+## Phase 2 — Identify the owner
+
+Ask what the code *knows about*, not what kind of file it is. See [Placement
+decision](#placement-decision).
+
+## Phase 3 — Place it
+
+Put the file in the owning feature, or in the correct shared location if it has no domain
+owner.
+
+## Phase 4 — Name it
+
+Match the project's established style. See [Naming](#naming).
+
+## Phase 5 — Check the dependency direction
+
+Confirm the new imports point the allowed way. See [Dependency
+direction](#dependency-direction).
+
+## Phase 6 — Verify
+
+Run the project's linter and type checker. Fix any import that breaks the direction
+rules or the build, then re-run until both pass; report failures that predate this change.
+
 ## Report
 
 When the placement was a judgment call, tell the user in one line where the file went and
@@ -448,7 +374,8 @@ why (for example: "Kept `reorderTasks` in `features/tasks/helpers.js` because it
 - **Refactoring**: only when the user explicitly asks. Then:
 
   1. Map current files to their owning features and share the plan before moving
-     anything. For a layered backend, see "Mapping a layered project" in backend-node.md.
+     anything. For a layered backend, see "Mapping a layered project" in
+     `references/backend-node.md`.
   2. Migrate one feature at a time.
   3. Move files without changing behavior. Keep structural changes separate from logic
      changes so the diff stays reviewable.

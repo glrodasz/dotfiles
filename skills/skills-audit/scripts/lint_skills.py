@@ -32,6 +32,7 @@ from pathlib import Path
 # --- limits from the digest ---------------------------------------------------------------
 NAME_MAX = 64                 # Anthropic frontmatter rule
 DESCRIPTION_MAX = 1024        # Anthropic frontmatter rule
+DESCRIPTION_WARN = 950        # leaves room to add a trigger phrase without breaking the limit
 DESCRIPTION_MIN_USEFUL = 60   # shorter than this reads like "Helps with documents"
 BODY_MAX_LINES = 500          # Anthropic + agentskills.io hard guidance
 BODY_WARN_LINES = 350         # "split when approaching the limit"
@@ -190,6 +191,8 @@ def lint_skill(skill_dir: Path) -> list[Finding]:
     else:
         if len(desc) > DESCRIPTION_MAX:
             add("error", "FM007", f"`description` is {len(desc)} chars (max {DESCRIPTION_MAX})")
+        elif len(desc) >= DESCRIPTION_WARN:
+            add("warn", "FM014", f"`description` is {len(desc)} chars — close to the {DESCRIPTION_MAX} limit, no room for new trigger phrases")
         if XML_TAG_RE.search(desc):
             add("error", "FM008", "`description` contains XML tags")
         if FIRST_SECOND_PERSON_RE.search(desc):
@@ -233,6 +236,15 @@ def lint_skill(skill_dir: Path) -> list[Finding]:
         add("warn", "BD003", "body has no `# Title` heading")
 
     long_lines: list[int] = []
+    # The folded `description: >` block is prose too; the body check alone misses it.
+    in_desc = False
+    for ln, line in enumerate(text.split("\n")[1:body_start], start=2):
+        if line.strip() == "---":
+            break
+        if re.match(r"^[A-Za-z][\w-]*:", line):
+            in_desc = line.startswith("description:")
+        if in_desc and len(line) > PROSE_MAX_COLUMNS:
+            long_lines.append(ln)
     for idx, line in prose:
         ln = body_start + idx - 1
         if len(line) > PROSE_MAX_COLUMNS and not re.search(r"https?://|\|", line):
