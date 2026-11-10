@@ -6,13 +6,13 @@ description: >
   modules on the backend. Use whenever creating a feature, page, component, container,
   hook, handler, helper, query, API route, endpoint, router, service, or repository;
   choosing between helpers, utils, common, lib, or infrastructure folders; styling a
-  component or adding a color/spacing value; deciding whether a component belongs in the
-  app or in the design system; wiring server-side rendering (getServerSideProps, React
-  Query initial data); naming files or directories; extracting or sharing code between
-  features; restructuring a project's folder layout; or adding an env var, a config
-  value, or Makefile setup/dev targets — even when the user only asks "where should this
-  go?", "add X to the project", "style this", or "clean up this utils folder". Not for
-  non-JS/TS projects or bug fixes inside existing files.
+  component or adding a color/spacing value; deciding if a component belongs in the
+  app or the design system; wiring SSR (getServerSideProps, React Query initial data);
+  naming files or folders; extracting or sharing code between features; restructuring
+  folder layout; or adding env vars, config values, or Makefile setup/dev targets —
+  even when the user only asks "where should this go?", "add X to the project", "style
+  this", or "clean up this utils folder". Not for non-JS/TS projects or bug fixes inside
+  existing files.
 ---
 
 # Feature-Based Architecture
@@ -23,12 +23,6 @@ Place code by ownership, not by technical type.
 near tasks. Code that knows nothing about the domain may be a utility. Code that connects
 the app to storage, a backend, or an external system belongs in a named infrastructure
 folder.
-
-Folder names exist to communicate ownership, responsibility, and boundaries. They are not
-a filing system for file types.
-
-The same rule applies on both sides of the wire: a frontend feature folder and a backend
-feature folder for the same domain should be recognizably the same thing.
 
 ## Hard rules (never violate)
 
@@ -41,8 +35,7 @@ feature folder for the same domain should be recognizably the same thing.
 
 ## Which reference to load
 
-This file holds the rules that apply everywhere. Load a reference only when the task
-touches its area:
+Load a reference only when the task touches its area:
 
 | Task touches | Load |
 |---|---|
@@ -297,15 +290,11 @@ precisely, the grouping is probably wrong.
 - Every component in one top-level `components/` directory by default
 - `lib/` used as a synonym for `utils/`
 - A new top-level folder created to hold a single file
-- A helper moved to shared code after its first reuse without evaluation
-- A feature reaching into another feature's internals when a public entry point exists
 - Domain logic living in route/page files, or business rules living in a backend router
-- A presentational component calling the HTTP client or a data hook
 - A UI primitive (button, input, card) built inside the app instead of the design system
 - Hard-coded colors, spacing, radii, or font sizes instead of tokens
 - `getServerSideProps` fetching the app's own API routes over HTTP
-- A backend router talking to the DB model directly, or a service returning raw ORM
-  documents
+- A backend service returning raw ORM documents
 - `process.env` read outside the config module
 - Env values used unvalidated, so a missing key surfaces as `undefined` or `NaN` at the
   first request instead of failing at startup
@@ -315,7 +304,7 @@ precisely, the grouping is probably wrong.
 
 ## Phase 1 — Read the project first
 
-Follow Phases 1–6 every time you create, move, or name a file.
+Follow Phases 1–3 every time you create, move, or name a file.
 
 Before writing anything, inspect the existing structure and record its conventions:
 
@@ -334,26 +323,16 @@ Before writing anything, inspect the existing structure and record its conventio
 - Whether UI primitives come from an external design-system package
 - Language and module system (JS/TS, ESM/CommonJS, `.js` extensions in TS imports)
 
-## Phase 2 — Identify the owner
+## Phase 2 — Place and name it
 
-Ask what the code *knows about*, not what kind of file it is. See [Placement
-decision](#placement-decision).
+1. **Owner:** ask what the code *knows about*, not what kind of file it is
+   ([Placement decision](#placement-decision)). Put it in the owning feature, or in the
+   correct shared location if it has no domain owner.
+2. **Name:** match the project's established style ([Naming](#naming)).
+3. **Direction:** confirm the new imports point the allowed way
+   ([Dependency direction](#dependency-direction)).
 
-## Phase 3 — Place it
-
-Put the file in the owning feature, or in the correct shared location if it has no domain
-owner.
-
-## Phase 4 — Name it
-
-Match the project's established style. See [Naming](#naming).
-
-## Phase 5 — Check the dependency direction
-
-Confirm the new imports point the allowed way. See [Dependency
-direction](#dependency-direction).
-
-## Phase 6 — Verify
+## Phase 3 — Verify
 
 Run the project's linter and type checker. Fix any import that breaks the direction
 rules or the build, then re-run until both pass; report failures that predate this change.
