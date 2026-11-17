@@ -1,9 +1,9 @@
 # Skills packed into the Claude plugin by `make claude-plugin`.
 # No version here: the claude-plugin-v* git tags hold it (see scripts/claude-plugin.sh).
-name: germorodas-skills
+name: glrodasz-skills
 description: >-
   Accessibility and production audits, design tokens, light/dark mode, localization,
-  feature-based architecture, READMEs and review-ready branches.
+  feature-based architecture, READMEs, release versioning and review-ready branches.
 author:
   name: Guillermo Rodas
 homepage: https://github.com/glrodasz/dotfiles
@@ -20,3 +20,5 @@ skills:
   - prod-page-audit
   - quantum-design-tokens
   - reviewable-commits
+  - semantic-release-versioning
+  - stacked-pr-splitter
