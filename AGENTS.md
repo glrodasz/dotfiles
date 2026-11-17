@@ -16,6 +16,18 @@ Personal macOS dotfiles. Configs live here and are symlinked into `$HOME` with
   `$HOME` (or `~`). In zsh, use double quotes so `$HOME` expands:
   `"$HOME/.foo"`, not `'/Users/name/.foo'`.
 
+## Skills (`skills/`)
+
+- The skills listed in `skills/claude-plugin-skills.yaml` ship as the
+  `glrodasz-skills` Claude plugin. A new skill is not in the plugin until it is
+  added to that list.
+- Every push to `main` that changes a listed skill publishes a GitHub release
+  (`.github/workflows/claude-plugin.yml`). The version comes from what changed,
+  not from commit messages: a skill removed from the list bumps major, a skill
+  added bumps minor, any other change bumps patch. The `claude-plugin-v*` tags
+  hold the version; never write it into a file.
+- Check the next version and what changed with `make claude-plugin-version`.
+
 ## Zsh (`zsh/.zshrc`, `zsh/.zprofile`)
 
 Fast shell startup comes first. Every process spawned at startup costs ~25ms
