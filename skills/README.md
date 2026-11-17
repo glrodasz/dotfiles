@@ -36,3 +36,15 @@ step treats it as optional.
 
 - `skills-social` — regenerates `skills-social.json`, a shareable catalog of every skill
   here (category, tagline, trigger), for rendering a social-media card.
+
+## Claude plugin
+
+The skills listed in `claude-plugin-skills.yaml` ship as one Claude plugin zip.
+
+- `make claude-plugin` — packs them into `dist/<name>-<version>.zip` (committed files only).
+- `make claude-plugin-version` — shows the next version and which skills changed.
+- On every push to `main` that touches them, `.github/workflows/claude-plugin.yml` tags
+  `claude-plugin-v<version>` and attaches the zip to a GitHub release.
+
+The tag is the only place the version lives. Since the last tag: a skill removed from the
+list bumps major, a skill added bumps minor, any other change to a listed skill bumps patch.

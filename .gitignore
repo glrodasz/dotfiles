@@ -11,3 +11,6 @@ scripts/github-audit/
 
 # make zip-skills output
 skills/*.zip
+
+# make claude-plugin output
+dist/

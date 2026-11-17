@@ -10,7 +10,7 @@ LOCAL_SKILLS_DIR := $(HOME)/.skills.local
 LOCAL_SKILLS     := $(notdir $(patsubst %/,%,$(dir $(wildcard $(LOCAL_SKILLS_DIR)/*/SKILL.md))))
 
 .PHONY: help slink slink-skills slink-skills-cursor slink-skills-claude slink-skills-agents slink-zsh slink-vim \
-        zip-skills \
+        zip-skills claude-plugin claude-plugin-version claude-plugin-release \
         install install-brew install-npm \
         backup backup-brew backup-apps backup-npm
 
@@ -88,6 +88,15 @@ zip-skills: ## Zip each skill into skills/<name>.zip for uploading to Claude
 			while IFS= read -r f; do [ -e "$$f" ] && echo "$$f"; done | zip -q "$$s.zip" -@) || exit 1; \
 		echo "  zipped $$s"; \
 	done
+
+claude-plugin: ## Pack skills/claude-plugin-skills.yaml into dist/<name>-<version>.zip
+	@$(DOTFILES)/scripts/claude-plugin.sh build
+
+claude-plugin-version: ## Show the next Claude plugin version and what changed
+	@$(DOTFILES)/scripts/claude-plugin.sh version
+
+claude-plugin-release: ## Publish the Claude plugin zip as a GitHub release (CI runs it on main)
+	@$(DOTFILES)/scripts/claude-plugin.sh release
 
 ## Install
 
