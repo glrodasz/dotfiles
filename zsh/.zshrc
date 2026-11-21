@@ -93,7 +93,7 @@ export PYENV_ROOT="${PYENV_ROOT:-$HOME/.pyenv}"
 zsh-defer -mp -c 'export ANDROID_HOME="$HOME/Library/Android/sdk"; export PATH="$PATH:$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools"'
 
 # Java OpenJDK path
-zsh-defer -mp -c 'export JAVA_HOME="/opt/homebrew/opt/openjdk@21"; export PATH="$JAVA_HOME/bin:$PATH"'
+zsh-defer -mp -c 'export JAVA_HOME="/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home"; export PATH="$JAVA_HOME/bin:$PATH"'
 
 # Antigravity path
 [[ -d "$HOME/.antigravity/antigravity/bin" ]] && zsh-defer -mp -c 'export PATH="$HOME/.antigravity/antigravity/bin:$PATH"'
