@@ -125,12 +125,10 @@ Write the sections in the fixed order below.
 The README is written for a person who wants to learn about the project, not as notes from
 an agent to the developer.
 
-- **Plain English everywhere.** Before writing the hero, load the
-  `simple-english:simple-english` skill and apply its document rules (Plain mode) to every
-  piece of text this skill writes: README, `docs/` files, alt text, tables, commit messages
-  and the PR description. Its rules win over any formatting in this skill's templates. If
-  the skill is not installed, say once that it comes from
-  `https://github.com/AminBlg/SimpleEnglish` and follow the rules below.
+- **Plain English everywhere.** Before writing the hero, read
+  `references/plain-english.md` and apply its rules to every piece of text this skill
+  writes: README, `docs/` files, alt text, tables, commit messages and the PR description.
+  Its rules win over any formatting in this skill's templates.
 - **The README never talks about itself or its own files.** No "this section explains…",
   "diagram sources live in…", "images are kept in X so they aren't published", "this README
   covers…". Where files live belongs in Project layout only if a reader needs it.
@@ -278,9 +276,8 @@ can't pass goes in the PR description, never in the README.
   no "yet"/"no X" absence notices; copyright names the owner.
 - No em or en dashes used as punctuation anywhere in the README or the docs you wrote
   (`grep -n '[—–]' README.md docs/*.md` returns nothing you added).
-- The simple-english self-check passes on the README, the docs you wrote and the PR
-  description: sentence lengths, no contractions, only can/will/must as modals, no bold,
-  one word per meaning.
+- The self-check in `references/plain-english.md` passes on the README, the docs you wrote
+  and the PR description.
 - Every gap was asked about (or the recommended default was taken and listed in the PR).
 - Logo on the left; the column beside it doesn't wrap under the logo (or the inline-title
   fallback is used).
