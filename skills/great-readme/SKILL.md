@@ -75,13 +75,13 @@ OG image go full width below.
 
 # <Name>
 
-**<One sentence: what it does, for whom, with one concrete number or differentiator.>**
+<One sentence: what it does, for whom, with one concrete number or differentiator.>
 
 <badges: max 6, health first, then stack, all on one line>
 
 <br clear="left">
 
-[**Live site**](<url>) · [How it works](#how-it-works) · [Architecture](#architecture) · [Quick start](#quick-start)
+[Live site](<url>) · [How it works](#how-it-works) · [Architecture](#architecture) · [Quick start](#quick-start)
 
 <img src="<path to the OG image>" alt="<the OG image's text, written out>" width="860">
 ```
@@ -125,6 +125,10 @@ Write the sections in the fixed order below.
 The README is written for a person who wants to learn about the project, not as notes from
 an agent to the developer.
 
+- **Plain English everywhere.** Before writing the hero, read
+  `references/plain-english.md` and apply its rules to every piece of text this skill
+  writes: README, `docs/` files, alt text, tables, commit messages and the PR description.
+  Its rules win over any formatting in this skill's templates.
 - **The README never talks about itself or its own files.** No "this section explains…",
   "diagram sources live in…", "images are kept in X so they aren't published", "this README
   covers…". Where files live belongs in Project layout only if a reader needs it.
@@ -170,7 +174,7 @@ link row and any TOC) and list the removal in the PR description. Don't move it 
 doc or replace it with a link.
 
 Keep the README under ~400 lines. Prose is short and scannable markdown; tables for
-comparisons and step-by-step mechanics; bold sparingly.
+comparisons and step-by-step mechanics; no bold.
 
 ### Docs to reference
 
@@ -272,6 +276,8 @@ can't pass goes in the PR description, never in the README.
   no "yet"/"no X" absence notices; copyright names the owner.
 - No em or en dashes used as punctuation anywhere in the README or the docs you wrote
   (`grep -n '[—–]' README.md docs/*.md` returns nothing you added).
+- The self-check in `references/plain-english.md` passes on the README, the docs you wrote
+  and the PR description.
 - Every gap was asked about (or the recommended default was taken and listed in the PR).
 - Logo on the left; the column beside it doesn't wrap under the logo (or the inline-title
   fallback is used).
